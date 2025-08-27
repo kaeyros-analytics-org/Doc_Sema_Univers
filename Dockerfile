@@ -15,11 +15,11 @@ RUN python -m venv venv \
     && if [ -f docs/en/requirements.txt ]; then pip install -r docs/en/requirements.txt; fi \
     && if [ -f docs/fr/requirements.txt ]; then pip install -r docs/fr/requirements.txt; fi
 
-# Générer la doc EN
-RUN . venv/bin/activate && sphinx-build -b html docs/en build/html/en
+# Générer la doc EN (note: source est bien le dossier avec conf.py)
+RUN . venv/bin/activate && sphinx-build -b html docs/en/source build/html/en
 
 # Générer la doc FR
-RUN . venv/bin/activate && sphinx-build -b html docs/fr build/html/fr
+RUN . venv/bin/activate && sphinx-build -b html docs/fr/source build/html/fr
 
 # Étape 2 : servir avec Nginx
 FROM nginx:alpine
