@@ -41,6 +41,11 @@ jobs:
           # rm -f renv.lock       
           docker build -t ${{ env.FRONTEND_IMAGE_REPOSITORY }}:${{ env.IMAGE_TAG }} .
 
-      - name: Push frontend image to GitHub Container Registry
+      - name: Tag image as latest
+        run: |
+          docker tag ${{ env.FRONTEND_IMAGE_REPOSITORY }}:${{ env.IMAGE_TAG }} ${{ env.FRONTEND_IMAGE_REPOSITORY }}:latest
+
+      - name: Push frontend images to GitHub Container Registry
         run: |
           docker push ${{ env.FRONTEND_IMAGE_REPOSITORY }}:${{ env.IMAGE_TAG }}
+          docker push ${{ env.FRONTEND_IMAGE_REPOSITORY }}:latest
