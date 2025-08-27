@@ -1,0 +1,8 @@
+Overview of the pointing tool
+===============================
+
+The **time-tracking tool** developed by **Kaeyros Analytics** is an innovative and easy-to-use solution that allows companies to efficiently monitor employees’ check-in and check-out times through a familiar channel: **WhatsApp**. Designed to minimize the effort involved in attendance management, the tool is based on an intuitive process. Each company site has a **QR code** displayed at the entrance. When an employee arrives at or leaves the workplace, they simply scan this **QR code** with their phone. This action automatically opens a **WhatsApp** conversation containing a pre-filled message to be sent. The employee then just needs to click on the "**Clock In/Out**" button in the received message to record either their arrival or departure time.  
+
+Each employee is entitled to two time records per day: the first is considered the clock-in time, and the second is the clock-out time. All entries are logged in real time on an online platform dedicated to the company. This platform makes it possible to view attendance statistics on a daily, weekly, monthly, or yearly basis, and the data can be exported for more efficient HR monitoring.  
+
+To ensure reliability and prevent fraud, the system also relies on geolocation. When a company is registered on the platform, the GPS coordinates of each site are recorded. At every check-in or check-out, the employee’s geographic position is compared with that of the worksite. If the employee is more than 100 meters away, the system blocks the entry. This prevents, for example, an employee from clocking in from home or from any other unauthorized location.  

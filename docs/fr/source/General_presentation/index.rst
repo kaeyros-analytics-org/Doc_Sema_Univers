@@ -1,0 +1,9 @@
+Présentation générale de l’outil de pointage
+========================================================
+
+L’outil de pointage développé par **Kaeyros Analytics** est une solution innovante et simple d’utilisation, qui permet aux entreprises de suivre efficacement les heures d’arrivée et de départ de leurs employés, en utilisant un canal déjà familier : **WhatsApp**. Conçu pour minimiser les efforts liés à la gestion de la présence, cet outil repose sur un fonctionnement intuitif. Chaque site de l’entreprise dispose d’un **QR Code** affiché à l’entrée. Lorsqu’un employé arrive ou quitte son lieu de travail, il lui suffit de scanner ce **QR Code** avec son téléphone. Ce scan ouvre automatiquement une conversation **WhatsApp** contenant directement un message qu’il devra envoyer dans la discussion. Il lui suffit ensuite de cliquer sur le bouton « **Pointer** » du message qu’il recevra par la suite pour enregistrer soit son heure d’arrivée, soit son heure de départ.
+
+Chaque employé a droit à deux pointages par jour : le premier est considéré comme son heure d’entrée et le second comme son heure de sortie. L’ensemble des pointages effectués est enregistré en temps réel sur une plateforme en ligne dédiée à l’entreprise. Celle-ci permet de consulter les statistiques de présence au quotidien, à la semaine, au mois ou à l’année, avec la possibilité d’extraire les données pour un meilleur suivi des ressources humaines.
+
+Pour garantir la fiabilité et éviter toute tentative de fraude, le système repose également sur la géolocalisation. Lors de la création d’une entreprise sur la plateforme, les coordonnées GPS de chaque site sont enregistrées. Ainsi, à chaque pointage, la position géographique de l’employé est comparée à celle du site. Si l’employé se trouve à plus de 100 mètres du lieu de travail, le système empêche le pointage. Cela évite, par exemple, qu’un collaborateur puisse pointer depuis son domicile ou un autre lieu non autorisé.
+
