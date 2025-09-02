@@ -1,0 +1,7 @@
+.wy-nav-content {
+    max-width: 100% !important;  /* retire la limite de largeur imposée */
+}
+
+.wy-nav-content p {
+    text-align: justify !important;
+}
