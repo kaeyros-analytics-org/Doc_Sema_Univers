@@ -11,9 +11,10 @@ COPY . .
 RUN python -m venv venv \
     && . venv/bin/activate \
     && pip install --upgrade pip \
-    && pip install sphinx sphinx-rtd-theme \
+    && pip install sphinx sphinx-rtd-theme myst-parser \
     && if [ -f docs/en/requirements.txt ]; then pip install -r docs/en/requirements.txt; fi \
     && if [ -f docs/fr/requirements.txt ]; then pip install -r docs/fr/requirements.txt; fi
+
 
 # Générer la doc EN (note: source est bien le dossier avec conf.py)
 RUN . venv/bin/activate && sphinx-build -b html docs/en/source build/html/en
