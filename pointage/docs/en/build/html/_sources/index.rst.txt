@@ -4,12 +4,10 @@
    contain the root `toctree` directive.
 
 Time and Attendance Documentation
-=========================
+====================================
 **Time and Attendance Tool**
 
 **User Guide**
-
-Version 1.0
 
 .. image:: images/image1.png
 
@@ -31,6 +29,6 @@ Time and attendance is the process of recording employees' arrival and departure
 
 .. toctree::
    :maxdepth: 2
-   :caption: Step-by-Step Tool Configuration Guide
+   :caption: Tool Configuration Guide
 
    Config_guide/index.rst

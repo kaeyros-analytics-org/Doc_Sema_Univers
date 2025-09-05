@@ -35,11 +35,13 @@ Once logged in to the attendance logs, you can:
 * download the attendance report,
 * view the overall reporting.
 
+
 **i. Browse Days**
 
 To change the day, click on the calendar where the date is displayed, as shown in the screenshot below.
 
 .. image:: ../images/image3.png
+
 
 **ii. Manually Record Attendance**
 
@@ -64,6 +66,7 @@ This function is reserved for authorized personnel (e.g., receptionists) to manu
 * **Entry**: arrival time;
 * **Exit**: Departure time.
 
+
 **iii. Download the daily attendance report**
 
 You can generate a daily attendance report to track your employees' activity.
@@ -86,6 +89,7 @@ You can generate a daily attendance report to track your employees' activity.
 * **Late by**: Length of time late, if any;
 * **In/Out Type**: Clocking method;
 
+
 **iv. View Daily Attendance Statistics**
 
 .. image:: ../images/image8.png
@@ -96,6 +100,7 @@ You can view:
 * The number of employees who were late;
 * The attendance, lateness, and punctuality percentages, displayed on the right side of the dashboard.
 
+
 **v. View Attendance Details**
 
 .. image:: ../images/image9.png
@@ -104,18 +109,11 @@ The data displayed reflects the columns in the Excel report: arrival and departu
 
 You can also use the following options to search by employee name, filter by location, and switch between pages using the pagination menu.
 
-**vi. View general reporting**
-General reporting allows you to analyze employee attendance trends over an extended period (month, quarter, year). Unlike the daily dashboard, this view provides an overall summary to help assess punctuality and attendance at the company or department level.
 
-1. From the **Main Dashboard**, click on the **View General Reporting** link.
+**vi. View reporting**
+Reporting allows you to analyze employee attendance trends over an extended period (month, quarter, year). Unlike the daily dashboard, this view provides an overall summary to help assess punctuality and attendance at the company or department level.
 
-.. image:: ../images/image10.png
-
-2. You will be automatically redirected to the **Second Dashboard**, dedicated to overall analyses.
-
-.. image:: ../images/image11.png
-
-3. Select the desired period (**month, quarter, year**) using the available filters.
+.. image:: ../images/image101.png
 
 Configure your platform
 ========================================
@@ -128,6 +126,7 @@ The initial configuration is **reserved for users with the Administrator role**.
 * **Positions**
 
 All these options are accessible from the **Settings tab** of the platform.
+
 
 **i. Add Sites**
 
@@ -159,6 +158,7 @@ Once validated, a **QR Code** is automatically generated. It will serve as a tim
 
 **Tip**: Before printing or distributing, test the QR Code to ensure it redirects to the configured WhatsApp number.
 
+
 **ii. View and edit a site**
 
 1. Still in the **Sites** sub-tab, view the list of sites already created.
@@ -172,6 +172,7 @@ Once validated, a **QR Code** is automatically generated. It will serve as a tim
 
 3. To download the QR code for an existing site, click **Download** at the bottom of **Edit Site**.
 
+
 **iii. Configure Working Hours**
 
 1. Go to the **Hours** sub-tab in the **Settings** tab.
@@ -183,6 +184,7 @@ Once validated, a **QR Code** is automatically generated. It will serve as a tim
 3. Modify the hours as desired (working days, opening/closing hours).
 
 4. Save your changes by clicking **Validate**.
+
 
 **iv. Configure Departments**
 
@@ -196,6 +198,7 @@ Once validated, a **QR Code** is automatically generated. It will serve as a tim
 * **Modify** a department name using the **edit** button;
 * **Delete** a department using the **edit** button.
 
+
 **v. Configure Positions**
 
 1. Go to the **Position** sub-tab.
@@ -208,6 +211,7 @@ Once validated, a **QR Code** is automatically generated. It will serve as a tim
 * **Modify** a position title or description;
 * **Delete** an existing position using the edit button.
 
+
 Employee Management
 ============================
 
@@ -217,6 +221,7 @@ This is done on the Employees tab.
 
 On this tab, you can view the employees registered in the company, add an employee, edit an employee's information, or delete an employee.
 
+
 **i. Add an Employee**
 
 By clicking the **Add Employee** button, a dialog box will open and you will enter the employee's name, phone number, email address, position, and department.
@@ -225,11 +230,13 @@ By clicking the **Add Employee** button, a dialog box will open and you will ent
 
 Note: For the phone number, make sure you enter the number exactly as it is entered on WhatsApp (for example, numbers without a 6 like 23789898989 and numbers with a 6 like 237689898989).
 
+
 **ii. Viewing, Editing, and Deleting an Employee**
 
 Everything works exactly as in the other cases. From the edit button, you can choose either the edit or delete option, depending on what you want to do.
 
 .. image:: ../images/image22.png
+
 
 Account Management
 =========================
@@ -239,6 +246,7 @@ This is done in the **Company Space** tab. Only users with the Admin or Account 
 .. image:: ../images/image23.png
 
 In this section, there are two main features: Add a New Company and Add a User.
+
 
 **i. Add a company**
 
@@ -252,6 +260,7 @@ By clicking the **Add Company** button, a dialog box will open and you must ente
 
 You must enter the company name, the name of a company manager, the email address, and phone number of the company or company manager, then click the Confirm button to complete the company creation. You cannot create two companies with the same phone number.
 
+
 **ii. View, edit, and delete companies.**
 
 .. image:: ../images/image25.png
@@ -259,6 +268,7 @@ You must enter the company name, the name of a company manager, the email addres
 Once you create a company, it is automatically added to the list of companies, as shown in the image above. Using the edit button on the far right of each company, you can modify the company's information by clicking Edit or delete the company by clicking Delete.
 
 Note: If you have the Account Manager role, you can only view and modify companies you have added. Therefore, you cannot modify a company added by the administrator or another user with the Account Manager role.
+
 
 **iii. Add a User**
 
@@ -273,6 +283,7 @@ This will open a dialog box and you will need to fill in the various fields for 
 .. image:: ../images/image27.png
 
 It will be up to you to send these credentials to the user in question so they can access the platform to manage their business. These include their email address and password. Every user needs these two pieces of information to log in to the platform.
+
 
 **i. View, edit, and delete a user.**
 

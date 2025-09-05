@@ -4,12 +4,11 @@
    contain the root `toctree` directive.
 
 Pointage Fr documentation
-=========================
+===========================
 **Outil de pointage**
 
 **Guide utilisateur**
 
-Version 1.0
 
 .. image:: images/image1.png
 
@@ -31,7 +30,7 @@ Le pointage est le processus qui consiste à enregistrer les heures d’arrivée
 
 .. toctree::
    :maxdepth: 2
-   :caption: Guide pratique de configuration pas à pas
+   :caption: Guide pratique de configuration
 
    Config_guide/index.rst
 

@@ -35,11 +35,13 @@ Une fois connecté aux journaux de présence, vous pouvez :
 * télécharger le rapport de présence,
 * consulter le reporting global.
 
+
 **i. Parcourir les jours**
 
 Pour changer de jour, cliquez sur le calendrier où la date est affichée, comme illustré dans la capture ci-dessous.
 
 .. image:: ../images/image3.png
+
 
 **ii. Enregistrer manuellement une présence**
 
@@ -63,6 +65,7 @@ Cette fonction est réservée aux personnels autorisés (ex. : agent d’accueil
 * **Entrée** : heure d’arrivée ;
 * **Sortie** : heure de départ.
 
+
 **iii. Télécharger le rapport journalier des présences**
 
 Vous pouvez générer un rapport quotidien des présences pour suivre l’activité de vos employés.
@@ -84,6 +87,7 @@ Vous pouvez générer un rapport quotidien des présences pour suivre l’activi
 * **En retard de** : durée du retard éventuel ;
 * **Type entrée / sortie** : Maniere dont le pointage s'effectue ;
 
+
 **iv. Visualiser les statistiques journalières des présences**
 
 .. image:: ../images/image8.png
@@ -94,6 +98,7 @@ Vous pouvez consulter :
 * Le nombre d’employés en retard ;
 * Les pourcentages de présence, de retard et de ponctualité, affichés dans la partie droite du tableau de bord.
 
+
 **v. Voir les détails sur les présences**
 
 .. image:: ../images/image9.png
@@ -102,19 +107,15 @@ Les données affichées reprennent les colonnes du rapport Excel : heures d’ar
 
 Vous pouvez aussi utiliser les options suivantes pour faire une recherche à partir du nom de l’employé, filtrer par le site, et basculer entre les pages en utilisant le menu de pagination.
 
-**vi. Visualiser le reporting général**
 
-Le reporting général permet d’analyser les tendances de présence des employés sur une période étendue (mois, trimestre, année). Contrairement au tableau de bord journalier, cette vue fournit une synthèse globale pour aider à évaluer la ponctualité et l’assiduité au niveau de l’entreprise ou des départements.
+**vi. Visualiser le reporting**
 
-1. Depuis le **Dashboard principal**, cliquez sur le lien **Voir le reporting général**.
+Le reporting permet d’analyser les tendances de présence des employés sur une période étendue (mois, trimestre, année). Contrairement au tableau de bord journalier, cette vue fournit une synthèse globale pour aider à évaluer la ponctualité et l’assiduité au niveau de l’entreprise ou des départements.
 
-.. image:: ../images/image10.png
-
-2. Vous serez automatiquement redirigé vers le **deuxième Dashboard**, dédié aux analyses globales.
-
-.. image:: ../images/image11.png
+.. image:: ../images/image101.png
 
 3. Sélectionnez la période souhaitée (**mois, trimestre, année**) à l’aide des filtres disponibles.
+
 
 Paramétrer sa plateforme
 ===================================
@@ -160,6 +161,7 @@ Une fois validé, un **QR Code** est automatiquement généré. Il sert de point
 
 **Conseil** : avant impression ou diffusion, testez le QR Code pour vérifier qu’il redirige bien vers le numéro WhatsApp configuré.
 
+
 **ii. Visualiser et modifier un site**
 
 1. Toujours dans le sous-onglet **Sites**, consultez la liste des sites déjà créés.
@@ -173,6 +175,7 @@ Une fois validé, un **QR Code** est automatiquement généré. Il sert de point
 
 3. Pour télécharger le QR Code d’un site existant, cliquez sur **Télécharger** en bas de **Éditer un site**.
 
+
 **iii. Configurer les horaires de travail**
 
 1. Accédez au sous-onglet **Horaires** dans l’onglet **Paramètres**.  
@@ -182,6 +185,7 @@ Une fois validé, un **QR Code** est automatiquement généré. Il sert de point
 
 3. Modifiez les horaires comme souhaité (jours ouvrables, heures d’ouverture/fermeture).  
 4. Enregistrez vos modifications en cliquant sur **Valider**.
+
 
 **iv. Configurer les départements**
 
@@ -195,6 +199,7 @@ Une fois validé, un **QR Code** est automatiquement généré. Il sert de point
 * **Modifier** le nom d’un département en utilisant le bouton **d’édition** ;
 * **Supprimer** un département en utilisant le bouton **d’édition**.
 
+
 **v. Configurer les postes**
 
 1. Accédez au sous-onglet **Poste**.
@@ -207,6 +212,7 @@ Une fois validé, un **QR Code** est automatiquement généré. Il sert de point
 * **Modifier** l’intitulé ou la description d’un poste ;
 * **Supprimer** un poste existant en utilisant le bouton d’édition.
 
+
 Gestion des employés
 ===========================
 
@@ -216,6 +222,7 @@ Cela se fait sur l’onglet Employés.
 
 Sur cet onglet, on peut visualiser les employés enregistrés dans l’entreprise, ajouter un employé, modifier les informations d’un employé ou supprimer un employé.
 
+
 **i. Ajouter un employé**
 
 En cliquant sur le bouton **Ajouter un employé**, une boîte de dialogue va s’ouvrir et vous allez renseigner le nom de l’employé, son numéro de téléphone, l’adresse mail, le poste et le département de l’employé.
@@ -223,6 +230,7 @@ En cliquant sur le bouton **Ajouter un employé**, une boîte de dialogue va s�
 .. image:: ../images/image21.png
 
 Attention : pour le numéro de téléphone, il faut se rassurer de renseigner le numéro tel qu’il est renseigné sur WhatsApp (par exemple, les numéros sans 6 comme 23789898989 et les numéros avec 6 tels que 237689898989).
+
 
 **ii. Visualiser, modifier et supprimer un employé**
 
@@ -239,6 +247,7 @@ Cela se fait dans l’onglet **Espace entreprise**. Seuls les utilisateurs qui o
 
 Sur cette section, il y a deux principales fonctionnalités : Ajouter une nouvelle société et Ajouter un utilisateur.
 
+
 **i. Ajouter une Société**
 
 Cette fonctionnalité vous permet de créer une nouvelle société à qui vous souhaitez vendre l’outil de pointage. Vous devez ajouter la société ici et ajouter un utilisateur qui va gérer cette société.
@@ -247,9 +256,11 @@ En cliquant sur le bouton **Ajouter une société**, une boîte de dialogue va s
 
 .. image:: ../images/image24.png
 
+
 .. image:: ../images/image241.png
 
 Il faut renseigner le nom de la compagnie, le nom d’un responsable de la compagnie, l’adresse mail et le téléphone de la société ou du responsable d’une société, puis cliquer sur le bouton de validation pour terminer la création de la société. Vous ne pouvez pas créer deux sociétés avec les mêmes numéros de téléphone.
+
 
 **ii. Visualiser, modifier, supprimer les sociétés.**
 
@@ -258,6 +269,7 @@ Il faut renseigner le nom de la compagnie, le nom d’un responsable de la compa
 Lorsque vous créez une nouvelle société, elle s’ajoute automatiquement dans la liste des sociétés comme le montre l’image ci-dessus. En utilisant le bouton d’édition à l’extrême droite de chaque société, vous avez la possibilité de modifier les informations de la société en cliquant sur Modifier ou alors de supprimer la société en cliquant sur Supprimer.
 
 NB : Si vous avez le rôle d’Account-Manager, vous ne pouvez voir et modifier que les sociétés que vous avez ajoutées. Donc, vous ne pouvez pas modifier une société ajoutée par l’administrateur ou par un autre utilisateur avec le rôle Account-Manager.
+
 
 **iii. Ajouter un utilisateur**
 
@@ -272,6 +284,7 @@ Cela va ouvrir une boîte de dialogue et vous allez devoir renseigner les diffé
 .. image:: ../images/image27.png
 
 Ce sera à vous d’envoyer ces identifiants à l’utilisateur en question pour qu’il puisse accéder à la plateforme pour gérer son entreprise. Il s’agit notamment de l’adresse mail et du mot de passe. Tout utilisateur a besoin de ces deux informations pour se connecter à la plateforme.
+
 
 **i. Visualiser, modifier, supprimer un utilisateur.**
 
