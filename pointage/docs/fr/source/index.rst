@@ -4,7 +4,7 @@
    contain the root `toctree` directive.
 
 Pointage Fr documentation
-===========================
+====================================
 **Outil de pointage**
 
 **Guide utilisateur**

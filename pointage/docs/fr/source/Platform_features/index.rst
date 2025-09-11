@@ -21,6 +21,7 @@ L’accès à la plateforme d’administration se fait via un navigateur web. Vo
 .. image:: ../images/image1.png
 
 En cas d’oubli de mot de passe, veuillez nous contacter afin d’en obtenir un nouveau.
+
 Une fois connecté, vous aurez un accès direct aux journaux de présence, où vous pourrez consulter les données de présence des employés pour la journée de votre choix.
 
 .. image:: ../images/image2.png
@@ -33,197 +34,186 @@ Une fois connecté aux journaux de présence, vous pouvez :
 * visualiser les présences pour une journée donnée,
 * saisir manuellement une présence,
 * télécharger le rapport de présence,
-* consulter le reporting global.
+* consulter le reporting global,
+* consulter les présences.
 
 
-**i. Parcourir les jours**
+**1. Visualisation des présences journalières**
 
-Pour changer de jour, cliquez sur le calendrier où la date est affichée, comme illustré dans la capture ci-dessous.
+Cette fonctionnalité permet de consulter rapidement la liste des employés présents sur une journée spécifique. Elle affiche les heures d’arrivée et de départ, ainsi que les éventuelles absences ou retards. Changez de jour en cliquant sur le calendrier où la date est affichée, comme illustrée dans la capture ci-dessous:
 
 .. image:: ../images/image3.png
 
 
-**ii. Enregistrer manuellement une présence**
+**2. Saisie manuelle des présences**
 
-Cette fonction est réservée aux personnels autorisés (ex. : agent d’accueil) pour saisir la présence d’un employé de manière manuelle.
+Cette fonctionnalité permet d’enregistrer directement et manuellement la présence d’un employé pour une journée donnée, en spécifiant les heures d’arrivée, de départ.
 
-1. Cliquez sur le bouton **Saisir la présence**.
+* Cliquez sur le bouton **Saisir la présence**.
 
 .. image:: ../images/image4.png
 
-2. Dans la boîte de dialogue qui s’ouvre, sélectionnez : 
-
-* L’employé concerné ; 
-* Le site correspondant
+* Dans la boîte de dialogue, sélectionnez l’employé concerné, le site correspondant, puis  l’heure et la date de présence. Cette interface permet de contrôler et d’enregistrer chaque information à la main pour garantir la fiabilité des données, notamment en cas de correction ou d’ajout exceptionnel. La saisie se fait rapidement grâce à des champs dédiés pour chaque élément, assurant que la présence soit bien rattachée au bon salarié et au bon site.
 
 .. image:: ../images/image5.png
 
-3. Cliquez sur **Valider** pour enregistrer la présence, elle sera immédiatement affichée dans le tableau récapitulatif de la journée. 
+* Cliquez sur **Valider** pour enregistrer la présence, elle sera immédiatement affichée dans le tableau récapitulatif de la journée. 
 
-**Important** : chaque employé doit pointer **deux fois par jour** :
+.. image:: ../images/image50.png
 
-* **Entrée** : heure d’arrivée ;
-* **Sortie** : heure de départ.
+**Important** : Rappel essentiel 
+
+Chaque salarié doit enregistrer deux pointages au cours de la journée :
+
+- Heure d’arrivée lors de l’entrée sur le site
+
+- Heure de départ à la sortie
+
+Ce processus garantit une gestion transparente et rigoureuse des temps de présence, facilitant le suivi et la conformité des données RH.
 
 
-**iii. Télécharger le rapport journalier des présences**
+**3. Téléchargement du rapport de présence**
 
-Vous pouvez générer un rapport quotidien des présences pour suivre l’activité de vos employés.
+Cette option permet d’exporter le rapport de présence sous forme de fichier, regroupant toutes les données de pointage des salariés pour la période sélectionnée. Le rapport inclut les horaires d’arrivée et de départ, les absences, les retards et toute information utile au suivi du temps de travail.
 
-1. Sélectionnez le jour pour lequel vous souhaitez obtenir le rapport.  
-2. Cliquez sur le bouton **Exporter**.
+* Sélectionnez le jour pour lequel vous souhaitez obtenir le rapport.  
+* Cliquez sur le bouton **Exporter**.
 
 .. image:: ../images/image6.png
 
-3. Le fichier Excel contenant les présences de tous les employés pour la journée choisie sera automatiquement téléchargé.
+* Le fichier Excel ou CSV regroupant les présences de tous les employés pour la journée sélectionnée sera téléchargé automatiquement, prêt à être consulté ou analysé.
 
 .. image:: ../images/image7.png
 
 **Structure du fichier** :
 
-* **Employé** : nom de l’employé ;
-* **Entrée / Sortie** : heures de pointage ;
+* **Employé** : nom complet de l’employé ;
+* **Entrée / Sortie** : heures de pointage correspondantes ;
 * **Site** : lieu du pointage ;
-* **En retard de** : durée du retard éventuel ;
-* **Type entrée / sortie** : Maniere dont le pointage s'effectue ;
+* **En retard de** : durée éventuelle du retard ;
+* **Type entrée / sortie** : mode de réalisation du pointage (manuel, automatique)
 
 
-**iv. Visualiser les statistiques journalières des présences**
+**4. Consultation du reporting global**
+
+Cette fonctionnalité offre une vue consolidée des données de présence des employés sur une période donnée. Elle permet de suivre les heures d’arrivée et de départ, les retards et absences, offrant ainsi un tableau de bord complet pour le pilotage des ressources humaines.
 
 .. image:: ../images/image8.png
 
-Vous pouvez consulter :
+Vous pouvez aussi faire une recherche à partir du nom de l’employé, filtrer par le site, et basculer entre les pages en utilisant le menu de pagination.
 
-* Le nombre d’employés arrivés à l’heure ;
-* Le nombre d’employés en retard ;
-* Les pourcentages de présence, de retard et de ponctualité, affichés dans la partie droite du tableau de bord.
-
-
-**v. Voir les détails sur les présences**
+**5. Voir les détails sur les présences**
 
 .. image:: ../images/image9.png
 
-Les données affichées reprennent les colonnes du rapport Excel : heures d’arrivée et de départ, site, retard, heures supplémentaires et solde.
-
-Vous pouvez aussi utiliser les options suivantes pour faire une recherche à partir du nom de l’employé, filtrer par le site, et basculer entre les pages en utilisant le menu de pagination.
+Cette fonctionnalité permet d’accéder aux informations précises sur les présences des employés. Elle offre une vision granulaire pour analyser la ponctualité et l’assiduité de chaque salarié, facilitant ainsi la gestion opérationnelle et le suivi rigoureux des temps de travail au sein de l’entreprise.
 
 
-**vi. Visualiser le reporting**
+*Visualiser le reporting*
 
-Le reporting permet d’analyser les tendances de présence des employés sur une période étendue (mois, trimestre, année). Contrairement au tableau de bord journalier, cette vue fournit une synthèse globale pour aider à évaluer la ponctualité et l’assiduité au niveau de l’entreprise ou des départements.
+Elle consiste à présenter les données collectées sous forme claire et synthétique, souvent à travers des tableaux de bord, graphiques ou indicateurs clés (KPIs). Cette présentation facilite l’analyse des tendances de présence, l’identification des écarts par rapport aux horaires prévus, et le suivi de la conformité aux règles internes. 
 
 .. image:: ../images/image101.png
 
-3. Sélectionnez la période souhaitée (**mois, trimestre, année**) à l’aide des filtres disponibles.
 
 
 Paramétrer sa plateforme
 ===================================
 
-La configuration initiale est **réservée aux utilisateurs disposant du rôle d’Administrateur**.
-Elle permet de définir les éléments essentiels de l’entreprise :
+La configuration initiale de la plateforme est réservée aux utilisateurs disposant d’un rôle administrateur. Elle permet de définir les sites, les horaires de travail, les départements ainsi que les postes, garantissant ainsi une organisation claire et personnalisée des paramètres essentiels à la gestion des présences.
 
-* **Sites**
-* **Horaires de travail**
-* **Départements**
-* **Postes**
-
-Toutes ces options sont accessibles depuis l’**onglet Paramètres** de la plateforme.
+Pour y acceder, il suffit de cliquet sur l’onglet **Configurations** de la plateforme.
 
 
-**i. Ajouter les Sites**
+**1. Ajouter les sites**
 
-1. Pour ajouter un nouveau site, commencez par accéder à l’onglet Paramètres. Vous serez automatiquement dirigé vers le sous-onglet Sites. Ensuite, cliquez sur le bouton Ajouter un site pour créer et configurer un nouveau site au sein de votre entreprise.
+Pour ajouter un nouveau site, depuis l'onglet **Configurations**, puis **Ajouter un site** 
 
 .. image:: ../images/image12.png 
 
-2. Une boîte de dialogue s’ouvre. Renseignez les informations suivantes :
 
-* **Nom du site** ;
-* **Numéro de téléphone** (utilisé pour l’intégration WhatsApp du pointage) ;
-* **Adresse du site** ;
+Une boîte de dialogue s’ouvre. Renseignez les informations suivantes :
+
+* **Nom du site** 
+* **Numéro de téléphone** (utilisé pour l’intégration WhatsApp du pointage) 
+* **Adresse du site** 
 * **Coordonnées géographiques** (cliquez sur **Obtenir la localisation**, en veillant à activer la géolocalisation sur votre appareil).
 
 .. image:: ../images/image13.png
 
-3. Cliquez sur **Suivant** pour définir les horaires de travail :
+
+Cliquez sur **Suivant** pour définir les horaires de travail :
 
 * Sélectionnez les **jours ouvrables** ;
 * Indiquez les **heures d’ouverture et de fermeture** (ex. : 08h30 – 17h30).
 
 .. image:: ../images/image14.png
 
-4. Cliquez sur **Valider** pour finaliser.
+
+Cliquez sur **Valider** pour finaliser.
 
 Une fois validé, un **QR Code** est automatiquement généré. Il sert de pointage pour les employés sur le site concerné.
 
 .. image:: ../images/image15.png
 
-**Conseil** : avant impression ou diffusion, testez le QR Code pour vérifier qu’il redirige bien vers le numéro WhatsApp configuré.
+
+**Conseil** : Avant toute impression ou diffusion, veillez à tester le QR Code afin de vous assurer qu’il redirige correctement vers le numéro WhatsApp configuré.
 
 
-**ii. Visualiser et modifier un site**
 
-1. Toujours dans le sous-onglet **Sites**, consultez la liste des sites déjà créés.
+
+*Visualiser et modifier un site*
+
+Vous pouvez consulter la liste des sites déjà créés.
 
 .. image:: ../images/image16.png
 
-2. Pour modifier ou supprimer un site, cliquez sur **Éditer le site** :
 
-* Vous pouvez modifier le **nom**, le **numéro de téléphone**, les **coordonnées géographiques** et les **horaires** ;
-* Vous pouvez également **supprimer** un site si nécessaire.
+Vous pouvez éditer, supprimer ou télécharger le QR Code associé à un site en cliquant sur les trois points situés à droite du nom du site, comme illustré dans la capture ci-dessous.
 
-3. Pour télécharger le QR Code d’un site existant, cliquez sur **Télécharger** en bas de **Éditer un site**.
+.. image:: ../images/image161.png
 
 
-**iii. Configurer les horaires de travail**
+**2.Configurer les horaires de travail**
 
-1. Accédez au sous-onglet **Horaires** dans l’onglet **Paramètres**.  
-2. Sélectionnez le site concerné dans la liste déroulante.
+- Accédez au sous-onglet **Horaires** dans l’onglet **Paramètres**.  
+- Sélectionnez le site concerné dans la liste déroulante.
 
 .. image:: ../images/image17.png
 
-3. Modifiez les horaires comme souhaité (jours ouvrables, heures d’ouverture/fermeture).  
-4. Enregistrez vos modifications en cliquant sur **Valider**.
+- Modifiez les horaires comme souhaité (jours ouvrables, heures d’ouverture/fermeture).  
+- Enregistrez vos modifications en cliquant sur **Valider**.
 
 
-**iv. Configurer les départements**
+**3. Configurer les départements**
 
-1. Rendez-vous dans le sous-onglet **Département**.
+- Rendez-vous dans le sous-onglet **Départements**.
 
 .. image:: ../images/image18.png
 
-2. Vous pouvez :
-
-* Visualiser la liste des départements existants ;
-* **Modifier** le nom d’un département en utilisant le bouton **d’édition** ;
-* **Supprimer** un département en utilisant le bouton **d’édition**.
+- Vous pouvez visualiser la liste des départements existants, les modifier ou supprimer.
 
 
-**v. Configurer les postes**
+**4. Configurer les postes**
 
-1. Accédez au sous-onglet **Poste**.
+- Accédez au sous-onglet **Postes**.
 
 .. image:: ../images/image19.png
 
-2. Vous pouvez :
-
-* Visualiser tous les postes de l’entreprise ;
-* **Modifier** l’intitulé ou la description d’un poste ;
-* **Supprimer** un poste existant en utilisant le bouton d’édition.
+- Vous pouvez visualiser la liste des postes existants, les modifier ou supprimer.
 
 
 Gestion des employés
 ===========================
 
-Cela se fait sur l’onglet Employés.
+Depuis l’onglet **Employés**, la gestion de la présence débute par la création du profil de chaque employé, qui contient ses informations clés : identité, poste, département, horaires et sites d’affectation. Ce profil permet d’associer précisément les pointages effectués, assurant ainsi un suivi fiable et personnalisé des présences, retards et absences.
 
 .. image:: ../images/image20.png
 
 Sur cet onglet, on peut visualiser les employés enregistrés dans l’entreprise, ajouter un employé, modifier les informations d’un employé ou supprimer un employé.
 
 
-**i. Ajouter un employé**
+**1. Ajouter un employé**
 
 En cliquant sur le bouton **Ajouter un employé**, une boîte de dialogue va s’ouvrir et vous allez renseigner le nom de l’employé, son numéro de téléphone, l’adresse mail, le poste et le département de l’employé.
 
@@ -232,23 +222,24 @@ En cliquant sur le bouton **Ajouter un employé**, une boîte de dialogue va s�
 Attention : pour le numéro de téléphone, il faut se rassurer de renseigner le numéro tel qu’il est renseigné sur WhatsApp (par exemple, les numéros sans 6 comme 23789898989 et les numéros avec 6 tels que 237689898989).
 
 
-**ii. Visualiser, modifier et supprimer un employé**
+**2. Visualiser, modifier et supprimer un employé**
 
-Tout se passe exactement comme dans les autres cas. À partir du bouton d’édition, vous pouvez choisir soit l’option de modification, soit celle de suppression selon ce que vous voulez faire.
+Depuis l’onglet Employés, vous pouvez modifier ou supprimer un employé facilement.
 
 .. image:: ../images/image22.png
+
 
 Gestion des comptes
 =======================
 
-Cela se fait dans l’onglet **Espace entreprise**. Seuls les utilisateurs qui ont le rôle d’Admin ou d’account manager peuvent voir cet onglet.
+Elle se fait dans l’onglet **Espace entreprise**. Seuls les utilisateurs qui ont le rôle d’Admin ou d’account manager peuvent voir cet onglet.
 
 .. image:: ../images/image23.png
 
 Sur cette section, il y a deux principales fonctionnalités : Ajouter une nouvelle société et Ajouter un utilisateur.
 
 
-**i. Ajouter une Société**
+**1. Ajouter une Société**
 
 Cette fonctionnalité vous permet de créer une nouvelle société à qui vous souhaitez vendre l’outil de pointage. Vous devez ajouter la société ici et ajouter un utilisateur qui va gérer cette société.
 
@@ -262,7 +253,7 @@ En cliquant sur le bouton **Ajouter une société**, une boîte de dialogue va s
 Il faut renseigner le nom de la compagnie, le nom d’un responsable de la compagnie, l’adresse mail et le téléphone de la société ou du responsable d’une société, puis cliquer sur le bouton de validation pour terminer la création de la société. Vous ne pouvez pas créer deux sociétés avec les mêmes numéros de téléphone.
 
 
-**ii. Visualiser, modifier, supprimer les sociétés.**
+**2. Visualiser, modifier, supprimer les sociétés.**
 
 .. image:: ../images/image25.png
 
@@ -271,7 +262,7 @@ Lorsque vous créez une nouvelle société, elle s’ajoute automatiquement dans
 NB : Si vous avez le rôle d’Account-Manager, vous ne pouvez voir et modifier que les sociétés que vous avez ajoutées. Donc, vous ne pouvez pas modifier une société ajoutée par l’administrateur ou par un autre utilisateur avec le rôle Account-Manager.
 
 
-**iii. Ajouter un utilisateur**
+**3. Ajouter un utilisateur**
 
 En général, lorsque vous créez une société, il faut ajouter un utilisateur de cette société qui va gérer la société en question. Et vous devez lui donner le rôle d’Admin.
 
@@ -286,7 +277,7 @@ Cela va ouvrir une boîte de dialogue et vous allez devoir renseigner les diffé
 Ce sera à vous d’envoyer ces identifiants à l’utilisateur en question pour qu’il puisse accéder à la plateforme pour gérer son entreprise. Il s’agit notamment de l’adresse mail et du mot de passe. Tout utilisateur a besoin de ces deux informations pour se connecter à la plateforme.
 
 
-**i. Visualiser, modifier, supprimer un utilisateur.**
+*Visualiser, modifier, supprimer un utilisateur.*
 
 .. image:: ../images/image28.png
 
