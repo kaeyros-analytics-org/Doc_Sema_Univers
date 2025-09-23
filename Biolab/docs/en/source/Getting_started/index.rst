@@ -1,0 +1,36 @@
+To start using **BIOLAB**, you must have an **account**  and **log in securely**.
+
+
+Create Account
+===============
+
+* Click on **"Register"** if you don't already have an **account**.
+
+.. image:: ../images/image0EN.png
+
+
+
+
+* **Fill out the form** with your **personal information**: **name**, **email**, **password**, etc.
+
+* Once **validated**, your **account** is created and you can proceed to **login**.
+
+
+
+Login
+======
+
+* Go to the **login page** and enter your **email** and **password**.
+
+* You will receive an **OTP (One Time Password)** by **email**.
+
+* This **code** is valid for **5 minutes**.
+
+* **Enter it** to complete the **login**.
+
+.. image:: ../images/image1EN.png
+
+
+
+
+* After this, you will be redirected to your **dashboard** and can begin using the **platform**.

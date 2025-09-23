@@ -1,0 +1,23 @@
+Running Sphinx v7.1.2
+making output directory... done
+building [mo]: targets for 0 po files that are out of date
+writing output... 
+building [html]: targets for 5 source files that are out of date
+updating environment: [new config] 5 added, 0 changed, 0 removed
+[2Kreading sources... [ 20%] Config_guide/index[2Kreading sources... [ 40%] Getting_started/index[2Kreading sources... [ 60%] Platform_use/index[2Kreading sources... [ 80%] Tracking/index[2Kreading sources... [100%] index
+looking for now-outdated files... none found
+pickling environment... done
+checking consistency... done
+preparing documents... done
+copying assets... copying static files... done
+copying extra files... done
+done
+[2Kwriting output... [ 20%] Config_guide/index[2Kwriting output... [ 40%] Getting_started/index[2Kwriting output... [ 60%] Platform_use/index[2Kwriting output... [ 80%] Tracking/index[2Kwriting output... [100%] index
+generating indices... genindex done
+writing additional pages... search done
+[2Kcopying images... [  3%] images/image15EN.png[2Kcopying images... [  7%] images/image16EN.png[2Kcopying images... [ 10%] images/image17EN.png[2Kcopying images... [ 13%] images/image18EN.png[2Kcopying images... [ 17%] images/image19EN.png[2Kcopying images... [ 20%] images/image20EN.png[2Kcopying images... [ 23%] images/image21EN.png[2Kcopying images... [ 27%] images/image22EN.png[2Kcopying images... [ 30%] images/image23EN.png[2Kcopying images... [ 33%] images/image24EN.png[2Kcopying images... [ 37%] images/image25EN.png[2Kcopying images... [ 40%] images/image26EN.png[2Kcopying images... [ 43%] images/image27EN.png[2Kcopying images... [ 47%] images/image28EN.png[2Kcopying images... [ 50%] images/image29EN.png[2Kcopying images... [ 53%] images/image0EN.png[2Kcopying images... [ 57%] images/image1EN.png[2Kcopying images... [ 60%] images/image2EN.png[2Kcopying images... [ 63%] images/image3EN.png[2Kcopying images... [ 67%] images/image5EN.png[2Kcopying images... [ 70%] images/image6EN.png[2Kcopying images... [ 73%] images/image7EN.png[2Kcopying images... [ 77%] images/image8EN.png[2Kcopying images... [ 80%] images/image9EN.png[2Kcopying images... [ 83%] images/image10EN.png[2Kcopying images... [ 87%] images/image12EN.png[2Kcopying images... [ 90%] images/image13EN.png[2Kcopying images... [ 93%] images/image11EN.png[2Kcopying images... [ 97%] images/image14EN.png[2Kcopying images... [100%] images/image30EN.png
+dumping search index in English (code: en)... done
+dumping object inventory... done
+build succeeded.
+
+The HTML pages are in build/html_en.

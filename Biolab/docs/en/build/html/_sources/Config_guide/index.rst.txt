@@ -1,0 +1,148 @@
+This section allows you to **customize your profile** and manage **advanced system features**.
+
+User Profile
+=============
+
+.. image:: ../images/image15EN.png
+
+
+
+
+* **Edit your personal information**: **name**, **phone number**, **profile picture**.
+
+* **Change your password** for added **security**.
+
+* **Log out** when finished.
+
+
+
+Lab Availability
+================
+
+.. image:: ../images/image16EN.png
+
+
+
+
+* **View** the **opening** and **closing schedule**.
+
+* **Download** the schedule as an **Excel file**.
+
+* **Add unavailabilities** to indicate **days** or **times** that are **unavailable**.
+
+.. image:: ../images/image17EN.png
+
+
+
+
+Exam Types
+===========
+
+.. image:: ../images/image18EN.png
+
+
+
+
+* **Create a new exam type**.
+
+.. image:: ../images/image19EN.png
+
+
+
+
+* **Search** and **view** existing **types**.
+
+* **Export** the list to **Excel**.
+
+
+
+System Permissions
+===================
+
+.. image:: ../images/image20EN.png
+
+
+
+
+* **Create new permissions** to manage who can access which **features**.
+
+.. image:: ../images/image21EN.png
+
+
+
+
+* **Enable** or **disable permissions**.
+
+* **Export permissions** to **Excel** for **tracking** or **reporting**.
+
+
+
+System Roles
+=============
+
+.. image:: ../images/image22EN.png
+
+
+
+
+* **Create** and **manage roles** to organize **users** by **function**.
+
+.. image:: ../images/image23EN.png
+
+
+
+
+* **Export** the list of **roles** to **Excel**.
+
+
+
+Users
+======
+
+.. image:: ../images/image24EN.png
+
+
+
+
+* **Create a new user**.
+
+.. image:: ../images/image25EN.png
+
+
+
+
+* **Edit** or **delete** an existing **user**.
+
+* **Export** the list of **users** to **Excel**.
+
+
+
+Laboratory Agent Profiles
+===========================
+
+.. image:: ../images/image26EN.png
+
+
+
+
+* **Create** and **manage agent profiles** to assign **roles** and **responsibilities**.
+
+.. image:: ../images/image27EN.png
+
+
+
+
+System Tests
+==============
+
+.. image:: ../images/image28EN.png
+
+
+
+
+* **Create** and **manage all tests** available in the **system** for the **laboratory**.
+
+.. image:: ../images/image29EN.png
+
+
+

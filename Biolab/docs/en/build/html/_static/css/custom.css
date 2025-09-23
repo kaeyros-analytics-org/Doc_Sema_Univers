@@ -1,0 +1,16 @@
+/* Justifier tous les paragraphes */
+.rst-content p,
+.document p,
+.body p,
+.content p {
+    text-align: justify;
+    text-justify: inter-word;
+    hyphens: auto;
+    -webkit-hyphens: auto;
+    -ms-hyphens: auto;
+}
+
+/* Garder code et tableaux alignés à gauche */
+pre, code, .highlight, table, th, td {
+    text-align: left !important;
+}

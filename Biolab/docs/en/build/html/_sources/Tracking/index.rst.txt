@@ -1,0 +1,17 @@
+Tracking and History
+=====================
+
+**BIOLAB** keeps track of all **actions taken** to ensure **security** and **transparency**.
+
+**Activities**: View all **actions** taken on the **platform**.
+
+.. image:: ../images/image30EN.png
+
+
+
+
+* **Creations**
+* **Modifications**
+* **Deletions**
+
+This section allows you to **monitor user activity** and ensure **complete tracking**.
