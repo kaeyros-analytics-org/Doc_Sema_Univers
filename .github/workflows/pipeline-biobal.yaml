@@ -38,7 +38,7 @@ jobs:
           
       - name: Build the Docker image for frontend
         run: |
-          cd pointage && \
+          cd biolab && \
           # rm -f renv.lock       
           docker build -t ${{ env.FRONTEND_IMAGE_REPOSITORY }}:${{ env.IMAGE_TAG }} .
 
