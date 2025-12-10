@@ -26,6 +26,7 @@ RUN . venv/bin/activate && sphinx-build -b html docs/fr/source build/html/fr
 FROM nginx:alpine
 RUN rm -rf /usr/share/nginx/html/*
 COPY --from=builder /app/build/html /usr/share/nginx/html
+COPY --from=builder /app/build/html/fr /usr/share/nginx/html
 
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
