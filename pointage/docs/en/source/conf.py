@@ -9,7 +9,7 @@ sys.path.insert(0, os.path.abspath('..'))
 
 # -- Project information -----------------------------------------------------
 
-project = 'Pointage En'
+project = 'Pointage'
 copyright = '2025, Kaeyros Analytics'
 author = 'Kaeyros Analytics'
 release = '1.0'

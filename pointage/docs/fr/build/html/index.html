@@ -1,159 +1,682 @@
-
-
-<!DOCTYPE html>
-<html class="writer-html5" lang="fr">
+<!doctype html>
+<html lang="fr">
 <head>
-  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Pointage Fr documentation &mdash; Documentation Pointage Fr 1.0</title>
-      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
-      <link rel="stylesheet" type="text/css" href="_static/css/custom.css?v=4816a4b2" />
+  <title>Pointage — Documentation 1.0</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Sora:wght@600;700&display=swap" rel="stylesheet" />
+  <style>
+    /* ── Variables ─────────────────────────────────────────── */
+    :root {
+      --blue-900: #0f2d57;
+      --blue-700: #1a4d8f;
+      --blue-600: #1e5fad;
+      --blue-500: #2471c8;
+      --blue-100: #ddeeff;
+      --blue-50:  #f0f6ff;
+      --accent:   #f0a500;
+      --text:     #1c2b3a;
+      --text-light: #4a5e72;
+      --border:   #d4e3f5;
+      --white:    #ffffff;
+      --sidebar-w: 280px;
+      --radius:   8px;
+    }
 
-  
-      <script src="_static/jquery.js?v=5d32c60e"></script>
-      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js?v=bd10cbeb"></script>
-      <script src="_static/doctools.js?v=888ff710"></script>
-      <script src="_static/sphinx_highlight.js?v=4825356b"></script>
-      <script src="_static/translations.js?v=d99ca74e"></script>
-    <script src="_static/js/theme.js"></script>
-    <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Recherche" href="search.html" />
-    <link rel="next" title="Présentation générale de l’outil de pointage" href="General_presentation/index.html" /> 
+    /* ── Reset & Base ──────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', sans-serif;
+      font-size: 15px;
+      color: var(--text);
+      background: #f5f8fc;
+      display: flex;
+      min-height: 100vh;
+    }
+    a { color: var(--blue-600); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* ── Overlay (mobile) ──────────────────────────────────── */
+    .sidebar-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.45);
+      z-index: 98;
+      opacity: 0;
+      transition: opacity 0.25s;
+      pointer-events: none;
+    }
+    .sidebar-overlay.active {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    /* ── Sidebar ───────────────────────────────────────────── */
+    .sidebar {
+      width: var(--sidebar-w);
+      min-height: 100vh;
+      background: var(--blue-900);
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+      z-index: 100;
+    }
+    .sidebar-logo {
+      padding: 24px 20px 20px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    .sidebar-logo a {
+      font-family: 'Sora', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--white);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+    .sidebar-logo a span.logo-icon {
+      width: 32px; height: 32px;
+      background: var(--blue-500);
+      border-radius: 6px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px;
+    }
+    .sidebar-search {
+      padding: 14px 16px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .sidebar-search input {
+      width: 100%;
+      padding: 8px 12px;
+      border-radius: 6px;
+      border: 1px solid rgba(255,255,255,0.15);
+      background: rgba(255,255,255,0.08);
+      color: var(--white);
+      font-size: 13px;
+      outline: none;
+    }
+    .sidebar-search input::placeholder { color: rgba(255,255,255,0.4); }
+    .sidebar-nav { padding: 12px 0 24px; flex: 1; }
+    .nav-section-title {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+      padding: 16px 20px 6px;
+    }
+    .nav-item a {
+      display: block;
+      padding: 7px 20px;
+      font-size: 13px;
+      color: rgba(255,255,255,0.75);
+      transition: background 0.15s, color 0.15s;
+      border-left: 3px solid transparent;
+    }
+    .nav-item a:hover {
+      background: rgba(255,255,255,0.06);
+      color: var(--white);
+      text-decoration: none;
+    }
+    .nav-item.active a {
+      color: var(--white);
+      border-left-color: var(--accent);
+      background: rgba(255,255,255,0.08);
+      font-weight: 600;
+    }
+
+    /* ── Main content ──────────────────────────────────────── */
+    .main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+
+    /* ── Top bar ───────────────────────────────────────────── */
+    .topbar {
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      padding: 0 32px;
+      height: 52px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      color: var(--text-light);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    .topbar a { color: var(--text-light); }
+    .topbar .sep { color: #b0bec9; margin: 0 2px; }
+    .topbar .current { color: var(--text); font-weight: 500; }
+
+    /* ── Hamburger button ──────────────────────────────────── */
+    .btn-menu {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      margin-right: 8px;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      border-radius: 6px;
+      padding: 0;
+      flex-shrink: 0;
+      transition: background 0.15s;
+    }
+    .btn-menu:hover { background: var(--blue-50); }
+    .btn-menu svg { display: block; }
+
+    /* ── Hero ──────────────────────────────────────────────── */
+    .hero {
+      background: linear-gradient(135deg, var(--blue-900) 0%, var(--blue-700) 55%, var(--blue-500) 100%);
+      padding: 52px 48px 48px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
+      pointer-events: none;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.2);
+      color: rgba(255,255,255,0.9);
+      font-size: 12px;
+      font-weight: 500;
+      padding: 4px 12px;
+      border-radius: 20px;
+      margin-bottom: 20px;
+      letter-spacing: 0.03em;
+    }
+    .hero-badge::before { content: '●'; color: #4cde9a; font-size: 8px; }
+    .hero h1 {
+      font-family: 'Sora', sans-serif;
+      font-size: 34px;
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1.2;
+      margin-bottom: 12px;
+      position: relative;
+    }
+    .hero-sub {
+      font-size: 16px;
+      color: rgba(255,255,255,0.7);
+      margin-bottom: 28px;
+      max-width: 560px;
+      line-height: 1.6;
+      position: relative;
+    }
+    .hero-desc {
+      background: rgba(255,255,255,0.1);
+      border-left: 3px solid var(--accent);
+      border-radius: 0 6px 6px 0;
+      padding: 14px 18px;
+      color: rgba(255,255,255,0.85);
+      font-size: 14px;
+      line-height: 1.6;
+      max-width: 640px;
+      position: relative;
+    }
+    .hero-meta {
+      display: flex;
+      gap: 24px;
+      margin-top: 28px;
+      position: relative;
+    }
+    .hero-meta-item {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      color: rgba(255,255,255,0.65);
+      font-size: 13px;
+    }
+    .hero-meta-item .icon {
+      width: 28px; height: 28px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 6px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px;
+    }
+
+    /* ── Content area ──────────────────────────────────────── */
+    .content {
+      padding: 40px 48px 60px;
+      max-width: 900px;
+    }
+
+    /* ── Section heading ───────────────────────────────────── */
+    .section-heading {
+      font-family: 'Sora', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--blue-600);
+      margin-bottom: 16px;
+      margin-top: 40px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .section-heading::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* ── Accordion ─────────────────────────────────────────── */
+    .accordion { display: flex; flex-direction: column; gap: 10px; }
+
+    .acc-item {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: box-shadow 0.2s;
+    }
+    .acc-item:hover { box-shadow: 0 2px 12px rgba(36,113,200,0.08); }
+
+    .acc-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 16px 20px;
+      cursor: pointer;
+      user-select: none;
+      list-style: none;
+    }
+    .acc-header::-webkit-details-marker { display: none; }
+
+    .acc-icon {
+      width: 36px; height: 36px;
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+    .acc-icon.blue   { background: var(--blue-50);  }
+    .acc-icon.green  { background: #f0faf4; }
+    .acc-icon.orange { background: #fff8ee; }
+
+    .acc-title {
+      flex: 1;
+      font-weight: 600;
+      font-size: 15px;
+      color: var(--text);
+    }
+    .acc-count {
+      font-size: 12px;
+      color: var(--text-light);
+      background: var(--blue-50);
+      border: 1px solid var(--border);
+      padding: 2px 8px;
+      border-radius: 12px;
+    }
+    .acc-arrow {
+      font-size: 12px;
+      color: var(--text-light);
+      transition: transform 0.2s;
+    }
+    details[open] .acc-arrow { transform: rotate(180deg); }
+
+    .acc-body {
+      border-top: 1px solid var(--border);
+      padding: 8px 0 12px;
+    }
+    .acc-link {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 20px 9px 70px;
+      font-size: 14px;
+      color: var(--text-light);
+      transition: background 0.12s, color 0.12s;
+      border-left: 3px solid transparent;
+    }
+    .acc-link:hover {
+      background: var(--blue-50);
+      color: var(--blue-600);
+      border-left-color: var(--blue-500);
+      text-decoration: none;
+    }
+    .acc-link::before {
+      content: '';
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: var(--border);
+      flex-shrink: 0;
+      transition: background 0.12s;
+    }
+    .acc-link:hover::before { background: var(--blue-500); }
+
+    /* ── Footer ────────────────────────────────────────────── */
+    .page-footer {
+      margin-top: auto;
+      padding: 20px 48px;
+      border-top: 1px solid var(--border);
+      background: var(--white);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      color: var(--text-light);
+    }
+    .page-footer a { color: var(--text-light); }
+    .btn-next {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--blue-600);
+      color: var(--white) !important;
+      padding: 9px 18px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 500;
+      text-decoration: none !important;
+      transition: background 0.15s;
+    }
+    .btn-next:hover { background: var(--blue-700); }
+
+    /* ── Responsive ────────────────────────────────────────── */
+    @media (max-width: 768px) {
+
+      /* Afficher le bouton hamburger */
+      .btn-menu { display: flex; }
+
+      /* Overlay visible */
+      .sidebar-overlay { display: block; }
+
+      /* Sidebar : toujours fixed sur mobile, cachée par défaut */
+      .sidebar {
+        position: fixed !important;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        min-height: 100vh;
+        transform: translateX(-100%);
+        transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: none;
+      }
+
+      /* Sidebar ouverte */
+      .sidebar.open {
+        transform: translateX(0) !important;
+        box-shadow: 6px 0 32px rgba(0,0,0,0.22);
+      }
+
+      /* Le main prend toute la largeur */
+      .main { width: 100%; }
+
+      .topbar {
+        padding: 0 16px;
+      }
+
+      .hero {
+        padding: 32px 20px 28px;
+      }
+      .hero h1 { font-size: 24px; }
+      .hero-sub { font-size: 14px; }
+
+      .content {
+        padding: 24px 16px 40px;
+      }
+
+      .page-footer {
+        padding: 16px;
+        flex-direction: column;
+        gap: 12px;
+        text-align: center;
+      }
+    }
+
+    /* ── Language switcher ─────────────────────────────────── */
+    .lang-switch {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+    }
+    .lang-switch a {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 12px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      border: 1.5px solid var(--border);
+      color: var(--text-light);
+      background: var(--white);
+      text-decoration: none;
+      transition: background 0.15s, border-color 0.15s, color 0.15s;
+      letter-spacing: 0.02em;
+    }
+    .lang-switch a:hover {
+      background: var(--blue-50);
+      border-color: var(--blue-500);
+      color: var(--blue-600);
+      text-decoration: none;
+    }
+    .lang-switch .flag { font-size: 14px; }
+  </style>
 </head>
+<body>
 
-<body class="wy-body-for-nav"> 
-  <div class="wy-grid-for-nav">
-    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
-      <div class="wy-side-scroll">
-        <div class="wy-side-nav-search" >
+  <!-- Overlay mobile -->
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
-          
-          
-          <a href="#" class="icon icon-home">
-            Pointage Fr
-          </a>
-<div role="search">
-  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Rechercher docs" aria-label="Rechercher docs" />
-    <input type="hidden" name="check_keywords" value="yes" />
-    <input type="hidden" name="area" value="default" />
-  </form>
-</div>
-        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption" role="heading"><span class="caption-text">Présentation générale</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="General_presentation/index.html">Présentation générale de l’outil de pointage</a></li>
-</ul>
-<p class="caption" role="heading"><span class="caption-text">Fonctionnalités de la plateforme</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="Platform_features/index.html">Aperçu</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Platform_features/index.html#connexion-a-la-plateforme">Connexion à la plateforme</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Platform_features/index.html#journaux-de-presence">Journaux de présence</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Platform_features/index.html#parametrer-sa-plateforme">Paramétrer sa plateforme</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Platform_features/index.html#gestion-des-employes">Gestion des employés</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Platform_features/index.html#gestion-des-comptes">Gestion des comptes</a></li>
-</ul>
-<p class="caption" role="heading"><span class="caption-text">Guide pratique de configuration</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="Config_guide/index.html">Introduction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Config_guide/index.html#etape-1-connexion-a-la-plateforme-dediee">Étape 1 : Connexion à la plateforme dédiée.</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Config_guide/index.html#etape-2-parametrage-de-lentreprise">Étape 2 : Paramétrage de l’entreprise.</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Config_guide/index.html#etape-3-ajout-dutilisateurs-supplementaires">Étape 3 : Ajout d’utilisateurs supplémentaires.</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Config_guide/index.html#etape-4-enregistrement-des-employes">Étape 4 : Enregistrement des employés.</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Config_guide/index.html#etape-5-mise-en-place-sur-site-et-phase-de-test">Étape 5 : Mise en place sur site et phase de test.</a></li>
-</ul>
+  <!-- ── Sidebar ── -->
+  <nav class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+      <a href="#">
+        <span>
+          <img src="img/sema-pointage-logo.png" alt="sema-pointage-logo" />
+        </span>
+      </a>
+    </div>
+    <div class="sidebar-search">
+      <input type="text" placeholder="Rechercher dans la doc…" />
+    </div>
+    <div class="sidebar-nav">
 
-        </div>
+      <div class="nav-section-title">Présentation générale</div>
+      <div class="nav-item">
+        <a href="General_presentation/index.html">Présentation générale</a>
       </div>
-    </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
-          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="#">Pointage Fr</a>
-      </nav>
+      <div class="nav-section-title">Fonctionnalités</div>
+      <div class="nav-item active"><a href="Platform_features/index.html">Aperçu</a></div>
+      <div class="nav-item"><a href="Platform_features/index.html#connexion-a-la-plateforme">Connexion à la plateforme</a></div>
+      <div class="nav-item"><a href="Platform_features/index.html#journaux-de-presence">Journaux de présence</a></div>
+      <div class="nav-item"><a href="Platform_features/index.html#tableau-de-bord">Tableau de Bord</a></div>
+      <div class="nav-item"><a href="Platform_features/index.html#employes">Employés</a></div>
+      <div class="nav-item"><a href="Platform_features/index.html#absences">Absences</a></div>
+      <div class="nav-item"><a href="Platform_features/index.html#departements">Départements</a></div>
+      <div class="nav-item"><a href="Platform_features/index.html#sites-qr-codes">Sites et codes QR</a></div>
+      <div class="nav-item"><a href="Platform_features/index.html#rapports">Rapports</a></div>
+      <div class="nav-item"><a href="Platform_features/index.html#configurations">Configurations</a></div>
+      <div class="nav-item"><a href="Platform_features/index.html#programmes">Programmes</a></div>
 
-      <div class="wy-nav-content">
-        <div class="rst-content">
-          <div role="navigation" aria-label="Page navigation">
-  <ul class="wy-breadcrumbs">
-      <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">Pointage Fr documentation</li>
-      <li class="wy-breadcrumbs-aside">
-            <a href="_sources/index.rst.txt" rel="nofollow"> Afficher la source de la page</a>
-      </li>
-  </ul>
-  <hr/>
-</div>
-          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
-           <div itemprop="articleBody">
-             
-  <section id="pointage-fr-documentation">
-<h1>Pointage Fr documentation<a class="headerlink" href="#pointage-fr-documentation" title="Lien permanent vers cette rubrique"></a></h1>
-<p><strong>Outil de pointage</strong></p>
-<p><strong>Guide utilisateur</strong></p>
-<img alt="_images/image1.png" src="_images/image1.png" />
-<p>Le pointage est le processus qui consiste à enregistrer les heures d’arrivée et de départ des employés sur leur lieu de travail, afin de suivre efficacement leur présence.</p>
-<div class="toctree-wrapper compound">
-<p class="caption" role="heading"><span class="caption-text">Présentation générale</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="General_presentation/index.html">Présentation générale de l’outil de pointage</a></li>
-</ul>
-</div>
-<div class="toctree-wrapper compound">
-<p class="caption" role="heading"><span class="caption-text">Fonctionnalités de la plateforme</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="Platform_features/index.html">Aperçu</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Platform_features/index.html#connexion-a-la-plateforme">Connexion à la plateforme</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Platform_features/index.html#journaux-de-presence">Journaux de présence</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Platform_features/index.html#parametrer-sa-plateforme">Paramétrer sa plateforme</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Platform_features/index.html#gestion-des-employes">Gestion des employés</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Platform_features/index.html#gestion-des-comptes">Gestion des comptes</a></li>
-</ul>
-</div>
-<div class="toctree-wrapper compound">
-<p class="caption" role="heading"><span class="caption-text">Guide pratique de configuration</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="Config_guide/index.html">Introduction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Config_guide/index.html#etape-1-connexion-a-la-plateforme-dediee">Étape 1 : Connexion à la plateforme dédiée.</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Config_guide/index.html#etape-2-parametrage-de-lentreprise">Étape 2 : Paramétrage de l’entreprise.</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Config_guide/index.html#etape-3-ajout-dutilisateurs-supplementaires">Étape 3 : Ajout d’utilisateurs supplémentaires.</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Config_guide/index.html#etape-4-enregistrement-des-employes">Étape 4 : Enregistrement des employés.</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Config_guide/index.html#etape-5-mise-en-place-sur-site-et-phase-de-test">Étape 5 : Mise en place sur site et phase de test.</a></li>
-</ul>
-</div>
-</section>
+      <div class="nav-section-title">Guide de configuration</div>
+      <div class="nav-item"><a href="Config_guide/index.html">Introduction</a></div>
+      <div class="nav-item"><a href="Config_guide/index.html#etape-1-connexion-a-la-plateforme-dediee">Étape 1 : Connexion</a></div>
+      <div class="nav-item"><a href="Config_guide/index.html#etape-2-configuration-des-parametres-de-base">Étape 2 : Paramètres de base</a></div>
+      <div class="nav-item"><a href="Config_guide/index.html#etape-3-ajout-dutilisateurs-supplementaires">Étape 3 : Utilisateurs</a></div>
+      <div class="nav-item"><a href="Config_guide/index.html#etape-4-enregistrement-des-employes">Étape 4 : Employés</a></div>
+      <div class="nav-item"><a href="Config_guide/index.html#etape-5-creation-des-programmes-de-travail">Étape 5 : Programmes</a></div>
+      <div class="nav-item"><a href="Config_guide/index.html#etape-6-mise-en-place-sur-site-et-phase-de-test">Étape 6 : Mise en place</a></div>
 
+    </div>
+  </nav>
 
-           </div>
-          </div>
-          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Pied de page">
-        <a href="General_presentation/index.html" class="btn btn-neutral float-right" title="Présentation générale de l’outil de pointage" accesskey="n" rel="next">Suivant <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+  <!-- ── Main ── -->
+  <div class="main">
+
+    <!-- Top bar -->
+    <div class="topbar">
+      <!-- Bouton hamburger (visible mobile uniquement) -->
+      <button class="btn-menu" id="btnMenu" aria-label="Ouvrir le menu">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect y="3" width="20" height="2" rx="1" fill="#4a5e72"/>
+          <rect y="9" width="20" height="2" rx="1" fill="#4a5e72"/>
+          <rect y="15" width="20" height="2" rx="1" fill="#4a5e72"/>
+        </svg>
+      </button>
+      <a href="#">🏠</a>
+      <span class="sep">›</span>
+      <span class="current">Pointage — Documentation</span>
+    
+      <div class="lang-switch"><a href="../../../en/build/html/index.html"><span class="flag">🇬🇧</span> English</a></div>
     </div>
 
-  <hr/>
-
-  <div role="contentinfo">
-    <p>&#169; Droits d'auteur 2025, Kaeyros Analytics.</p>
-  </div>
-
-  Compilé avec <a href="https://www.sphinx-doc.org/">Sphinx</a> en utilisant un
-    <a href="https://github.com/readthedocs/sphinx_rtd_theme">thème</a>
-    fourni par <a href="https://readthedocs.org">Read the Docs</a>.
-   
-
-</footer>
-        </div>
+    <!-- Hero -->
+    <div class="hero">
+      <div class="hero-badge">Version 1.0 &nbsp;·&nbsp; Kaeyros Analytics</div>
+      <h1>Documentation Pointage</h1>
+      <p class="hero-sub">Guide complet d'utilisation et de configuration de la solution de pointage.</p>
+      <div class="hero-desc">
+        Le pointage est le processus qui consiste à enregistrer les heures d'arrivée et de départ
+        des employés sur leur lieu de travail, afin de suivre efficacement leur présence.
+        Cette documentation couvre l'ensemble des fonctionnalités de la plateforme ainsi que
+        le guide de mise en place pas à pas.
       </div>
-    </section>
+    </div>
+
+    <!-- Content -->
+    <div class="content">
+
+      <div class="section-heading">Table des matières</div>
+
+      <div class="accordion">
+
+        <!-- Présentation générale -->
+        <details class="acc-item">
+          <summary class="acc-header">
+            <span class="acc-icon blue">📘</span>
+            <span class="acc-title">Présentation générale</span>
+            <span class="acc-count">1 page</span>
+            <span class="acc-arrow">▼</span>
+          </summary>
+          <div class="acc-body">
+            <a class="acc-link" href="General_presentation/index.html">Présentation générale de l'outil de pointage</a>
+          </div>
+        </details>
+
+        <!-- Fonctionnalités -->
+        <details class="acc-item" open>
+          <summary class="acc-header">
+            <span class="acc-icon blue">🖥️</span>
+            <span class="acc-title">Fonctionnalités de la plateforme</span>
+            <span class="acc-count">11 sections</span>
+            <span class="acc-arrow">▼</span>
+          </summary>
+          <div class="acc-body">
+            <a class="acc-link" href="Platform_features/index.html">Aperçu</a>
+            <a class="acc-link" href="Platform_features/index.html#connexion-a-la-plateforme">Connexion à la plateforme</a>
+            <a class="acc-link" href="Platform_features/index.html#journaux-de-presence">Journaux de présence</a>
+            <a class="acc-link" href="Platform_features/index.html#tableau-de-bord">Tableau de Bord</a>
+            <a class="acc-link" href="Platform_features/index.html#employes">Employés</a>
+            <a class="acc-link" href="Platform_features/index.html#absences">Absences</a>
+            <a class="acc-link" href="Platform_features/index.html#departements">Départements</a>
+            <a class="acc-link" href="Platform_features/index.html#sites-qr-codes">Sites et codes QR</a>
+            <a class="acc-link" href="Platform_features/index.html#rapports">Rapports</a>
+            <a class="acc-link" href="Platform_features/index.html#configurations">Configurations</a>
+            <a class="acc-link" href="Platform_features/index.html#programmes">Programmes</a>
+          </div>
+        </details>
+
+        <!-- Guide de configuration -->
+        <details class="acc-item">
+          <summary class="acc-header">
+            <span class="acc-icon orange">🛠️</span>
+            <span class="acc-title">Guide pratique de configuration</span>
+            <span class="acc-count">6 étapes</span>
+            <span class="acc-arrow">▼</span>
+          </summary>
+          <div class="acc-body">
+            <a class="acc-link" href="Config_guide/index.html">Introduction</a>
+            <a class="acc-link" href="Config_guide/index.html#etape-1-connexion-a-la-plateforme-dediee">Étape 1 : Connexion à la plateforme dédiée</a>
+            <a class="acc-link" href="Config_guide/index.html#etape-2-configuration-des-parametres-de-base">Étape 2 : Configuration des paramètres de base</a>
+            <a class="acc-link" href="Config_guide/index.html#etape-3-ajout-dutilisateurs-supplementaires">Étape 3 : Ajout d'utilisateurs supplémentaires</a>
+            <a class="acc-link" href="Config_guide/index.html#etape-4-enregistrement-des-employes">Étape 4 : Enregistrement des employés</a>
+            <a class="acc-link" href="Config_guide/index.html#etape-5-creation-des-programmes-de-travail">Étape 5 : Création des programmes de travail</a>
+            <a class="acc-link" href="Config_guide/index.html#etape-6-mise-en-place-sur-site-et-phase-de-test">Étape 6 : Mise en place sur site et phase de test</a>
+          </div>
+        </details>
+
+      </div>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="page-footer">
+      <span>© 2025 Kaeyros Analytics &nbsp;·&nbsp; Compilé avec <a href="https://www.sphinx-doc.org/">Sphinx</a></span>
+      <a href="General_presentation/index.html" class="btn-next">
+        Suivant &nbsp;›
+      </a>
+    </footer>
+
   </div>
+
   <script>
-      jQuery(function () {
-          SphinxRtdTheme.Navigation.enable(true);
-      });
-  </script> 
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('sidebarOverlay');
+    const btnMenu = document.getElementById('btnMenu');
+
+    function openSidebar() {
+      sidebar.classList.add('open');
+      overlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      overlay.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    function toggleSidebar() {
+      if (sidebar.classList.contains('open')) {
+        closeSidebar();
+      } else {
+        openSidebar();
+      }
+    }
+
+    btnMenu.addEventListener('click', function(e) {
+      e.stopPropagation();
+      toggleSidebar();
+    });
+
+    overlay.addEventListener('click', closeSidebar);
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeSidebar();
+    });
+
+    window.addEventListener('resize', function() {
+      if (window.innerWidth > 768) closeSidebar();
+    });
+  </script>
 
 </body>
 </html>
