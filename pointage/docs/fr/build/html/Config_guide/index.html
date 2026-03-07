@@ -40,58 +40,30 @@
     li { margin-bottom: 7px; line-height: 1.7; }
     li p { margin-bottom: 3px; }
 
-    /* ── Overlay (mobile) ──────────────────────────────────── */
+    /* ── Overlay (mobile) ── */
     .sidebar-overlay {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.45);
-      z-index: 98;
-      opacity: 0;
-      transition: opacity 0.25s;
-      pointer-events: none;
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,0.45); z-index: 98;
+      opacity: 0; transition: opacity 0.25s; pointer-events: none;
     }
-    .sidebar-overlay.active {
-      opacity: 1;
-      pointer-events: all;
-    }
+    .sidebar-overlay.active { opacity: 1; pointer-events: all; }
 
     /* ── Sidebar ── */
     .sidebar {
-      width: var(--sidebar-w);
-      min-height: 100vh;
+      width: var(--sidebar-w); min-height: 100vh;
       background: var(--blue-900);
-      display: flex;
-      flex-direction: column;
-      flex-shrink: 0;
-      position: sticky;
-      top: 0;
-      height: 100vh;
-      overflow-y: auto;
-      z-index: 100;
+      display: flex; flex-direction: column; flex-shrink: 0;
+      position: sticky; top: 0; height: 100vh; overflow-y: auto; z-index: 100;
     }
-    .sidebar-logo {
-      padding: 24px 20px 20px;
-      border-bottom: 1px solid rgba(255,255,255,0.1);
-    }
+    .sidebar-logo { padding: 24px 20px 20px; border-bottom: 1px solid rgba(255,255,255,0.1); }
     .sidebar-logo a {
-      font-family: 'Sora', sans-serif;
-      font-size: 18px; font-weight: 700;
-      color: var(--white);
-      display: flex; align-items: center; gap: 10px;
-      text-decoration: none;
-    }
-    .sidebar-logo .logo-icon {
-      width: 32px; height: 32px;
-      background: var(--blue-500);
-      border-radius: 6px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 16px;
+      font-family: 'Sora', sans-serif; font-size: 18px; font-weight: 700;
+      color: var(--white); display: flex; align-items: center; gap: 10px; text-decoration: none;
     }
     .sidebar-search { padding: 14px 16px; border-bottom: 1px solid rgba(255,255,255,0.08); }
     .sidebar-search input {
-      width: 100%; padding: 8px 12px;
-      border-radius: 6px; border: 1px solid rgba(255,255,255,0.15);
+      width: 100%; padding: 8px 12px; border-radius: 6px;
+      border: 1px solid rgba(255,255,255,0.15);
       background: rgba(255,255,255,0.08); color: var(--white);
       font-size: 13px; outline: none;
     }
@@ -99,22 +71,18 @@
     .sidebar-nav { padding: 12px 0 24px; flex: 1; }
     .nav-section-title {
       font-size: 10px; font-weight: 600; letter-spacing: 0.1em;
-      text-transform: uppercase; color: rgba(255,255,255,0.4);
-      padding: 16px 20px 6px;
+      text-transform: uppercase; color: rgba(255,255,255,0.4); padding: 16px 20px 6px;
     }
     .nav-item a {
-      display: block; padding: 7px 20px; font-size: 13px;
+      display: flex; align-items: center; gap: 8px;
+      padding: 7px 20px; font-size: 13px;
       color: rgba(255,255,255,0.75);
-      transition: background 0.15s, color 0.15s, border-color 0.15s;
-      border-left: 3px solid transparent;
+      transition: background 0.15s, color 0.15s; border-left: 3px solid transparent;
     }
+    .nav-item a svg { width: 15px; height: 15px; flex-shrink: 0; opacity: 0.6; }
     .nav-item a:hover { background: rgba(255,255,255,0.06); color: var(--white); text-decoration: none; }
-    .nav-item.active a {
-      color: var(--white);
-      border-left-color: var(--accent);
-      background: rgba(255,255,255,0.08);
-      font-weight: 600;
-    }
+    .nav-item.active a { color: var(--white); border-left-color: var(--accent); background: rgba(255,255,255,0.08); font-weight: 600; }
+    .nav-item.active a svg { opacity: 1; }
 
     /* ── Main ── */
     .main { flex: 1; display: flex; flex-direction: column; min-width: 0; }
@@ -127,25 +95,17 @@
       font-size: 13px; color: var(--text-light);
       position: sticky; top: 0; z-index: 10;
     }
-    .topbar a { color: var(--text-light); }
+    .topbar a { color: var(--text-light); display: flex; align-items: center; }
+    .topbar a svg { width: 16px; height: 16px; }
     .topbar .sep { color: #b0bec9; margin: 0 2px; }
     .topbar .current { color: var(--text); font-weight: 500; }
 
-    /* ── Hamburger button ──────────────────────────────────── */
+    /* ── Hamburger ── */
     .btn-menu {
-      display: none;
-      align-items: center;
-      justify-content: center;
-      width: 36px;
-      height: 36px;
-      margin-right: 8px;
-      border: none;
-      background: transparent;
-      cursor: pointer;
-      border-radius: 6px;
-      padding: 0;
-      flex-shrink: 0;
-      transition: background 0.15s;
+      display: none; align-items: center; justify-content: center;
+      width: 36px; height: 36px; margin-right: 8px;
+      border: none; background: transparent; cursor: pointer;
+      border-radius: 6px; padding: 0; flex-shrink: 0; transition: background 0.15s;
     }
     .btn-menu:hover { background: var(--blue-50); }
     .btn-menu svg { display: block; }
@@ -153,13 +113,10 @@
     /* ── Page header ── */
     .page-header {
       background: linear-gradient(135deg, var(--blue-900) 0%, var(--blue-700) 55%, var(--blue-500) 100%);
-      padding: 40px 48px 36px;
-      position: relative;
-      overflow: hidden;
+      padding: 40px 48px 36px; position: relative; overflow: hidden;
     }
     .page-header::before {
-      content: '';
-      position: absolute; inset: 0;
+      content: ''; position: absolute; inset: 0;
       background-image: radial-gradient(circle, rgba(255,255,255,0.04) 1px, transparent 1px);
       background-size: 28px 28px;
     }
@@ -169,58 +126,41 @@
       margin-bottom: 10px; position: relative;
     }
     .page-header h1 {
-      font-family: 'Sora', sans-serif; font-size: 28px;
-      font-weight: 700; color: var(--white);
-      line-height: 1.2; position: relative;
+      font-family: 'Sora', sans-serif; font-size: 28px; font-weight: 700;
+      color: var(--white); line-height: 1.2; position: relative;
     }
     .page-header .header-desc {
-      margin-top: 14px;
-      font-size: 14px; color: rgba(255,255,255,0.75);
-      line-height: 1.65;
-      border-left: 3px solid var(--accent);
-      padding-left: 14px;
-      position: relative;
-      max-width: 620px;
+      margin-top: 14px; font-size: 14px; color: rgba(255,255,255,0.75);
+      line-height: 1.65; border-left: 3px solid var(--accent);
+      padding-left: 14px; position: relative; max-width: 620px;
     }
 
-    /* ── Progress stepper ── */
+    /* ── Stepper ── */
     .stepper {
-      background: var(--white);
-      border-bottom: 1px solid var(--border);
-      padding: 20px 48px;
-      display: flex;
-      align-items: center;
-      gap: 0;
-      overflow-x: auto;
+      background: var(--white); border-bottom: 1px solid var(--border);
+      padding: 20px 48px; display: flex; align-items: center; gap: 0; overflow-x: auto;
     }
-    .step-pill {
-      display: flex; align-items: center; gap: 0; flex-shrink: 0;
-    }
+    .step-pill { display: flex; align-items: center; gap: 0; flex-shrink: 0; }
     .step-pill a {
       display: flex; align-items: center; gap: 8px;
-      padding: 8px 14px;
-      border-radius: 6px;
-      font-size: 12px; font-weight: 500;
-      color: var(--text-light);
-      text-decoration: none;
-      border: 1px solid var(--border);
-      background: var(--white);
-      transition: background 0.15s, color 0.15s, border-color 0.15s;
+      padding: 8px 14px; border-radius: 6px;
+      font-size: 12px; font-weight: 500; color: var(--text-light);
+      text-decoration: none; border: 1px solid var(--border);
+      background: var(--white); transition: background 0.15s, color 0.15s, border-color 0.15s;
       white-space: nowrap;
     }
     .step-pill a:hover { background: var(--blue-50); border-color: var(--blue-100); color: var(--blue-600); }
     .step-pill .step-num {
-      width: 20px; height: 20px;
-      border-radius: 50%;
+      width: 20px; height: 20px; border-radius: 50%;
       background: var(--blue-50); border: 1px solid var(--blue-100);
-      color: var(--blue-600);
-      font-size: 11px; font-weight: 700;
-      display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0;
+      color: var(--blue-600); font-size: 11px; font-weight: 700;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
     }
     .step-arrow {
-      color: #b0bec9; font-size: 14px; margin: 0 4px; flex-shrink: 0;
+      display: flex; align-items: center;
+      color: #b0bec9; margin: 0 4px; flex-shrink: 0;
     }
+    .step-arrow svg { width: 14px; height: 14px; stroke: #b0bec9; }
 
     /* ── Content ── */
     .content { padding: 40px 48px 60px; max-width: 860px; }
@@ -228,112 +168,77 @@
     /* ── Doc sections ── */
     .doc-section { margin-bottom: 52px; }
 
-    /* ── Section header (step card) ── */
+    /* ── Step header ── */
     .step-header {
       display: flex; align-items: flex-start; gap: 16px;
-      background: var(--white);
-      border: 1px solid var(--border);
+      background: var(--white); border: 1px solid var(--border);
       border-left: 4px solid var(--blue-600);
-      border-radius: var(--radius);
-      padding: 18px 20px;
-      margin-bottom: 22px;
+      border-radius: var(--radius); padding: 18px 20px; margin-bottom: 22px;
     }
     .step-header .step-badge {
-      width: 40px; height: 40px;
-      border-radius: 50%;
-      background: var(--blue-900);
-      color: var(--white);
-      font-family: 'Sora', sans-serif;
-      font-size: 15px; font-weight: 700;
-      display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0;
+      width: 40px; height: 40px; border-radius: 50%;
+      background: var(--blue-900); color: var(--white);
+      font-family: 'Sora', sans-serif; font-size: 15px; font-weight: 700;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
     }
     .step-header .step-meta { flex: 1; }
     .step-header .step-label-text {
       font-size: 11px; font-weight: 600; letter-spacing: 0.08em;
-      text-transform: uppercase; color: var(--blue-500);
-      margin-bottom: 4px;
+      text-transform: uppercase; color: var(--blue-500); margin-bottom: 4px;
     }
     .step-header h2 {
-      font-family: 'Sora', sans-serif;
-      font-size: 18px; font-weight: 700;
+      font-family: 'Sora', sans-serif; font-size: 18px; font-weight: 700;
       color: var(--blue-900); line-height: 1.25;
     }
 
-    /* Intro section header */
+    /* ── Intro header ── */
     .intro-header {
       display: flex; align-items: center; gap: 14px;
-      margin-bottom: 20px;
-      padding-bottom: 14px;
+      margin-bottom: 20px; padding-bottom: 14px;
       border-bottom: 2px solid var(--blue-50);
     }
     .intro-header .s-icon {
-      width: 40px; height: 40px;
-      border-radius: 10px;
+      width: 40px; height: 40px; border-radius: 10px;
       background: var(--blue-50); border: 1px solid var(--blue-100);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 20px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
     }
+    .intro-header .s-icon svg { width: 22px; height: 22px; stroke: var(--blue-600); }
     .intro-header h2 {
-      font-family: 'Sora', sans-serif;
-      font-size: 20px; font-weight: 700;
-      color: var(--blue-900);
+      font-family: 'Sora', sans-serif; font-size: 20px; font-weight: 700; color: var(--blue-900);
     }
 
     /* ── Sub-title ── */
     .sub-title {
-      font-family: 'Sora', sans-serif;
-      font-size: 14px; font-weight: 600;
-      color: var(--blue-900);
-      margin: 24px 0 10px;
+      font-family: 'Sora', sans-serif; font-size: 14px; font-weight: 600;
+      color: var(--blue-900); margin: 24px 0 10px;
       display: flex; align-items: center; gap: 8px;
     }
     .sub-title::before {
-      content: '';
-      width: 4px; height: 15px;
-      background: var(--accent);
-      border-radius: 2px;
-      flex-shrink: 0;
+      content: ''; width: 4px; height: 15px;
+      background: var(--accent); border-radius: 2px; flex-shrink: 0;
     }
 
     /* ── Info blocks ── */
     .info-block {
-      border-radius: var(--radius);
-      padding: 14px 18px;
-      margin: 18px 0;
-      display: flex;
-      gap: 12px;
-      align-items: flex-start;
+      border-radius: var(--radius); padding: 14px 18px;
+      margin: 18px 0; display: flex; gap: 12px; align-items: flex-start;
     }
-    .info-block.tip {
-      background: var(--blue-50);
-      border: 1px solid var(--blue-100);
-      border-left: 4px solid var(--blue-500);
-    }
-    .info-block.important {
-      background: #fff8ee;
-      border: 1px solid #fde9b0;
-      border-left: 4px solid var(--accent);
-    }
-    .info-block .ib-icon { font-size: 17px; flex-shrink: 0; margin-top: 1px; }
+    .info-block.tip { background: var(--blue-50); border: 1px solid var(--blue-100); border-left: 4px solid var(--blue-500); }
+    .info-block.important { background: #fff8ee; border: 1px solid #fde9b0; border-left: 4px solid var(--accent); }
+    .info-block .ib-icon { flex-shrink: 0; margin-top: 1px; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; }
+    .info-block.tip .ib-icon svg { stroke: var(--blue-600); width: 20px; height: 20px; }
+    .info-block.important .ib-icon svg { stroke: #c87000; width: 20px; height: 20px; }
     .info-block .ib-body { flex: 1; }
     .info-block .ib-title { font-weight: 600; font-size: 13px; margin-bottom: 4px; color: var(--text); }
     .info-block p { font-size: 13.5px; color: var(--text-light); margin: 0; line-height: 1.6; }
 
     /* ── Role cards ── */
     .role-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 16px 0; }
-    .role-card {
-      background: var(--white);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 16px;
-    }
+    .role-card { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; }
     .role-card .r-badge {
-      display: inline-block;
-      font-size: 10px; font-weight: 700; letter-spacing: 0.08em;
-      text-transform: uppercase;
-      padding: 2px 8px; border-radius: 10px;
-      margin-bottom: 8px;
+      display: inline-block; font-size: 10px; font-weight: 700;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      padding: 2px 8px; border-radius: 10px; margin-bottom: 8px;
     }
     .role-card.admin-r .r-badge { background: #e8f0fe; color: #2d5bbc; }
     .role-card.hr-r .r-badge { background: #e8f8ee; color: #2d7a4f; }
@@ -346,17 +251,16 @@
       display: inline-flex; align-items: center; gap: 8px;
       background: var(--blue-50); border: 1px solid var(--blue-100);
       border-radius: 6px; padding: 10px 16px;
-      font-size: 14px; font-weight: 500; color: var(--blue-600);
-      margin: 8px 0;
+      font-size: 14px; font-weight: 500; color: var(--blue-600); margin: 8px 0;
     }
+    .url-block svg { width: 16px; height: 16px; stroke: var(--blue-600); flex-shrink: 0; }
 
-    /* ── Sub-step tag ── */
+    /* ── Substep tag ── */
     .substep-tag {
       display: inline-flex; align-items: center; gap: 7px;
       background: var(--blue-900); color: var(--white);
       font-size: 11px; font-weight: 600; letter-spacing: 0.04em;
-      padding: 4px 12px; border-radius: 4px;
-      margin: 20px 0 10px;
+      padding: 4px 12px; border-radius: 4px; margin: 20px 0 10px;
     }
 
     /* ── Footer ── */
@@ -370,102 +274,58 @@
     .nav-buttons { display: flex; gap: 10px; }
     .btn-nav {
       display: inline-flex; align-items: center; gap: 7px;
-      padding: 8px 16px; border-radius: 6px;
-      font-size: 13px; font-weight: 500;
-      text-decoration: none !important;
-      transition: background 0.15s;
-      border: 1px solid var(--border);
-      color: var(--text) !important;
-      background: var(--white);
+      padding: 8px 16px; border-radius: 6px; font-size: 13px; font-weight: 500;
+      text-decoration: none !important; transition: background 0.15s;
+      border: 1px solid var(--border); color: var(--text) !important; background: var(--white);
     }
+    .btn-nav svg { width: 16px; height: 16px; stroke: currentColor; }
     .btn-nav:hover { background: var(--blue-50); border-color: var(--blue-100); }
     .btn-nav.primary { background: var(--blue-600); color: var(--white) !important; border-color: var(--blue-600); }
     .btn-nav.primary:hover { background: var(--blue-700); border-color: var(--blue-700); }
+    .btn-nav.primary svg { stroke: var(--white); }
 
-    /* ── Responsive ────────────────────────────────────────── */
+    /* ── Language switcher ── */
+    .lang-switch { margin-left: auto; display: flex; align-items: center; }
+    .lang-switch a {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 5px 12px; border-radius: 6px; font-size: 12px; font-weight: 600;
+      border: 1.5px solid var(--border); color: var(--text-light); background: var(--white);
+      text-decoration: none; transition: background 0.15s, border-color 0.15s, color 0.15s; letter-spacing: 0.02em;
+    }
+    .lang-switch a svg { width: 15px; height: 15px; stroke: currentColor; }
+    .lang-switch a:hover { background: var(--blue-50); border-color: var(--blue-500); color: var(--blue-600); text-decoration: none; }
+
+    /* ── Responsive ── */
     @media (max-width: 768px) {
-
       .btn-menu { display: flex; }
       .sidebar-overlay { display: block; }
-
       .sidebar {
-        position: fixed !important;
-        top: 0;
-        left: 0;
-        height: 100vh;
-        min-height: 100vh;
+        position: fixed !important; top: 0; left: 0;
+        height: 100vh; min-height: 100vh;
         transform: translateX(-100%);
-        transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
-        box-shadow: none;
+        transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: none;
       }
-      .sidebar.open {
-        transform: translateX(0) !important;
-        box-shadow: 6px 0 32px rgba(0,0,0,0.22);
-      }
-
+      .sidebar.open { transform: translateX(0) !important; box-shadow: 6px 0 32px rgba(0,0,0,0.22); }
       .main { width: 100%; }
-
       .topbar { padding: 0 16px; }
-
       .page-header { padding: 28px 20px 24px; }
       .page-header h1 { font-size: 22px; }
-
       .stepper { padding: 14px 16px; }
-
       .content { padding: 24px 16px 40px; }
-
       .role-cards { grid-template-columns: 1fr; }
-
-      .page-footer {
-        padding: 16px;
-        flex-direction: column;
-        gap: 12px;
-        text-align: center;
-      }
+      .page-footer { padding: 16px; flex-direction: column; gap: 12px; text-align: center; }
     }
-
-    /* ── Language switcher ─────────────────────────────────── */
-    .lang-switch {
-      margin-left: auto;
-      display: flex;
-      align-items: center;
-    }
-    .lang-switch a {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 5px 12px;
-      border-radius: 6px;
-      font-size: 12px;
-      font-weight: 600;
-      border: 1.5px solid var(--border);
-      color: var(--text-light);
-      background: var(--white);
-      text-decoration: none;
-      transition: background 0.15s, border-color 0.15s, color 0.15s;
-      letter-spacing: 0.02em;
-    }
-    .lang-switch a:hover {
-      background: var(--blue-50);
-      border-color: var(--blue-500);
-      color: var(--blue-600);
-      text-decoration: none;
-    }
-    .lang-switch .flag { font-size: 14px; }
   </style>
 </head>
 <body>
 
-  <!-- Overlay mobile -->
   <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
   <!-- ── Sidebar ── -->
   <nav class="sidebar" id="sidebar">
     <div class="sidebar-logo">
       <a href="../index.html">
-        <span>
-          <img src="../img/sema-pointage-logo.png" alt="sema-pointage-logo" />
-        </span>
+        <span><img src="../img/sema-pointage-logo.png" alt="sema-pointage-logo" /></span>
       </a>
     </div>
     <div class="sidebar-search">
@@ -474,29 +334,124 @@
     <div class="sidebar-nav">
 
       <div class="nav-section-title">Présentation générale</div>
-      <div class="nav-item"><a href="../General_presentation/index.html">Présentation générale</a></div>
+      <div class="nav-item">
+        <a href="../General_presentation/index.html">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" /></svg>
+          Présentation générale
+        </a>
+      </div>
 
       <div class="nav-section-title">Fonctionnalités</div>
-      <div class="nav-item"><a href="../Platform_features/index.html">Aperçu</a></div>
-      <div class="nav-item"><a href="../Platform_features/index.html#connexion-a-la-plateforme">Connexion à la plateforme</a></div>
-      <div class="nav-item"><a href="../Platform_features/index.html#journaux-de-presence">Journaux de présence</a></div>
-      <div class="nav-item"><a href="../Platform_features/index.html#tableau-de-bord">Tableau de Bord</a></div>
-      <div class="nav-item"><a href="../Platform_features/index.html#employes">Employés</a></div>
-      <div class="nav-item"><a href="../Platform_features/index.html#absences">Absences</a></div>
-      <div class="nav-item"><a href="../Platform_features/index.html#departements">Départements</a></div>
-      <div class="nav-item"><a href="../Platform_features/index.html#sites-qr-codes">Sites et codes QR</a></div>
-      <div class="nav-item"><a href="../Platform_features/index.html#rapports">Rapports</a></div>
-      <div class="nav-item"><a href="../Platform_features/index.html#configurations">Configurations</a></div>
-      <div class="nav-item"><a href="../Platform_features/index.html#programmes">Programmes</a></div>
+      <div class="nav-item">
+        <a href="../Platform_features/index.html">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z" /></svg>
+          Aperçu
+        </a>
+      </div>
+      <div class="nav-item">
+        <a href="../Platform_features/index.html#connexion-a-la-plateforme">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" /></svg>
+          Connexion à la plateforme
+        </a>
+      </div>
+      <div class="nav-item">
+        <a href="../Platform_features/index.html#journaux-de-presence">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25zM6.75 12h.008v.008H6.75V12zm0 3h.008v.008H6.75V15zm0 3h.008v.008H6.75V18z" /></svg>
+          Journaux de présence
+        </a>
+      </div>
+      <div class="nav-item">
+        <a href="../Platform_features/index.html#tableau-de-bord">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M7.5 14.25v2.25m3-4.5v4.5m3-6.75v6.75m3-9v9M6 20.25h12A2.25 2.25 0 0020.25 18V6A2.25 2.25 0 0018 3.75H6A2.25 2.25 0 003.75 6v12A2.25 2.25 0 006 20.25z" /></svg>
+          Tableau de Bord
+        </a>
+      </div>
+      <div class="nav-item">
+        <a href="../Platform_features/index.html#employes">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" /></svg>
+          Employés
+        </a>
+      </div>
+      <div class="nav-item">
+        <a href="../Platform_features/index.html#absences">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5m-9-6h.008v.008H12v-.008zM12 15h.008v.008H12V15zm0 2.25h.008v.008H12v-.008zM9.75 15h.008v.008H9.75V15zm0 2.25h.008v.008H9.75v-.008zM7.5 15h.008v.008H7.5V15zm0 2.25h.008v.008H7.5v-.008zm6.75-4.5h.008v.008h-.008v-.008zm0 2.25h.008v.008h-.008V15zm0 2.25h.008v.008h-.008v-.008zm2.25-4.5h.008v.008H16.5v-.008zm0 2.25h.008v.008H16.5V15z" /></svg>
+          Absences
+        </a>
+      </div>
+      <div class="nav-item">
+        <a href="../Platform_features/index.html#departements">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 3.75h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008z" /></svg>
+          Départements
+        </a>
+      </div>
+      <div class="nav-item">
+        <a href="../Platform_features/index.html#sites-qr-codes">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 013.75 9.375v-4.5zM3.75 14.625c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5a1.125 1.125 0 01-1.125-1.125v-4.5zM13.5 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 0113.5 9.375v-4.5z" /><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 6.75h.75v.75h-.75v-.75zM6.75 17.25h.75v.75h-.75v-.75zM16.5 6.75h.75v.75h-.75v-.75zM13.5 13.5h.75v.75h-.75v-.75zM13.5 19.5h.75v.75h-.75v-.75zM19.5 13.5h.75v.75h-.75v-.75zM19.5 19.5h.75v.75h-.75v-.75zM16.5 16.5h.75v.75h-.75v-.75z" /></svg>
+          Sites et codes QR
+        </a>
+      </div>
+      <div class="nav-item">
+        <a href="../Platform_features/index.html#rapports">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25M9 16.5v.75m3-3v3M15 12v5.25m-4.5-11.625h.375a3 3 0 013 3v1.5a3 3 0 003 3h1.5m-10.875-5.25h9.375M6.75 19.5h10.5a2.25 2.25 0 002.25-2.25V7.5a2.25 2.25 0 00-2.25-2.25H6.75A2.25 2.25 0 004.5 7.5v9.75A2.25 2.25 0 006.75 19.5z" /></svg>
+          Rapports
+        </a>
+      </div>
+      <div class="nav-item">
+        <a href="../Platform_features/index.html#configurations">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.324.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 011.37.49l1.296 2.247a1.125 1.125 0 01-.26 1.431l-1.003.827c-.293.24-.438.613-.431.992a6.759 6.759 0 010 .255c-.007.378.138.75.43.99l1.005.828c.424.35.534.954.26 1.43l-1.298 2.247a1.125 1.125 0 01-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.57 6.57 0 01-.22.128c-.331.183-.581.495-.644.869l-.213 1.28c-.09.543-.56.941-1.11.941h-2.594c-.55 0-1.02-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 01-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 01-1.369-.49l-1.297-2.247a1.125 1.125 0 01.26-1.431l1.004-.827c.292-.24.437-.613.43-.992a6.932 6.932 0 010-.255c.007-.378-.138-.75-.43-.99l-1.004-.828a1.125 1.125 0 01-.26-1.43l1.297-2.247a1.125 1.125 0 011.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.087.22-.128.332-.183.582-.495.644-.869l.214-1.281z" /><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+          Configurations
+        </a>
+      </div>
+      <div class="nav-item">
+        <a href="../Platform_features/index.html#programmes">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+          Programmes
+        </a>
+      </div>
 
       <div class="nav-section-title">Guide de configuration</div>
-      <div class="nav-item" id="nav-introduction"><a href="#introduction">Introduction</a></div>
-      <div class="nav-item" id="nav-etape-1"><a href="#etape-1-connexion-a-la-plateforme-dediee">Étape 1 : Connexion</a></div>
-      <div class="nav-item" id="nav-etape-2"><a href="#etape-2-configuration-des-parametres-de-base">Étape 2 : Paramètres de base</a></div>
-      <div class="nav-item" id="nav-etape-3"><a href="#etape-3-ajout-dutilisateurs-supplementaires">Étape 3 : Utilisateurs</a></div>
-      <div class="nav-item" id="nav-etape-4"><a href="#etape-4-enregistrement-des-employes">Étape 4 : Employés</a></div>
-      <div class="nav-item" id="nav-etape-5"><a href="#etape-5-creation-des-programmes-de-travail">Étape 5 : Programmes</a></div>
-      <div class="nav-item" id="nav-etape-6"><a href="#etape-6-mise-en-place-sur-site-et-phase-de-test">Étape 6 : Mise en place</a></div>
+      <div class="nav-item" id="nav-introduction">
+        <a href="#introduction">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" /></svg>
+          Introduction
+        </a>
+      </div>
+      <div class="nav-item" id="nav-etape-1">
+        <a href="#etape-1-connexion-a-la-plateforme-dediee">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9" /></svg>
+          Étape 1 : Connexion
+        </a>
+      </div>
+      <div class="nav-item" id="nav-etape-2">
+        <a href="#etape-2-configuration-des-parametres-de-base">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 11-3 0m3 0a1.5 1.5 0 10-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-9.75 0h9.75" /></svg>
+          Étape 2 : Paramètres de base
+        </a>
+      </div>
+      <div class="nav-item" id="nav-etape-3">
+        <a href="#etape-3-ajout-dutilisateurs-supplementaires">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zM4 19.235v-.11a6.375 6.375 0 0112.75 0v.109A12.318 12.318 0 0110.374 21c-2.331 0-4.512-.645-6.374-1.766z" /></svg>
+          Étape 3 : Utilisateurs
+        </a>
+      </div>
+      <div class="nav-item" id="nav-etape-4">
+        <a href="#etape-4-enregistrement-des-employes">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15 9h3.75M15 12h3.75M15 15h3.75M4.5 19.5h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5zm6-10.125a1.875 1.875 0 11-3.75 0 1.875 1.875 0 013.75 0zm1.294 6.336a6.721 6.721 0 01-3.17.789 6.721 6.721 0 01-3.168-.789 3.376 3.376 0 016.338 0z" /></svg>
+          Étape 4 : Employés
+        </a>
+      </div>
+      <div class="nav-item" id="nav-etape-5">
+        <a href="#etape-5-creation-des-programmes-de-travail">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" /></svg>
+          Étape 5 : Programmes
+        </a>
+      </div>
+      <div class="nav-item" id="nav-etape-6">
+        <a href="#etape-6-mise-en-place-sur-site-et-phase-de-test">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-.45 3.867 3.745 3.745 0 01-3.867.45A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.867-.45 3.745 3.745 0 01-.45-3.867A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 01.45-3.867 3.746 3.746 0 013.867-.45A3.745 3.745 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.867.45 3.745 3.745 0 01.45 3.867A3.745 3.745 0 0121 12z" /></svg>
+          Étape 6 : Mise en place
+        </a>
+      </div>
 
     </div>
   </nav>
@@ -507,17 +462,21 @@
     <!-- Topbar -->
     <div class="topbar">
       <button class="btn-menu" id="btnMenu" aria-label="Ouvrir le menu">
-        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect y="3" width="20" height="2" rx="1" fill="#4a5e72"/>
-          <rect y="9" width="20" height="2" rx="1" fill="#4a5e72"/>
-          <rect y="15" width="20" height="2" rx="1" fill="#4a5e72"/>
-        </svg>
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect y="3" width="20" height="2" rx="1" fill="#4a5e72"/><rect y="9" width="20" height="2" rx="1" fill="#4a5e72"/><rect y="15" width="20" height="2" rx="1" fill="#4a5e72"/></svg>
       </button>
-      <a href="../index.html">🏠</a>
+      <!-- Heroicon: home -->
+      <a href="../index.html">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" /></svg>
+      </a>
       <span class="sep">›</span>
       <span class="current">Guide pratique de configuration</span>
-    
-      <div class="lang-switch"><a href="../../../../en/build/html/Config_guide/index.html"><span class="flag">🇬🇧</span> English</a></div>
+      <div class="lang-switch">
+        <a href="../../../../en/build/html/Config_guide/index.html">
+          <!-- Heroicon: globe-alt -->
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253M3 12a8.959 8.959 0 01.284-2.253" /></svg>
+          English
+        </a>
+      </div>
     </div>
 
     <!-- Page header -->
@@ -534,27 +493,39 @@
       <div class="step-pill">
         <a href="#introduction"><span class="step-num">·</span> Introduction</a>
       </div>
-      <span class="step-arrow">›</span>
+      <span class="step-arrow">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" /></svg>
+      </span>
       <div class="step-pill">
         <a href="#etape-1-connexion-a-la-plateforme-dediee"><span class="step-num">1</span> Connexion</a>
       </div>
-      <span class="step-arrow">›</span>
+      <span class="step-arrow">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" /></svg>
+      </span>
       <div class="step-pill">
         <a href="#etape-2-configuration-des-parametres-de-base"><span class="step-num">2</span> Paramètres</a>
       </div>
-      <span class="step-arrow">›</span>
+      <span class="step-arrow">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" /></svg>
+      </span>
       <div class="step-pill">
         <a href="#etape-3-ajout-dutilisateurs-supplementaires"><span class="step-num">3</span> Utilisateurs</a>
       </div>
-      <span class="step-arrow">›</span>
+      <span class="step-arrow">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" /></svg>
+      </span>
       <div class="step-pill">
         <a href="#etape-4-enregistrement-des-employes"><span class="step-num">4</span> Employés</a>
       </div>
-      <span class="step-arrow">›</span>
+      <span class="step-arrow">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" /></svg>
+      </span>
       <div class="step-pill">
         <a href="#etape-5-creation-des-programmes-de-travail"><span class="step-num">5</span> Programmes</a>
       </div>
-      <span class="step-arrow">›</span>
+      <span class="step-arrow">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" /></svg>
+      </span>
       <div class="step-pill">
         <a href="#etape-6-mise-en-place-sur-site-et-phase-de-test"><span class="step-num">6</span> Déploiement</a>
       </div>
@@ -565,12 +536,18 @@
       <!-- ══ INTRODUCTION ══ -->
       <div class="doc-section" id="introduction">
         <div class="intro-header">
-          <span class="s-icon">📖</span>
+          <span class="s-icon">
+            <!-- Heroicon: book-open -->
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" /></svg>
+          </span>
           <h2>Introduction</h2>
         </div>
         <p>Ce guide décrit pas à pas la mise en place complète de la solution de pointage au sein de votre entreprise. Imaginons que votre structure dispose de deux sites, l'un à <strong>Yaoundé</strong> et l'autre à <strong>Douala</strong>, avec des équipes organisées en départements distincts et des horaires de travail potentiellement différents selon les sites. Voici les étapes à suivre pour configurer correctement l'outil.</p>
         <div class="info-block tip">
-          <span class="ib-icon">💡</span>
+          <span class="ib-icon">
+            <!-- Heroicon: information-circle -->
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" /></svg>
+          </span>
           <div class="ib-body">
             <div class="ib-title">Ordre recommandé</div>
             <p>Pour une configuration optimale, respectez l'ordre des étapes ci-dessous. Certaines actions dépendent d'éléments créés précédemment : les shifts doivent exister avant de créer les programmes, et les employés doivent être enregistrés avant d'être affectés à un programme.</p>
@@ -588,7 +565,11 @@
           </div>
         </div>
         <p>En tant qu'administrateur, connectez-vous à la plateforme à l'aide des identifiants (adresse e-mail et mot de passe) qui vous ont été communiqués lors de la souscription :</p>
-        <div class="url-block">🔗 <a href="https://pointing-front.kaeyros.org">https://pointing-front.kaeyros.org</a></div>
+        <div class="url-block">
+          <!-- Heroicon: link -->
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244" /></svg>
+          <a href="https://pointing-front.kaeyros.org">https://pointing-front.kaeyros.org</a>
+        </div>
         <p style="margin-top: 14px;">Une fois connecté, vous êtes automatiquement redirigé vers les <strong>journaux de présence</strong>. La navigation entre les différentes sections se fait via le menu latéral gauche.</p>
       </div>
 
@@ -621,7 +602,9 @@
         <p>Dans le sous-onglet <strong>Shifts</strong> (onglet Configurations), cliquez sur <strong>« Créer un nouveau shift »</strong>. Renseignez le nom du shift, ses heures de début et de fin, activez l'option <strong>« Shift de nuit »</strong> si nécessaire, et indiquez la capacité maximale d'employés pouvant y être affectés. Créez autant de shifts que nécessaire (ex. : Shift matin 07h–15h, Shift nuit 20h–05h).</p>
 
         <div class="info-block tip">
-          <span class="ib-icon">💡</span>
+          <span class="ib-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" /></svg>
+          </span>
           <div class="ib-body">
             <div class="ib-title">Bon à savoir</div>
             <p>Les shifts créés ici seront disponibles lors de la constitution des programmes de travail à l'étape 5. Veillez à créer tous les shifts dont vous avez besoin avant de passer à la suite.</p>
@@ -675,7 +658,10 @@
           <li><strong>Ajout en masse</strong> : importez plusieurs employés simultanément via un fichier Excel ou CSV (.xlsx, .xls, .csv — max 10 Mo), en sélectionnant au préalable le site, le département et le poste communs.</li>
         </ul>
         <div class="info-block important">
-          <span class="ib-icon">⚠️</span>
+          <span class="ib-icon">
+            <!-- Heroicon: exclamation-triangle -->
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" /></svg>
+          </span>
           <div class="ib-body">
             <div class="ib-title">Attention — Numéro de téléphone</div>
             <p>Renseignez le numéro de téléphone <strong>exactement tel qu'il est enregistré sur WhatsApp</strong>, avec ou sans le 6 selon le format (ex. : <strong>23789898989</strong> ou <strong>237689898989</strong>). Un numéro incorrect empêchera l'employé de pointer via WhatsApp.</p>
@@ -703,7 +689,9 @@
         </ul>
         <p>Cliquez sur <strong>« Sauvegarder »</strong> pour valider. Répétez l'opération pour chaque programme nécessaire selon vos sites et équipes.</p>
         <div class="info-block tip">
-          <span class="ib-icon">💡</span>
+          <span class="ib-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" /></svg>
+          </span>
           <div class="ib-body">
             <div class="ib-title">Bon à savoir</div>
             <p>Le système s'appuie sur les programmes pour calculer automatiquement les présences attendues, détecter les absences et mesurer les retards. <strong>Un employé non rattaché à un programme ne sera pas suivi par le système.</strong></p>
@@ -727,7 +715,9 @@
           <li>Prévoyez une <strong>période de test d'au moins une semaine</strong> pour former les équipes, corriger les éventuelles erreurs de numéros de téléphone et valider le bon fonctionnement du dispositif sur l'ensemble des sites.</li>
         </ul>
         <div class="info-block tip">
-          <span class="ib-icon">💡</span>
+          <span class="ib-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" /></svg>
+          </span>
           <div class="ib-body">
             <div class="ib-title">Bon à savoir</div>
             <p>En cas d'oubli de pointage durant la phase de test ou en production, un responsable peut saisir manuellement la présence d'un employé depuis l'onglet <strong>Journaux de présence</strong> en cliquant sur <strong>« Saisir la présence »</strong>. Les absences non pointées sont détectées automatiquement par le système à la fin de chaque journée de travail prévue.</p>
@@ -738,40 +728,31 @@
     </div><!-- /content -->
 
     <footer class="page-footer">
-      <span>© 2025 Kaeyros Analytics</span>
+      <span>© 2026 Kaeyros Analytics</span>
       <div class="nav-buttons">
-        <a href="../Platform_features/index.html" class="btn-nav">‹ &nbsp;Précédent</a>
+        <a href="../Platform_features/index.html" class="btn-nav">
+          <!-- Heroicon: arrow-left -->
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" /></svg>
+          Précédent
+        </a>
       </div>
     </footer>
 
   </div><!-- /main -->
 
   <script>
-    // ── Sidebar toggle ──────────────────────────────────────
     const sidebar = document.getElementById('sidebar');
     const overlay = document.getElementById('sidebarOverlay');
     const btnMenu = document.getElementById('btnMenu');
 
-    function openSidebar() {
-      sidebar.classList.add('open');
-      overlay.classList.add('active');
-      document.body.style.overflow = 'hidden';
-    }
-    function closeSidebar() {
-      sidebar.classList.remove('open');
-      overlay.classList.remove('active');
-      document.body.style.overflow = '';
-    }
+    function openSidebar() { sidebar.classList.add('open'); overlay.classList.add('active'); document.body.style.overflow = 'hidden'; }
+    function closeSidebar() { sidebar.classList.remove('open'); overlay.classList.remove('active'); document.body.style.overflow = ''; }
 
-    btnMenu.addEventListener('click', function(e) {
-      e.stopPropagation();
-      sidebar.classList.contains('open') ? closeSidebar() : openSidebar();
-    });
+    btnMenu.addEventListener('click', function(e) { e.stopPropagation(); sidebar.classList.contains('open') ? closeSidebar() : openSidebar(); });
     overlay.addEventListener('click', closeSidebar);
     document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeSidebar(); });
     window.addEventListener('resize', function() { if (window.innerWidth > 768) closeSidebar(); });
 
-    // ── Active section highlight ────────────────────────────
     (function () {
       const sectionIds = [
         'introduction',
@@ -783,19 +764,16 @@
         'etape-6-mise-en-place-sur-site-et-phase-de-test'
       ];
       const navMap = {
-        'introduction':                                    'nav-introduction',
-        'etape-1-connexion-a-la-plateforme-dediee':        'nav-etape-1',
-        'etape-2-configuration-des-parametres-de-base':    'nav-etape-2',
-        'etape-3-ajout-dutilisateurs-supplementaires':     'nav-etape-3',
-        'etape-4-enregistrement-des-employes':             'nav-etape-4',
-        'etape-5-creation-des-programmes-de-travail':      'nav-etape-5',
+        'introduction': 'nav-introduction',
+        'etape-1-connexion-a-la-plateforme-dediee': 'nav-etape-1',
+        'etape-2-configuration-des-parametres-de-base': 'nav-etape-2',
+        'etape-3-ajout-dutilisateurs-supplementaires': 'nav-etape-3',
+        'etape-4-enregistrement-des-employes': 'nav-etape-4',
+        'etape-5-creation-des-programmes-de-travail': 'nav-etape-5',
         'etape-6-mise-en-place-sur-site-et-phase-de-test': 'nav-etape-6'
       };
       function setActive(id) {
-        sectionIds.forEach(sid => {
-          const navEl = document.getElementById(navMap[sid]);
-          if (navEl) navEl.classList.remove('active');
-        });
+        sectionIds.forEach(sid => { const el = document.getElementById(navMap[sid]); if (el) el.classList.remove('active'); });
         const target = document.getElementById(navMap[id]);
         if (target) target.classList.add('active');
       }
