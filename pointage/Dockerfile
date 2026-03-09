@@ -33,9 +33,11 @@
 
 
 # Servir la documentation déjà construite avec Nginx
+# Servir la documentation déjà construite avec Nginx
 FROM nginx:alpine
 RUN rm -rf /usr/share/nginx/html/*
-COPY pointage/build/html /usr/share/nginx/html
+COPY docs/en/build/html /usr/share/nginx/html/en
+COPY docs/fr/build/html /usr/share/nginx/html/fr
 
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
