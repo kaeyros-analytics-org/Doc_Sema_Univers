@@ -1,166 +1,545 @@
-
-
-<!DOCTYPE html>
-<html class="writer-html5" lang="en">
+<!doctype html>
+<html lang="en">
 <head>
-  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Introduction &mdash; Pointage En 1.0 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
-      <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=3437f865" />
+  <title>Configuration Guide — Pointage Documentation 1.0</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Sora:wght@600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --blue-900: #0f2d57; --blue-700: #1a4d8f; --blue-600: #1e5fad;
+      --blue-500: #2471c8; --blue-100: #ddeeff; --blue-50: #f0f6ff;
+      --accent: #f0a500; --text: #1c2b3a; --text-light: #4a5e72;
+      --border: #d4e3f5; --white: #ffffff; --sidebar-w: 280px; --radius: 8px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', sans-serif; font-size: 15px; color: var(--text); background: #f5f8fc; display: flex; min-height: 100vh; }
+    a { color: var(--blue-600); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    p { line-height: 1.75; margin-bottom: 14px; }
+    strong { font-weight: 600; }
+    ul, ol { padding-left: 22px; margin-bottom: 14px; }
+    li { margin-bottom: 7px; line-height: 1.7; }
+    li p { margin-bottom: 3px; }
 
-  
-      <script src="../_static/jquery.js?v=5d32c60e"></script>
-      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=359c27e9"></script>
-      <script src="../_static/doctools.js?v=888ff710"></script>
-      <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
-    <script src="../_static/js/theme.js"></script>
-    <link rel="index" title="Index" href="../genindex.html" />
-    <link rel="search" title="Search" href="../search.html" />
-    <link rel="prev" title="Overview" href="../Platform_features/index.html" /> 
+    .sidebar-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 98; opacity: 0; transition: opacity 0.25s; pointer-events: none; }
+    .sidebar-overlay.active { opacity: 1; pointer-events: all; }
+
+    .sidebar { width: var(--sidebar-w); min-height: 100vh; background: var(--blue-900); display: flex; flex-direction: column; flex-shrink: 0; position: sticky; top: 0; height: 100vh; overflow-y: auto; z-index: 100; }
+    .sidebar-logo { padding: 24px 20px 20px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+    .sidebar-logo a { font-family: 'Sora', sans-serif; font-size: 18px; font-weight: 700; color: var(--white); display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .sidebar-search { padding: 14px 16px; border-bottom: 1px solid rgba(255,255,255,0.08); }
+    .sidebar-search input { width: 100%; padding: 8px 12px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.15); background: rgba(255,255,255,0.08); color: var(--white); font-size: 13px; outline: none; }
+    .sidebar-search input::placeholder { color: rgba(255,255,255,0.4); }
+    .sidebar-nav { padding: 12px 0 24px; flex: 1; }
+    .nav-section-title { font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.4); padding: 16px 20px 6px; }
+    .nav-item a { display: flex; align-items: center; gap: 8px; padding: 7px 20px; font-size: 13px; color: rgba(255,255,255,0.75); transition: background 0.15s, color 0.15s; border-left: 3px solid transparent; }
+    .nav-item a svg { width: 15px; height: 15px; flex-shrink: 0; opacity: 0.6; }
+    .nav-item a:hover { background: rgba(255,255,255,0.06); color: var(--white); text-decoration: none; }
+    .nav-item.active a { color: var(--white); border-left-color: var(--accent); background: rgba(255,255,255,0.08); font-weight: 600; }
+    .nav-item.active a svg { opacity: 1; }
+
+    .main { flex: 1; display: flex; flex-direction: column; min-width: 0; }
+
+    .topbar { background: var(--white); border-bottom: 1px solid var(--border); padding: 0 40px; height: 52px; display: flex; align-items: center; gap: 6px; font-size: 13px; color: var(--text-light); position: sticky; top: 0; z-index: 10; }
+    .topbar a { color: var(--text-light); display: flex; align-items: center; }
+    .topbar a svg { width: 16px; height: 16px; }
+    .topbar .sep { color: #b0bec9; margin: 0 2px; }
+    .topbar .current { color: var(--text); font-weight: 500; }
+
+    .btn-menu { display: none; align-items: center; justify-content: center; width: 36px; height: 36px; margin-right: 8px; border: none; background: transparent; cursor: pointer; border-radius: 6px; padding: 0; flex-shrink: 0; transition: background 0.15s; }
+    .btn-menu:hover { background: var(--blue-50); }
+    .btn-menu svg { display: block; }
+
+    .page-header { background: linear-gradient(135deg, var(--blue-900) 0%, var(--blue-700) 55%, var(--blue-500) 100%); padding: 40px 48px 36px; position: relative; overflow: hidden; }
+    .page-header::before { content: ''; position: absolute; inset: 0; background-image: radial-gradient(circle, rgba(255,255,255,0.04) 1px, transparent 1px); background-size: 28px 28px; }
+    .page-header .label { font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.6); margin-bottom: 10px; position: relative; }
+    .page-header h1 { font-family: 'Sora', sans-serif; font-size: 28px; font-weight: 700; color: var(--white); line-height: 1.2; position: relative; }
+    .page-header .header-desc { margin-top: 14px; font-size: 14px; color: rgba(255,255,255,0.75); line-height: 1.65; border-left: 3px solid var(--accent); padding-left: 14px; position: relative; max-width: 620px; }
+
+    .stepper { background: var(--white); border-bottom: 1px solid var(--border); padding: 20px 48px; display: flex; align-items: center; gap: 0; overflow-x: auto; }
+    .step-pill { display: flex; align-items: center; gap: 0; flex-shrink: 0; }
+    .step-pill a { display: flex; align-items: center; gap: 8px; padding: 8px 14px; border-radius: 6px; font-size: 12px; font-weight: 500; color: var(--text-light); text-decoration: none; border: 1px solid var(--border); background: var(--white); transition: background 0.15s, color 0.15s, border-color 0.15s; white-space: nowrap; }
+    .step-pill a:hover { background: var(--blue-50); border-color: var(--blue-100); color: var(--blue-600); }
+    .step-pill .step-num { width: 20px; height: 20px; border-radius: 50%; background: var(--blue-50); border: 1px solid var(--blue-100); color: var(--blue-600); font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .step-arrow { display: flex; align-items: center; margin: 0 4px; flex-shrink: 0; color: #b0bec9; }
+    .step-arrow svg { width: 14px; height: 14px; stroke: #b0bec9; }
+
+    .content { padding: 40px 48px 60px; max-width: 860px; }
+    .doc-section { margin-bottom: 52px; }
+
+    .step-header { display: flex; align-items: flex-start; gap: 16px; background: var(--white); border: 1px solid var(--border); border-left: 4px solid var(--blue-600); border-radius: var(--radius); padding: 18px 20px; margin-bottom: 22px; }
+    .step-header .step-badge { width: 40px; height: 40px; border-radius: 50%; background: var(--blue-900); color: var(--white); font-family: 'Sora', sans-serif; font-size: 15px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .step-header .step-meta { flex: 1; }
+    .step-header .step-label-text { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--blue-500); margin-bottom: 4px; }
+    .step-header h2 { font-family: 'Sora', sans-serif; font-size: 18px; font-weight: 700; color: var(--blue-900); line-height: 1.25; }
+
+    /* Intro section header */
+    .intro-header { display: flex; align-items: center; gap: 14px; margin-bottom: 20px; padding-bottom: 14px; border-bottom: 2px solid var(--blue-50); }
+    .intro-header .s-icon { width: 40px; height: 40px; border-radius: 10px; background: var(--blue-50); border: 1px solid var(--blue-100); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .intro-header .s-icon svg { width: 22px; height: 22px; stroke: var(--blue-600); }
+    .intro-header h2 { font-family: 'Sora', sans-serif; font-size: 20px; font-weight: 700; color: var(--blue-900); }
+
+    /* Info blocks */
+    .info-block { border-radius: var(--radius); padding: 14px 18px; margin: 18px 0; display: flex; gap: 12px; align-items: flex-start; }
+    .info-block.tip { background: var(--blue-50); border: 1px solid var(--blue-100); border-left: 4px solid var(--blue-500); }
+    .info-block.important { background: #fff8ee; border: 1px solid #fde9b0; border-left: 4px solid var(--accent); }
+    .info-block .ib-icon { flex-shrink: 0; margin-top: 1px; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; }
+    .info-block.tip .ib-icon svg { stroke: var(--blue-600); width: 20px; height: 20px; }
+    .info-block.important .ib-icon svg { stroke: #c87000; width: 20px; height: 20px; }
+    .info-block .ib-body { flex: 1; }
+    .info-block .ib-title { font-weight: 600; font-size: 13px; margin-bottom: 4px; color: var(--text); }
+    .info-block p { font-size: 13.5px; color: var(--text-light); margin: 0; line-height: 1.6; }
+
+    .role-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 16px 0; }
+    .role-card { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; }
+    .role-card .r-badge { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 2px 8px; border-radius: 10px; margin-bottom: 8px; }
+    .role-card.admin-r .r-badge { background: #e8f0fe; color: #2d5bbc; }
+    .role-card.hr-r .r-badge { background: #e8f8ee; color: #2d7a4f; }
+    .role-card.am-r .r-badge { background: #fff3e0; color: #b06000; }
+    .role-card h3 { font-size: 13px; font-weight: 600; margin-bottom: 6px; color: var(--text); }
+    .role-card p { font-size: 12.5px; color: var(--text-light); margin: 0; line-height: 1.5; }
+
+    /* URL block */
+    .url-block { display: inline-flex; align-items: center; gap: 8px; background: var(--blue-50); border: 1px solid var(--blue-100); border-radius: 6px; padding: 10px 16px; font-size: 14px; font-weight: 500; color: var(--blue-600); margin: 8px 0; }
+    .url-block svg { width: 16px; height: 16px; stroke: var(--blue-600); flex-shrink: 0; }
+
+    .substep-tag { display: inline-flex; align-items: center; gap: 7px; background: var(--blue-900); color: var(--white); font-size: 11px; font-weight: 600; letter-spacing: 0.04em; padding: 4px 12px; border-radius: 4px; margin: 20px 0 10px; }
+
+    /* Footer */
+    .page-footer { margin-top: auto; padding: 20px 48px; border-top: 1px solid var(--border); background: var(--white); display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: var(--text-light); }
+    .page-footer a { color: var(--text-light); }
+    .nav-buttons { display: flex; gap: 10px; }
+    .btn-nav { display: inline-flex; align-items: center; gap: 7px; padding: 8px 16px; border-radius: 6px; font-size: 13px; font-weight: 500; text-decoration: none !important; transition: background 0.15s; border: 1px solid var(--border); color: var(--text) !important; background: var(--white); }
+    .btn-nav svg { width: 16px; height: 16px; stroke: currentColor; }
+    .btn-nav:hover { background: var(--blue-50); border-color: var(--blue-100); }
+    .btn-nav.primary { background: var(--blue-600); color: var(--white) !important; border-color: var(--blue-600); }
+    .btn-nav.primary:hover { background: var(--blue-700); border-color: var(--blue-700); }
+    .btn-nav.primary svg { stroke: var(--white); }
+
+    /* Language switcher */
+    .lang-switch { margin-left: auto; display: flex; align-items: center; }
+    .lang-switch a { display: inline-flex; align-items: center; gap: 6px; padding: 5px 12px; border-radius: 6px; font-size: 12px; font-weight: 600; border: 1.5px solid var(--border); color: var(--text-light); background: var(--white); text-decoration: none; transition: background 0.15s, border-color 0.15s, color 0.15s; letter-spacing: 0.02em; }
+    .lang-switch a svg { width: 15px; height: 15px; stroke: currentColor; }
+    .lang-switch a:hover { background: var(--blue-50); border-color: var(--blue-500); color: var(--blue-600); text-decoration: none; }
+
+    @media (max-width: 768px) {
+      .btn-menu { display: flex; }
+      .sidebar-overlay { display: block; }
+      .sidebar { position: fixed !important; top: 0; left: 0; height: 100vh; min-height: 100vh; transform: translateX(-100%); transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: none; }
+      .sidebar.open { transform: translateX(0) !important; box-shadow: 6px 0 32px rgba(0,0,0,0.22); }
+      .main { width: 100%; }
+      .topbar { padding: 0 16px; }
+      .page-header { padding: 28px 20px 24px; }
+      .page-header h1 { font-size: 22px; }
+      .stepper { padding: 14px 16px; }
+      .content { padding: 24px 16px 40px; }
+      .role-cards { grid-template-columns: 1fr; }
+      .page-footer { padding: 16px; flex-direction: column; gap: 12px; text-align: center; }
+    }
+  </style>
 </head>
+<body>
 
-<body class="wy-body-for-nav"> 
-  <div class="wy-grid-for-nav">
-    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
-      <div class="wy-side-scroll">
-        <div class="wy-side-nav-search" >
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
-          
-          
-          <a href="../index.html" class="icon icon-home">
-            Pointage En
-          </a>
-<div role="search">
-  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
-    <input type="hidden" name="check_keywords" value="yes" />
-    <input type="hidden" name="area" value="default" />
-  </form>
-</div>
-        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption" role="heading"><span class="caption-text">Overview</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../General_presentation/index.html">Overview of the pointing tool</a></li>
-</ul>
-<p class="caption" role="heading"><span class="caption-text">Platform Features</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../Platform_features/index.html">Overview</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Platform_features/index.html#connecting-to-the-platform">Connecting to the Platform</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Platform_features/index.html#attendance-logs">Attendance Logs</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Platform_features/index.html#configure-your-platform">Configure your platform</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Platform_features/index.html#employee-management">Employee Management</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Platform_features/index.html#account-management">Account Management</a></li>
-</ul>
-<p class="caption" role="heading"><span class="caption-text">Step-by-Step Tool Configuration Guide</span></p>
-<ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Introduction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="#step-1-logging-in-to-the-dedicated-platform">Step 1: Logging in to the Dedicated Platform</a></li>
-<li class="toctree-l1"><a class="reference internal" href="#step-2-company-setup">Step 2: Company Setup</a></li>
-<li class="toctree-l1"><a class="reference internal" href="#step-3-adding-additional-users">Step 3: Adding Additional Users</a></li>
-<li class="toctree-l1"><a class="reference internal" href="#step-4-employee-registration">Step 4: Employee Registration</a></li>
-<li class="toctree-l1"><a class="reference internal" href="#step-5-on-site-implementation-and-testing-phase">Step 5: On-site Implementation and Testing Phase</a></li>
-</ul>
-
-        </div>
+  <nav class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+      <a href="../index.html"><span><img src="../img/sema-pointage-logo.png" alt="sema-pointage-logo" /></span></a>
+    </div>
+    <div class="sidebar-search"><input type="text" placeholder="Search in docs…" /></div>
+    <div class="sidebar-nav">
+      <div class="nav-section-title">General Overview</div>
+      <div class="nav-item">
+        <a href="../General_presentation/index.html">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" /></svg>
+          General Overview
+        </a>
       </div>
-    </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
-          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../index.html">Pointage En</a>
-      </nav>
+      <div class="nav-section-title">Features</div>
+      <div class="nav-item">
+        <a href="../Platform_features/index.html">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z" /></svg>
+          Overview
+        </a>
+      </div>
+      <div class="nav-item">
+        <a href="../Platform_features/index.html#connexion-a-la-plateforme">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" /></svg>
+          Platform Login
+        </a>
+      </div>
+      <div class="nav-item">
+        <a href="../Platform_features/index.html#journaux-de-presence">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25zM6.75 12h.008v.008H6.75V12zm0 3h.008v.008H6.75V15zm0 3h.008v.008H6.75V18z" /></svg>
+          Attendance Logs
+        </a>
+      </div>
+      <div class="nav-item">
+        <a href="../Platform_features/index.html#tableau-de-bord">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M7.5 14.25v2.25m3-4.5v4.5m3-6.75v6.75m3-9v9M6 20.25h12A2.25 2.25 0 0020.25 18V6A2.25 2.25 0 0018 3.75H6A2.25 2.25 0 003.75 6v12A2.25 2.25 0 006 20.25z" /></svg>
+          Dashboard
+        </a>
+      </div>
+      <div class="nav-item">
+        <a href="../Platform_features/index.html#employes">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" /></svg>
+          Employees
+        </a>
+      </div>
+      <div class="nav-item">
+        <a href="../Platform_features/index.html#absences">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5m-9-6h.008v.008H12v-.008zM12 15h.008v.008H12V15zm0 2.25h.008v.008H12v-.008zM9.75 15h.008v.008H9.75V15zm0 2.25h.008v.008H9.75v-.008zM7.5 15h.008v.008H7.5V15zm0 2.25h.008v.008H7.5v-.008zm6.75-4.5h.008v.008h-.008v-.008zm0 2.25h.008v.008h-.008V15zm0 2.25h.008v.008h-.008v-.008zm2.25-4.5h.008v.008H16.5v-.008zm0 2.25h.008v.008H16.5V15z" /></svg>
+          Absences
+        </a>
+      </div>
+      <div class="nav-item">
+        <a href="../Platform_features/index.html#departements">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 3.75h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008z" /></svg>
+          Departments
+        </a>
+      </div>
+      <div class="nav-item">
+        <a href="../Platform_features/index.html#sites-qr-codes">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 013.75 9.375v-4.5zM3.75 14.625c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5a1.125 1.125 0 01-1.125-1.125v-4.5zM13.5 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 0113.5 9.375v-4.5z" /><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 6.75h.75v.75h-.75v-.75zM6.75 17.25h.75v.75h-.75v-.75zM16.5 6.75h.75v.75h-.75v-.75zM13.5 13.5h.75v.75h-.75v-.75zM13.5 19.5h.75v.75h-.75v-.75zM19.5 13.5h.75v.75h-.75v-.75zM19.5 19.5h.75v.75h-.75v-.75zM16.5 16.5h.75v.75h-.75v-.75z" /></svg>
+          Sites & QR Codes
+        </a>
+      </div>
+      <div class="nav-item">
+        <a href="../Platform_features/index.html#rapports">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25M9 16.5v.75m3-3v3M15 12v5.25m-4.5-11.625h.375a3 3 0 013 3v1.5a3 3 0 003 3h1.5m-10.875-5.25h9.375M6.75 19.5h10.5a2.25 2.25 0 002.25-2.25V7.5a2.25 2.25 0 00-2.25-2.25H6.75A2.25 2.25 0 004.5 7.5v9.75A2.25 2.25 0 006.75 19.5z" /></svg>
+          Reports
+        </a>
+      </div>
+      <div class="nav-item">
+        <a href="../Platform_features/index.html#configurations">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.324.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 011.37.49l1.296 2.247a1.125 1.125 0 01-.26 1.431l-1.003.827c-.293.24-.438.613-.431.992a6.759 6.759 0 010 .255c-.007.378.138.75.43.99l1.005.828c.424.35.534.954.26 1.43l-1.298 2.247a1.125 1.125 0 01-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.57 6.57 0 01-.22.128c-.331.183-.581.495-.644.869l-.213 1.28c-.09.543-.56.941-1.11.941h-2.594c-.55 0-1.02-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 01-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 01-1.369-.49l-1.297-2.247a1.125 1.125 0 01.26-1.431l1.004-.827c.292-.24.437-.613.43-.992a6.932 6.932 0 010-.255c.007-.378-.138-.75-.43-.99l-1.004-.828a1.125 1.125 0 01-.26-1.43l1.297-2.247a1.125 1.125 0 011.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.087.22-.128.332-.183.582-.495.644-.869l.214-1.281z" /><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+          Settings
+        </a>
+      </div>
+      <div class="nav-item">
+        <a href="../Platform_features/index.html#programmes">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+          Schedules
+        </a>
+      </div>
 
-      <div class="wy-nav-content">
-        <div class="rst-content">
-          <div role="navigation" aria-label="Page navigation">
-  <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">Introduction</li>
-      <li class="wy-breadcrumbs-aside">
-            <a href="../_sources/Config_guide/index.rst.txt" rel="nofollow"> View page source</a>
-      </li>
-  </ul>
-  <hr/>
-</div>
-          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
-           <div itemprop="articleBody">
-             
-  <section id="introduction">
-<h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading"></a></h1>
-<p>Imagine that your company has two locations: one in Yaoundé and the other in Douala. After acquiring a license, you can deploy the time-tracking solution across your organization. Below are the steps to properly configure the tool.</p>
-</section>
-<section id="step-1-logging-in-to-the-dedicated-platform">
-<h1>Step 1: Logging in to the Dedicated Platform<a class="headerlink" href="#step-1-logging-in-to-the-dedicated-platform" title="Permalink to this heading"></a></h1>
-<p>When you subscribe to the license, you will be provided with a personalized platform to manage your company. As an administrator, you must log in using your credentials.</p>
-</section>
-<section id="step-2-company-setup">
-<h1>Step 2: Company Setup<a class="headerlink" href="#step-2-company-setup" title="Permalink to this heading"></a></h1>
-<p>Once logged in, go to the <strong>Settings</strong> tab to configure your organization:</p>
-<ul class="simple">
-<li><p>Create your two sites (Douala and Yaoundé).</p></li>
-<li><p>Define the specific working hours for each site.</p></li>
-<li><p>Add the various departments and positions in your company.</p></li>
-</ul>
-<p>Each employee must be assigned to a specific department and position.</p>
-</section>
-<section id="step-3-adding-additional-users">
-<h1>Step 3: Adding Additional Users<a class="headerlink" href="#step-3-adding-additional-users" title="Permalink to this heading"></a></h1>
-<p>You can then invite other users depending on their role:</p>
-<ul class="simple">
-<li><p><strong>Administrator</strong>: Has the same rights as you on the platform.</p></li>
-<li><p><strong>Account Manager</strong>: Intended only for resellers. They can add companies and users but only have access to the <strong>Account</strong> tab.</p></li>
-<li><p><strong>HR</strong>: Has restricted access limited to the <strong>Reporting</strong> tab, allowing them to view attendance records only.</p></li>
-</ul>
-</section>
-<section id="step-4-employee-registration">
-<h1>Step 4: Employee Registration<a class="headerlink" href="#step-4-employee-registration" title="Permalink to this heading"></a></h1>
-<ul class="simple">
-<li><p>Add employees manually via the platform.</p></li>
-<li><p>Ensure that each phone number matches <strong>exactly</strong> the one used on WhatsApp; otherwise, the time-tracking system will not function.</p></li>
-<li><p>A feature to allow bulk import via Excel will be available soon.</p></li>
-</ul>
-</section>
-<section id="step-5-on-site-implementation-and-testing-phase">
-<h1>Step 5: On-site Implementation and Testing Phase<a class="headerlink" href="#step-5-on-site-implementation-and-testing-phase" title="Permalink to this heading"></a></h1>
-<ul class="simple">
-<li><p><strong>Display the QR Code</strong> at the entrance of each site (e.g., at reception) so that employees can easily scan and clock in.</p></li>
-<li><p><strong>Inform and train employees</strong> on how the system works.</p></li>
-<li><p>Schedule a <strong>test week</strong> to train teams and confirm that the system is functioning correctly.</p></li>
-</ul>
-</section>
+      <div class="nav-section-title">Configuration Guide</div>
+      <div class="nav-item" id="nav-introduction">
+        <a href="#introduction">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" /></svg>
+          Introduction
+        </a>
+      </div>
+      <div class="nav-item" id="nav-etape-1">
+        <a href="#etape-1-connexion-a-la-plateforme-dediee">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9" /></svg>
+          Step 1: Login
+        </a>
+      </div>
+      <div class="nav-item" id="nav-etape-2">
+        <a href="#etape-2-configuration-des-parametres-de-base">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 11-3 0m3 0a1.5 1.5 0 10-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-9.75 0h9.75" /></svg>
+          Step 2: Basic Settings
+        </a>
+      </div>
+      <div class="nav-item" id="nav-etape-3">
+        <a href="#etape-3-ajout-dutilisateurs-supplementaires">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zM4 19.235v-.11a6.375 6.375 0 0112.75 0v.109A12.318 12.318 0 0110.374 21c-2.331 0-4.512-.645-6.374-1.766z" /></svg>
+          Step 3: Users
+        </a>
+      </div>
+      <div class="nav-item" id="nav-etape-4">
+        <a href="#etape-4-enregistrement-des-employes">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15 9h3.75M15 12h3.75M15 15h3.75M4.5 19.5h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5zm6-10.125a1.875 1.875 0 11-3.75 0 1.875 1.875 0 013.75 0zm1.294 6.336a6.721 6.721 0 01-3.17.789 6.721 6.721 0 01-3.168-.789 3.376 3.376 0 016.338 0z" /></svg>
+          Step 4: Employees
+        </a>
+      </div>
+      <div class="nav-item" id="nav-etape-5">
+        <a href="#etape-5-creation-des-programmes-de-travail">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" /></svg>
+          Step 5: Schedules
+        </a>
+      </div>
+      <div class="nav-item" id="nav-etape-6">
+        <a href="#etape-6-mise-en-place-sur-site-et-phase-de-test">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-.45 3.867 3.745 3.745 0 01-3.867.45A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.867-.45 3.745 3.745 0 01-.45-3.867A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 01.45-3.867 3.746 3.746 0 013.867-.45A3.745 3.745 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.867.45 3.745 3.745 0 01.45 3.867A3.745 3.745 0 0121 12z" /></svg>
+          Step 6: Deployment
+        </a>
+      </div>
+    </div>
+  </nav>
 
+  <div class="main">
 
-           </div>
-          </div>
-          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="../Platform_features/index.html" class="btn btn-neutral float-left" title="Overview" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    <div class="topbar">
+      <button class="btn-menu" id="btnMenu" aria-label="Open menu">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect y="3" width="20" height="2" rx="1" fill="#4a5e72"/><rect y="9" width="20" height="2" rx="1" fill="#4a5e72"/><rect y="15" width="20" height="2" rx="1" fill="#4a5e72"/></svg>
+      </button>
+      <a href="../index.html">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" /></svg>
+      </a>
+      <span class="sep">›</span>
+      <span class="current">Configuration Guide</span>
+      <div class="lang-switch">
+        <a href="../../../../fr/build/html/Config_guide/index.html">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253M3 12a8.959 8.959 0 01.284-2.253" /></svg>
+          Français
+        </a>
+      </div>
     </div>
 
-  <hr/>
+    <div class="page-header">
+      <div class="label">Configuration Guide</div>
+      <h1>Step-by-step setup</h1>
+      <div class="header-desc">
+        From initial login to on-site deployment — everything you need to do to correctly configure the attendance tracking solution within your company.
+      </div>
+    </div>
 
-  <div role="contentinfo">
-    <p>&#169; Copyright 2025, Kaeyros Analytics.</p>
-  </div>
+    <div class="stepper">
+      <div class="step-pill"><a href="#introduction"><span class="step-num">·</span> Introduction</a></div>
+      <span class="step-arrow"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" /></svg></span>
+      <div class="step-pill"><a href="#etape-1-connexion-a-la-plateforme-dediee"><span class="step-num">1</span> Login</a></div>
+      <span class="step-arrow"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" /></svg></span>
+      <div class="step-pill"><a href="#etape-2-configuration-des-parametres-de-base"><span class="step-num">2</span> Settings</a></div>
+      <span class="step-arrow"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" /></svg></span>
+      <div class="step-pill"><a href="#etape-3-ajout-dutilisateurs-supplementaires"><span class="step-num">3</span> Users</a></div>
+      <span class="step-arrow"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" /></svg></span>
+      <div class="step-pill"><a href="#etape-4-enregistrement-des-employes"><span class="step-num">4</span> Employees</a></div>
+      <span class="step-arrow"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" /></svg></span>
+      <div class="step-pill"><a href="#etape-5-creation-des-programmes-de-travail"><span class="step-num">5</span> Schedules</a></div>
+      <span class="step-arrow"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" /></svg></span>
+      <div class="step-pill"><a href="#etape-6-mise-en-place-sur-site-et-phase-de-test"><span class="step-num">6</span> Deployment</a></div>
+    </div>
 
-  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    provided by <a href="https://readthedocs.org">Read the Docs</a>.
-   
+    <div class="content">
 
-</footer>
+      <!-- INTRODUCTION -->
+      <div class="doc-section" id="introduction">
+        <div class="intro-header">
+          <span class="s-icon">
+            <!-- Heroicon: book-open -->
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" /></svg>
+          </span>
+          <h2>Introduction</h2>
+        </div>
+        <p>This guide describes step by step the complete setup of the attendance tracking solution within your company. Let us assume your organisation has two sites, one in <strong>Yaoundé</strong> and one in <strong>Douala</strong>, with teams organised into distinct departments and potentially different working hours depending on the site. Here are the steps to follow to correctly configure the tool.</p>
+        <div class="info-block tip">
+          <span class="ib-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" /></svg>
+          </span>
+          <div class="ib-body">
+            <div class="ib-title">Recommended order</div>
+            <p>For optimal configuration, follow the steps below in order. Some actions depend on elements created previously: shifts must exist before creating schedules, and employees must be registered before being assigned to a schedule.</p>
+          </div>
         </div>
       </div>
-    </section>
+
+      <!-- STEP 1 -->
+      <div class="doc-section" id="etape-1-connexion-a-la-plateforme-dediee">
+        <div class="step-header">
+          <div class="step-badge">1</div>
+          <div class="step-meta">
+            <div class="step-label-text">Step 1</div>
+            <h2>Login to the dedicated platform</h2>
+          </div>
+        </div>
+        <p>As an administrator, log in to the platform using the credentials (email address and password) provided to you at the time of subscription:</p>
+        <div class="url-block">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244" /></svg>
+          <a href="https://pointing-front.kaeyros.org">https://pointing-front.kaeyros.org</a>
+        </div>
+        <p style="margin-top: 14px;">Once logged in, you are automatically redirected to the <strong>attendance logs</strong>. Navigation between different sections is done via the left sidebar menu.</p>
+      </div>
+
+      <!-- STEP 2 -->
+      <div class="doc-section" id="etape-2-configuration-des-parametres-de-base">
+        <div class="step-header">
+          <div class="step-badge">2</div>
+          <div class="step-meta">
+            <div class="step-label-text">Step 2</div>
+            <h2>Basic settings configuration</h2>
+          </div>
+        </div>
+        <p>Go to the <strong>Settings</strong> tab to configure the fundamental elements of your organisation. This step involves <strong>four sub-steps</strong> to be completed in the following order.</p>
+
+        <div class="substep-tag">2a — Create departments</div>
+        <p>Go to the <strong>Departments</strong> sub-tab (also accessible from the sidebar). Click <strong>"Add a department"</strong> and enter the name of each department in your company (e.g. Accounting, Production, Logistics). Repeat for each department to create.</p>
+
+        <div class="substep-tag">2b — Create positions</div>
+        <p>In the <strong>Positions</strong> sub-tab, click <strong>"Add a position"</strong> and enter the name and, if necessary, a description for each job title (e.g. Manager, Technician, Security Officer). These positions will be available when creating employee profiles.</p>
+
+        <div class="substep-tag">2c — Create sites and define their hours</div>
+        <p>Go to the <strong>Sites & QR Codes</strong> tab from the sidebar. Click <strong>"Add a site"</strong> and follow the two steps of the form:</p>
+        <ul>
+          <li><strong>Step 1 — General information</strong>: enter the site name (e.g. Yaoundé HQ), its address, time zone and geographic coordinates. Click <strong>"Get location"</strong> to retrieve them automatically;</li>
+          <li><strong>Step 2 — Working days and hours</strong>: select the working days and set the opening and closing hours. You can apply the same hours to all days or customise them day by day.</li>
+        </ul>
+        <p>Click <strong>"Confirm"</strong>. A <strong>unique QR code</strong> is automatically generated for this site. Repeat for each of your sites (Yaoundé, Douala, etc.).</p>
+
+        <div class="substep-tag">2d — Create shifts</div>
+        <p>In the <strong>Shifts</strong> sub-tab (Settings tab), click <strong>"Create a new shift"</strong>. Enter the shift name, its start and end times, enable the <strong>"Night shift"</strong> option if necessary, and specify the maximum number of employees that can be assigned. Create as many shifts as needed (e.g. Morning shift 7am–3pm, Night shift 8pm–5am).</p>
+
+        <div class="info-block tip">
+          <span class="ib-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" /></svg>
+          </span>
+          <div class="ib-body">
+            <div class="ib-title">Good to know</div>
+            <p>The shifts created here will be available when building work schedules in step 5. Make sure to create all the shifts you need before moving on.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 3 -->
+      <div class="doc-section" id="etape-3-ajout-dutilisateurs-supplementaires">
+        <div class="step-header">
+          <div class="step-badge">3</div>
+          <div class="step-meta">
+            <div class="step-label-text">Step 3</div>
+            <h2>Adding additional users</h2>
+          </div>
+        </div>
+        <p>If other people need access to the platform to monitor attendance, add them from the <strong>Users</strong> sub-tab (Settings tab). Click <strong>"Add a user"</strong> and enter their name, email address, a password and the company they belong to.</p>
+        <p>Three roles are available:</p>
+        <div class="role-cards">
+          <div class="role-card admin-r">
+            <div class="r-badge">Administrator</div>
+            <h3>Full access</h3>
+            <p>Same access as yours — all platform features are available.</p>
+          </div>
+          <div class="role-card hr-r">
+            <div class="r-badge">HR</div>
+            <h3>Restricted access</h3>
+            <p>Limited access to HR tracking features.</p>
+          </div>
+          <div class="role-card am-r">
+            <div class="r-badge">Account Manager</div>
+            <h3>Multi-company</h3>
+            <p>Reserved for resellers — allows managing multiple client companies from a single interface.</p>
+          </div>
+        </div>
+        <p>Share the email address and password with each user so they can log in to the platform.</p>
+      </div>
+
+      <!-- STEP 4 -->
+      <div class="doc-section" id="etape-4-enregistrement-des-employes">
+        <div class="step-header">
+          <div class="step-badge">4</div>
+          <div class="step-meta">
+            <div class="step-label-text">Step 4</div>
+            <h2>Employee registration</h2>
+          </div>
+        </div>
+        <p>Go to the <strong>Employees</strong> tab and click <strong>"Add an employee"</strong>. Two addition modes are available:</p>
+        <ul>
+          <li><strong>Single addition</strong>: manually enter the employee's information — first name, last name, email, phone number, department, position, assigned sites and profile photo (optional);</li>
+          <li><strong>Bulk addition</strong>: import multiple employees simultaneously via an Excel or CSV file (.xlsx, .xls, .csv — max 10 MB), selecting the common site, department and position beforehand.</li>
+        </ul>
+        <div class="info-block important">
+          <span class="ib-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" /></svg>
+          </span>
+          <div class="ib-body">
+            <div class="ib-title">Warning — Phone number</div>
+            <p>Enter the phone number <strong>exactly as registered on WhatsApp</strong>, with or without the 6 depending on the format (e.g. <strong>23789898989</strong> or <strong>237689898989</strong>). An incorrect number will prevent the employee from checking in via WhatsApp.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 5 -->
+      <div class="doc-section" id="etape-5-creation-des-programmes-de-travail">
+        <div class="step-header">
+          <div class="step-badge">5</div>
+          <div class="step-meta">
+            <div class="step-label-text">Step 5</div>
+            <h2>Creating work schedules</h2>
+          </div>
+        </div>
+        <p>Go to the <strong>Schedules</strong> tab and click <strong>"Create new schedule"</strong>. Schedules allow you to associate employees with shifts on defined working days. Fill in the following information:</p>
+        <ul>
+          <li><strong>Schedule name</strong>: give an explicit name (e.g. Day Schedule Yaoundé, Night Schedule Douala);</li>
+          <li><strong>Working days</strong>: select the days to which the schedule applies;</li>
+          <li><strong>Capacity</strong>: indicate the maximum number of employees that can be enrolled across all shifts;</li>
+          <li><strong>Shifts and employees</strong>: for each shift, select the shift and add the employees to assign. Click <strong>"+ Add a shift"</strong> to create multiple blocks if needed. An employee can be enrolled in multiple schedules as long as their shifts do not overlap;</li>
+          <li><strong>Dates</strong>: choose between <strong>Unlimited</strong>, a <strong>date range</strong> or an <strong>explicit date list</strong> depending on the planned duration of the schedule;</li>
+          <li><strong>Exception dates</strong>: enter days to exclude from the validity period (public holidays, exceptional closures, etc.).</li>
+        </ul>
+        <p>Click <strong>"Save"</strong> to confirm. Repeat for each schedule needed depending on your sites and teams.</p>
+        <div class="info-block tip">
+          <span class="ib-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" /></svg>
+          </span>
+          <div class="ib-body">
+            <div class="ib-title">Good to know</div>
+            <p>The system uses schedules to automatically calculate expected attendance, detect absences and measure late arrivals. <strong>An employee not assigned to a schedule will not be tracked by the system.</strong></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 6 -->
+      <div class="doc-section" id="etape-6-mise-en-place-sur-site-et-phase-de-test">
+        <div class="step-header">
+          <div class="step-badge">6</div>
+          <div class="step-meta">
+            <div class="step-label-text">Step 6</div>
+            <h2>On-site setup and testing phase</h2>
+          </div>
+        </div>
+        <p>Once configuration is complete, all that remains is to physically deploy the system at your sites.</p>
+        <ul>
+          <li><strong>Display the QR code</strong> of each site at the entrance (reception or security post). The QR code can be downloaded from the <strong>Sites & QR Codes</strong> tab by clicking the three dots of the site and then <strong>"Download QR"</strong>. Test it before printing to verify it correctly redirects to the configured WhatsApp number;</li>
+          <li><strong>Inform and train</strong> employees on how the system works: scan the QR Code at arrival <em>and</em> at departure, using the WhatsApp number registered on the platform;</li>
+          <li>Plan a <strong>test period of at least one week</strong> to train teams, correct any phone number errors and validate proper operation of the system across all sites.</li>
+        </ul>
+        <div class="info-block tip">
+          <span class="ib-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" /></svg>
+          </span>
+          <div class="ib-body">
+            <div class="ib-title">Good to know</div>
+            <p>In case of a missed check-in during the testing or production phase, a manager can manually record an employee's attendance from the <strong>Attendance Logs</strong> tab by clicking <strong>"Record attendance"</strong>. Absences with no check-in are automatically detected by the system at the end of each scheduled working day.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <footer class="page-footer">
+      <span>© 2026 Kaeyros Analytics</span>
+      <div class="nav-buttons">
+        <a href="../Platform_features/index.html" class="btn-nav">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" /></svg>
+          Previous
+        </a>
+      </div>
+    </footer>
+
   </div>
+
   <script>
-      jQuery(function () {
-          SphinxRtdTheme.Navigation.enable(true);
-      });
-  </script> 
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('sidebarOverlay');
+    const btnMenu = document.getElementById('btnMenu');
+    function openSidebar() { sidebar.classList.add('open'); overlay.classList.add('active'); document.body.style.overflow = 'hidden'; }
+    function closeSidebar() { sidebar.classList.remove('open'); overlay.classList.remove('active'); document.body.style.overflow = ''; }
+    btnMenu.addEventListener('click', function(e) { e.stopPropagation(); sidebar.classList.contains('open') ? closeSidebar() : openSidebar(); });
+    overlay.addEventListener('click', closeSidebar);
+    document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeSidebar(); });
+    window.addEventListener('resize', function() { if (window.innerWidth > 768) closeSidebar(); });
+
+    (function () {
+      const sectionIds = ['introduction','etape-1-connexion-a-la-plateforme-dediee','etape-2-configuration-des-parametres-de-base','etape-3-ajout-dutilisateurs-supplementaires','etape-4-enregistrement-des-employes','etape-5-creation-des-programmes-de-travail','etape-6-mise-en-place-sur-site-et-phase-de-test'];
+      const navMap = { 'introduction': 'nav-introduction', 'etape-1-connexion-a-la-plateforme-dediee': 'nav-etape-1', 'etape-2-configuration-des-parametres-de-base': 'nav-etape-2', 'etape-3-ajout-dutilisateurs-supplementaires': 'nav-etape-3', 'etape-4-enregistrement-des-employes': 'nav-etape-4', 'etape-5-creation-des-programmes-de-travail': 'nav-etape-5', 'etape-6-mise-en-place-sur-site-et-phase-de-test': 'nav-etape-6' };
+      function setActive(id) { sectionIds.forEach(sid => { const navEl = document.getElementById(navMap[sid]); if (navEl) navEl.classList.remove('active'); }); const target = document.getElementById(navMap[id]); if (target) target.classList.add('active'); }
+      const observer = new IntersectionObserver((entries) => { entries.forEach(entry => { if (entry.isIntersecting) setActive(entry.target.id); }); }, { rootMargin: '-10% 0px -80% 0px', threshold: 0 });
+      sectionIds.forEach(id => { const el = document.getElementById(id); if (el) observer.observe(el); });
+    })();
+  </script>
 
 </body>
 </html>

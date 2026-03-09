@@ -1,310 +1,2506 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Platform Features — Pointage Documentation 1.0</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Sora:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --blue-900: #0f2d57;
+        --blue-700: #1a4d8f;
+        --blue-600: #1e5fad;
+        --blue-500: #2471c8;
+        --blue-100: #ddeeff;
+        --blue-50: #f0f6ff;
+        --accent: #f0a500;
+        --text: #1c2b3a;
+        --text-light: #4a5e72;
+        --border: #d4e3f5;
+        --white: #ffffff;
+        --sidebar-w: 280px;
+        --radius: 8px;
+      }
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family: "Inter", sans-serif;
+        font-size: 15px;
+        color: var(--text);
+        background: #f5f8fc;
+        display: flex;
+        min-height: 100vh;
+      }
+      a {
+        color: var(--blue-600);
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+      p {
+        line-height: 1.75;
+        margin-bottom: 14px;
+      }
+      strong {
+        font-weight: 600;
+      }
+      ul,
+      ol {
+        padding-left: 22px;
+        margin-bottom: 14px;
+      }
+      li {
+        margin-bottom: 6px;
+        line-height: 1.7;
+      }
+      li p {
+        margin-bottom: 4px;
+      }
 
+      .sidebar-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.45);
+        z-index: 98;
+        opacity: 0;
+        transition: opacity 0.25s;
+        pointer-events: none;
+      }
+      .sidebar-overlay.active {
+        opacity: 1;
+        pointer-events: all;
+      }
 
-<!DOCTYPE html>
-<html class="writer-html5" lang="en">
-<head>
-  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+      .sidebar {
+        width: var(--sidebar-w);
+        min-height: 100vh;
+        background: var(--blue-900);
+        display: flex;
+        flex-direction: column;
+        flex-shrink: 0;
+        position: sticky;
+        top: 0;
+        height: 100vh;
+        overflow-y: auto;
+        z-index: 100;
+      }
+      .sidebar-logo {
+        padding: 24px 20px 20px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      }
+      .sidebar-logo a {
+        font-family: "Sora", sans-serif;
+        font-size: 18px;
+        font-weight: 700;
+        color: var(--white);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        text-decoration: none;
+      }
+      .sidebar-search {
+        padding: 14px 16px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      }
+      .sidebar-search input {
+        width: 100%;
+        padding: 8px 12px;
+        border-radius: 6px;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        background: rgba(255, 255, 255, 0.08);
+        color: var(--white);
+        font-size: 13px;
+        outline: none;
+      }
+      .sidebar-search input::placeholder {
+        color: rgba(255, 255, 255, 0.4);
+      }
+      .sidebar-nav {
+        padding: 12px 0 24px;
+        flex: 1;
+      }
+      .nav-section-title {
+        font-size: 10px;
+        font-weight: 600;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.4);
+        padding: 16px 20px 6px;
+      }
+      .nav-item a {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 7px 20px;
+        font-size: 13px;
+        color: rgba(255, 255, 255, 0.75);
+        transition:
+          background 0.15s,
+          color 0.15s;
+        border-left: 3px solid transparent;
+      }
+      .nav-item a svg {
+        width: 15px;
+        height: 15px;
+        flex-shrink: 0;
+        opacity: 0.6;
+      }
+      .nav-item a:hover {
+        background: rgba(255, 255, 255, 0.06);
+        color: var(--white);
+        text-decoration: none;
+      }
+      .nav-item.active a {
+        color: var(--white);
+        border-left-color: var(--accent);
+        background: rgba(255, 255, 255, 0.08);
+        font-weight: 600;
+      }
+      .nav-item.active a svg {
+        opacity: 1;
+      }
 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Overview &mdash; Pointage En 1.0 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
-      <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=3437f865" />
+      .main {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+      }
 
-  
-      <script src="../_static/jquery.js?v=5d32c60e"></script>
-      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=359c27e9"></script>
-      <script src="../_static/doctools.js?v=888ff710"></script>
-      <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
-    <script src="../_static/js/theme.js"></script>
-    <link rel="index" title="Index" href="../genindex.html" />
-    <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Introduction" href="../Config_guide/index.html" />
-    <link rel="prev" title="Overview of the pointing tool" href="../General_presentation/index.html" /> 
-</head>
+      .topbar {
+        background: var(--white);
+        border-bottom: 1px solid var(--border);
+        padding: 0 40px;
+        height: 52px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 13px;
+        color: var(--text-light);
+        position: sticky;
+        top: 0;
+        z-index: 10;
+      }
+      .topbar a {
+        color: var(--text-light);
+        display: flex;
+        align-items: center;
+      }
+      .topbar a svg {
+        width: 16px;
+        height: 16px;
+      }
+      .topbar .sep {
+        color: #b0bec9;
+        margin: 0 2px;
+      }
+      .topbar .current {
+        color: var(--text);
+        font-weight: 500;
+      }
 
-<body class="wy-body-for-nav"> 
-  <div class="wy-grid-for-nav">
-    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
-      <div class="wy-side-scroll">
-        <div class="wy-side-nav-search" >
+      .btn-menu {
+        display: none;
+        align-items: center;
+        justify-content: center;
+        width: 36px;
+        height: 36px;
+        margin-right: 8px;
+        border: none;
+        background: transparent;
+        cursor: pointer;
+        border-radius: 6px;
+        padding: 0;
+        flex-shrink: 0;
+        transition: background 0.15s;
+      }
+      .btn-menu:hover {
+        background: var(--blue-50);
+      }
+      .btn-menu svg {
+        display: block;
+      }
 
-          
-          
-          <a href="../index.html" class="icon icon-home">
-            Pointage En
+      .page-header {
+        background: var(--white);
+        border-bottom: 1px solid var(--border);
+        padding: 32px 48px 28px;
+      }
+      .page-header .label {
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--blue-500);
+        margin-bottom: 8px;
+      }
+      .page-header h1 {
+        font-family: "Sora", sans-serif;
+        font-size: 26px;
+        font-weight: 700;
+        color: var(--blue-900);
+        line-height: 1.25;
+      }
+      .page-header .underline {
+        width: 48px;
+        height: 3px;
+        background: var(--accent);
+        border-radius: 2px;
+        margin-top: 12px;
+      }
+
+      .on-page-nav {
+        background: var(--white);
+        border-bottom: 1px solid var(--border);
+        padding: 0 48px;
+        display: flex;
+        gap: 4px;
+        overflow-x: auto;
+        flex-wrap: nowrap;
+      }
+      .on-page-nav a {
+        display: inline-block;
+        padding: 12px 14px;
+        font-size: 13px;
+        font-weight: 500;
+        color: var(--text-light);
+        border-bottom: 2px solid transparent;
+        white-space: nowrap;
+        text-decoration: none;
+        transition:
+          color 0.15s,
+          border-color 0.15s;
+      }
+      .on-page-nav a:hover {
+        color: var(--blue-600);
+        border-bottom-color: var(--blue-100);
+      }
+
+      .content {
+        padding: 40px 48px 60px;
+        max-width: 900px;
+      }
+
+      .doc-section {
+        margin-bottom: 56px;
+      }
+      .doc-section:last-child {
+        margin-bottom: 0;
+      }
+
+      /* Section headers */
+      .section-header {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        margin-bottom: 20px;
+        padding-bottom: 14px;
+        border-bottom: 2px solid var(--blue-50);
+      }
+      .section-header .s-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 10px;
+        background: var(--blue-50);
+        border: 1px solid var(--blue-100);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+      .section-header .s-icon svg {
+        width: 22px;
+        height: 22px;
+        stroke: var(--blue-600);
+      }
+      .section-header h2 {
+        font-family: "Sora", sans-serif;
+        font-size: 20px;
+        font-weight: 700;
+        color: var(--blue-900);
+      }
+
+      .sub-title {
+        font-family: "Sora", sans-serif;
+        font-size: 15px;
+        font-weight: 600;
+        color: var(--blue-900);
+        margin: 28px 0 10px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .sub-title::before {
+        content: "";
+        width: 4px;
+        height: 16px;
+        background: var(--accent);
+        border-radius: 2px;
+        flex-shrink: 0;
+      }
+
+      .img-wrap {
+        margin: 20px 0;
+        border-radius: var(--radius);
+        overflow: hidden;
+        border: 1px solid var(--border);
+        background: var(--white);
+      }
+      .img-wrap img {
+        display: block;
+        width: 100%;
+        height: auto;
+      }
+      .img-caption {
+        padding: 8px 14px;
+        font-size: 12px;
+        color: var(--text-light);
+        border-top: 1px solid var(--border);
+        background: #fafcff;
+        font-style: italic;
+      }
+
+      /* Info blocks */
+      .info-block {
+        border-radius: var(--radius);
+        padding: 14px 18px;
+        margin: 20px 0;
+        display: flex;
+        gap: 12px;
+        align-items: flex-start;
+      }
+      .info-block.tip {
+        background: var(--blue-50);
+        border: 1px solid var(--blue-100);
+        border-left: 4px solid var(--blue-500);
+      }
+      .info-block.important {
+        background: #fff8ee;
+        border: 1px solid #fde9b0;
+        border-left: 4px solid var(--accent);
+      }
+      .info-block.note {
+        background: #f6fff8;
+        border: 1px solid #c3e8cc;
+        border-left: 4px solid #3cb96a;
+      }
+      .info-block .ib-icon {
+        flex-shrink: 0;
+        margin-top: 1px;
+        width: 20px;
+        height: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .info-block.tip .ib-icon svg {
+        stroke: var(--blue-600);
+        width: 20px;
+        height: 20px;
+      }
+      .info-block.important .ib-icon svg {
+        stroke: #c87000;
+        width: 20px;
+        height: 20px;
+      }
+      .info-block.note .ib-icon svg {
+        stroke: #2a9e50;
+        width: 20px;
+        height: 20px;
+      }
+      .info-block .ib-body {
+        flex: 1;
+      }
+      .info-block .ib-title {
+        font-weight: 600;
+        font-size: 13px;
+        margin-bottom: 4px;
+        color: var(--text);
+      }
+      .info-block p {
+        font-size: 13.5px;
+        color: var(--text-light);
+        margin: 0;
+        line-height: 1.6;
+      }
+
+      .type-cards {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+        margin: 20px 0;
+      }
+      .type-card {
+        background: var(--white);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 20px;
+        position: relative;
+      }
+      .type-card.admin {
+        border-top: 3px solid var(--blue-500);
+      }
+      .type-card.resell {
+        border-top: 3px solid var(--accent);
+      }
+      .type-card .badge {
+        display: inline-block;
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        padding: 2px 8px;
+        border-radius: 10px;
+        margin-bottom: 8px;
+      }
+      .type-card.admin .badge {
+        background: var(--blue-50);
+        color: var(--blue-600);
+      }
+      .type-card.resell .badge {
+        background: #fff8ee;
+        color: #b87c00;
+      }
+      .type-card h3 {
+        font-size: 14px;
+        font-weight: 600;
+        margin-bottom: 8px;
+        color: var(--text);
+      }
+      .type-card p {
+        font-size: 13px;
+        color: var(--text-light);
+        margin: 0;
+        line-height: 1.55;
+      }
+
+      ol.steps {
+        padding-left: 0;
+        list-style: none;
+        counter-reset: steps;
+        margin-bottom: 14px;
+      }
+      ol.steps li {
+        counter-increment: steps;
+        display: flex;
+        gap: 14px;
+        align-items: flex-start;
+        margin-bottom: 10px;
+      }
+      ol.steps li::before {
+        content: counter(steps);
+        width: 26px;
+        height: 26px;
+        background: var(--blue-600);
+        color: var(--white);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+        font-weight: 700;
+        flex-shrink: 0;
+        margin-top: 2px;
+      }
+      ol.steps li p {
+        margin: 0;
+      }
+
+      .step-label {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: var(--blue-900);
+        color: var(--white);
+        font-size: 12px;
+        font-weight: 600;
+        padding: 4px 12px;
+        border-radius: 4px;
+        margin: 16px 0 10px;
+      }
+
+      .data-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 16px 0;
+        font-size: 13.5px;
+      }
+      .data-table th {
+        background: var(--blue-900);
+        color: var(--white);
+        padding: 10px 14px;
+        text-align: left;
+        font-weight: 600;
+        font-size: 12px;
+      }
+      .data-table td {
+        padding: 9px 14px;
+        border-bottom: 1px solid var(--border);
+      }
+      .data-table tr:last-child td {
+        border-bottom: none;
+      }
+      .data-table tr:nth-child(even) td {
+        background: var(--blue-50);
+      }
+
+      /* URL block */
+      .url-block {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: var(--blue-50);
+        border: 1px solid var(--blue-100);
+        border-radius: 6px;
+        padding: 10px 16px;
+        font-size: 14px;
+        font-weight: 500;
+        color: var(--blue-600);
+        margin: 10px 0;
+      }
+      .url-block svg {
+        width: 16px;
+        height: 16px;
+        stroke: var(--blue-600);
+        flex-shrink: 0;
+      }
+
+      /* Footer */
+      .page-footer {
+        margin-top: auto;
+        padding: 20px 48px;
+        border-top: 1px solid var(--border);
+        background: var(--white);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 12px;
+        color: var(--text-light);
+      }
+      .page-footer a {
+        color: var(--text-light);
+      }
+      .nav-buttons {
+        display: flex;
+        gap: 10px;
+      }
+      .btn-nav {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        padding: 8px 16px;
+        border-radius: 6px;
+        font-size: 13px;
+        font-weight: 500;
+        text-decoration: none !important;
+        transition: background 0.15s;
+        border: 1px solid var(--border);
+        color: var(--text) !important;
+        background: var(--white);
+      }
+      .btn-nav svg {
+        width: 16px;
+        height: 16px;
+        stroke: currentColor;
+      }
+      .btn-nav:hover {
+        background: var(--blue-50);
+        border-color: var(--blue-100);
+      }
+      .btn-nav.primary {
+        background: var(--blue-600);
+        color: var(--white) !important;
+        border-color: var(--blue-600);
+      }
+      .btn-nav.primary:hover {
+        background: var(--blue-700);
+        border-color: var(--blue-700);
+      }
+      .btn-nav.primary svg {
+        stroke: var(--white);
+      }
+
+      /* Language switcher */
+      .lang-switch {
+        margin-left: auto;
+        display: flex;
+        align-items: center;
+      }
+      .lang-switch a {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 5px 12px;
+        border-radius: 6px;
+        font-size: 12px;
+        font-weight: 600;
+        border: 1.5px solid var(--border);
+        color: var(--text-light);
+        background: var(--white);
+        text-decoration: none;
+        transition:
+          background 0.15s,
+          border-color 0.15s,
+          color 0.15s;
+        letter-spacing: 0.02em;
+      }
+      .lang-switch a svg {
+        width: 15px;
+        height: 15px;
+        stroke: currentColor;
+      }
+      .lang-switch a:hover {
+        background: var(--blue-50);
+        border-color: var(--blue-500);
+        color: var(--blue-600);
+        text-decoration: none;
+      }
+
+      @media (max-width: 768px) {
+        .btn-menu {
+          display: flex;
+        }
+        .sidebar-overlay {
+          display: block;
+        }
+        .sidebar {
+          position: fixed !important;
+          top: 0;
+          left: 0;
+          height: 100vh;
+          min-height: 100vh;
+          transform: translateX(-100%);
+          transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+          box-shadow: none;
+        }
+        .sidebar.open {
+          transform: translateX(0) !important;
+          box-shadow: 6px 0 32px rgba(0, 0, 0, 0.22);
+        }
+        .main {
+          width: 100%;
+        }
+        .topbar {
+          padding: 0 16px;
+        }
+        .page-header {
+          padding: 24px 20px 20px;
+        }
+        .page-header h1 {
+          font-size: 20px;
+        }
+        .on-page-nav {
+          padding: 0 16px;
+        }
+        .content {
+          padding: 24px 16px 40px;
+        }
+        .type-cards {
+          grid-template-columns: 1fr;
+        }
+        .data-table {
+          font-size: 12px;
+        }
+        .data-table th,
+        .data-table td {
+          padding: 8px 10px;
+        }
+        .page-footer {
+          padding: 16px;
+          flex-direction: column;
+          gap: 12px;
+          text-align: center;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <nav class="sidebar" id="sidebar">
+      <div class="sidebar-logo">
+        <a href="../index.html"
+          ><span
+            ><img
+              src="../img/sema-pointage-logo.png"
+              alt="sema-pointage-logo" /></span
+        ></a>
+      </div>
+      <div class="sidebar-search">
+        <input type="text" placeholder="Search in docs…" />
+      </div>
+      <div class="sidebar-nav">
+        <div class="nav-section-title">General Overview</div>
+        <div class="nav-item">
+          <a href="../General_presentation/index.html">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"
+              />
+            </svg>
+            General Overview
           </a>
-<div role="search">
-  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
-    <input type="hidden" name="check_keywords" value="yes" />
-    <input type="hidden" name="area" value="default" />
-  </form>
-</div>
-        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption" role="heading"><span class="caption-text">Overview</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../General_presentation/index.html">Overview of the pointing tool</a></li>
-</ul>
-<p class="caption" role="heading"><span class="caption-text">Platform Features</span></p>
-<ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Overview</a></li>
-<li class="toctree-l1"><a class="reference internal" href="#connecting-to-the-platform">Connecting to the Platform</a></li>
-<li class="toctree-l1"><a class="reference internal" href="#attendance-logs">Attendance Logs</a></li>
-<li class="toctree-l1"><a class="reference internal" href="#configuring-your-platform">Configuring your platform</a></li>
-<li class="toctree-l1"><a class="reference internal" href="#employee-management">Employee Management</a></li>
-<li class="toctree-l1"><a class="reference internal" href="#account-management">Account Management</a></li>
-</ul>
-<p class="caption" role="heading"><span class="caption-text">Tool Configuration Guide</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../Config_guide/index.html">Introduction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Config_guide/index.html#step-1-logging-in-to-the-dedicated-platform">Step 1: Logging in to the Dedicated Platform</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Config_guide/index.html#step-2-company-setup">Step 2: Company Setup</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Config_guide/index.html#step-3-adding-additional-users">Step 3: Adding Additional Users</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Config_guide/index.html#step-4-employee-registration">Step 4: Employee Registration</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Config_guide/index.html#step-5-on-site-implementation-and-testing-phase">Step 5: On-site Implementation and Testing Phase</a></li>
-</ul>
+        </div>
 
+        <div class="nav-section-title">Features</div>
+        <div class="nav-item active">
+          <a href="#">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z"
+              />
+            </svg>
+            Overview
+          </a>
+        </div>
+        <div class="nav-item">
+          <a href="#connexion-a-la-plateforme">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"
+              />
+            </svg>
+            Platform Login
+          </a>
+        </div>
+        <div class="nav-item">
+          <a href="#journaux-de-presence">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25zM6.75 12h.008v.008H6.75V12zm0 3h.008v.008H6.75V15zm0 3h.008v.008H6.75V18z"
+              />
+            </svg>
+            Attendance Logs
+          </a>
+        </div>
+        <div class="nav-item">
+          <a href="#tableau-de-bord">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M7.5 14.25v2.25m3-4.5v4.5m3-6.75v6.75m3-9v9M6 20.25h12A2.25 2.25 0 0020.25 18V6A2.25 2.25 0 0018 3.75H6A2.25 2.25 0 003.75 6v12A2.25 2.25 0 006 20.25z"
+              />
+            </svg>
+            Dashboard
+          </a>
+        </div>
+        <div class="nav-item">
+          <a href="#employes">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z"
+              />
+            </svg>
+            Employees
+          </a>
+        </div>
+        <div class="nav-item">
+          <a href="#absences">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5m-9-6h.008v.008H12v-.008zM12 15h.008v.008H12V15zm0 2.25h.008v.008H12v-.008zM9.75 15h.008v.008H9.75V15zm0 2.25h.008v.008H9.75v-.008zM7.5 15h.008v.008H7.5V15zm0 2.25h.008v.008H7.5v-.008zm6.75-4.5h.008v.008h-.008v-.008zm0 2.25h.008v.008h-.008V15zm0 2.25h.008v.008h-.008v-.008zm2.25-4.5h.008v.008H16.5v-.008zm0 2.25h.008v.008H16.5V15z"
+              />
+            </svg>
+            Absences
+          </a>
+        </div>
+        <div class="nav-item">
+          <a href="#departements">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 3.75h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008z"
+              />
+            </svg>
+            Departments
+          </a>
+        </div>
+        <div class="nav-item">
+          <a href="#sites-qr-codes">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M3.75 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 013.75 9.375v-4.5zM3.75 14.625c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5a1.125 1.125 0 01-1.125-1.125v-4.5zM13.5 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 0113.5 9.375v-4.5z"
+              />
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M6.75 6.75h.75v.75h-.75v-.75zM6.75 17.25h.75v.75h-.75v-.75zM16.5 6.75h.75v.75h-.75v-.75zM13.5 13.5h.75v.75h-.75v-.75zM13.5 19.5h.75v.75h-.75v-.75zM19.5 13.5h.75v.75h-.75v-.75zM19.5 19.5h.75v.75h-.75v-.75zM16.5 16.5h.75v.75h-.75v-.75z"
+              />
+            </svg>
+            Sites & QR Codes
+          </a>
+        </div>
+        <div class="nav-item">
+          <a href="#rapports">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25M9 16.5v.75m3-3v3M15 12v5.25m-4.5-11.625h.375a3 3 0 013 3v1.5a3 3 0 003 3h1.5m-10.875-5.25h9.375M6.75 19.5h10.5a2.25 2.25 0 002.25-2.25V7.5a2.25 2.25 0 00-2.25-2.25H6.75A2.25 2.25 0 004.5 7.5v9.75A2.25 2.25 0 006.75 19.5z"
+              />
+            </svg>
+            Reports
+          </a>
+        </div>
+        <div class="nav-item">
+          <a href="#configurations">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.324.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 011.37.49l1.296 2.247a1.125 1.125 0 01-.26 1.431l-1.003.827c-.293.24-.438.613-.431.992a6.759 6.759 0 010 .255c-.007.378.138.75.43.99l1.005.828c.424.35.534.954.26 1.43l-1.298 2.247a1.125 1.125 0 01-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.57 6.57 0 01-.22.128c-.331.183-.581.495-.644.869l-.213 1.28c-.09.543-.56.941-1.11.941h-2.594c-.55 0-1.02-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 01-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 01-1.369-.49l-1.297-2.247a1.125 1.125 0 01.26-1.431l1.004-.827c.292-.24.437-.613.43-.992a6.932 6.932 0 010-.255c.007-.378-.138-.75-.43-.99l-1.004-.828a1.125 1.125 0 01-.26-1.43l1.297-2.247a1.125 1.125 0 011.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.087.22-.128.332-.183.582-.495.644-.869l.214-1.281z"
+              />
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+              />
+            </svg>
+            Settings
+          </a>
+        </div>
+        <div class="nav-item">
+          <a href="#programmes">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"
+              />
+            </svg>
+            Schedules
+          </a>
+        </div>
+
+        <div class="nav-section-title">Configuration Guide</div>
+        <div class="nav-item">
+          <a href="../Config_guide/index.html">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25"
+              />
+            </svg>
+            Introduction
+          </a>
+        </div>
+        <div class="nav-item">
+          <a
+            href="../Config_guide/index.html#etape-1-connexion-a-la-plateforme-dediee"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9"
+              />
+            </svg>
+            Step 1: Login
+          </a>
+        </div>
+        <div class="nav-item">
+          <a
+            href="../Config_guide/index.html#etape-2-configuration-des-parametres-de-base"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M10.5 6h9.75M10.5 6a1.5 1.5 0 11-3 0m3 0a1.5 1.5 0 10-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-9.75 0h9.75"
+              />
+            </svg>
+            Step 2: Basic Settings
+          </a>
+        </div>
+        <div class="nav-item">
+          <a
+            href="../Config_guide/index.html#etape-3-ajout-dutilisateurs-supplementaires"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M19 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zM4 19.235v-.11a6.375 6.375 0 0112.75 0v.109A12.318 12.318 0 0110.374 21c-2.331 0-4.512-.645-6.374-1.766z"
+              />
+            </svg>
+            Step 3: Users
+          </a>
+        </div>
+        <div class="nav-item">
+          <a
+            href="../Config_guide/index.html#etape-4-enregistrement-des-employes"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M15 9h3.75M15 12h3.75M15 15h3.75M4.5 19.5h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5zm6-10.125a1.875 1.875 0 11-3.75 0 1.875 1.875 0 013.75 0zm1.294 6.336a6.721 6.721 0 01-3.17.789 6.721 6.721 0 01-3.168-.789 3.376 3.376 0 016.338 0z"
+              />
+            </svg>
+            Step 4: Employees
+          </a>
+        </div>
+        <div class="nav-item">
+          <a
+            href="../Config_guide/index.html#etape-5-creation-des-programmes-de-travail"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5"
+              />
+            </svg>
+            Step 5: Schedules
+          </a>
+        </div>
+        <div class="nav-item">
+          <a
+            href="../Config_guide/index.html#etape-6-mise-en-place-sur-site-et-phase-de-test"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-.45 3.867 3.745 3.745 0 01-3.867.45A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.867-.45 3.745 3.745 0 01-.45-3.867A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 01.45-3.867 3.746 3.746 0 013.867-.45A3.745 3.745 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.867.45 3.745 3.745 0 01.45 3.867A3.745 3.745 0 0121 12z"
+              />
+            </svg>
+            Step 6: Deployment
+          </a>
         </div>
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
-          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../index.html">Pointage En</a>
-      </nav>
-
-      <div class="wy-nav-content">
-        <div class="rst-content">
-          <div role="navigation" aria-label="Page navigation">
-  <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">Overview</li>
-      <li class="wy-breadcrumbs-aside">
-            <a href="../_sources/Platform_features/index.rst.txt" rel="nofollow"> View page source</a>
-      </li>
-  </ul>
-  <hr/>
-</div>
-          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
-           <div itemprop="articleBody">
-             
-  <section id="overview">
-<h1>Overview<a class="headerlink" href="#overview" title="Permalink to this heading"></a></h1>
-<p>The time and attendance platform developed by <strong>Kaeyros Analytics</strong> offers two types of use:</p>
-<ul class="simple">
-<li><p><strong>Internal Administration</strong>: Attendance tracking and user management for your company;</p></li>
-<li><p><strong>Distribution</strong>: Solution management for other client organizations (function reserved for <strong>Reseller</strong> accounts).</p></li>
-</ul>
-<p>This guide describes step-by-step how to use the platform, from login to reporting.</p>
-</section>
-<section id="connecting-to-the-platform">
-<h1>Connecting to the Platform<a class="headerlink" href="#connecting-to-the-platform" title="Permalink to this heading"></a></h1>
-<p>The administration platform is accessed via a web browser. Here are the steps to log in:</p>
-<ul class="simple">
-<li><p><strong>Open your browser</strong> (Google Chrome, Firefox, Edge, etc.);</p></li>
-<li><p>Enter the following URL: “<a class="reference external" href="https://pointing-front.kaeyros.org">https://pointing-front.kaeyros.org</a>”;</p></li>
-<li><p>Enter the <strong>login details</strong> provided when you subscribed to the <strong>service</strong> (email address and password);</p></li>
-<li><p>Click on <strong>“Login”</strong> to access your account.</p></li>
-</ul>
-<img alt="../_images/image1.png" src="../_images/image1.png" />
-<p>If you forget your password, please contact us to obtain a new one.</p>
-<p>Once logged in, you will have direct access to the attendance logs, where you can view employee attendance data for the day of your choice.</p>
-<img alt="../_images/image2.png" src="../_images/image2.png" />
-</section>
-<section id="attendance-logs">
-<h1>Attendance Logs<a class="headerlink" href="#attendance-logs" title="Permalink to this heading"></a></h1>
-<p>Once logged in to the attendance logs, you can:</p>
-<ul class="simple">
-<li><p>view attendance for a given day,</p></li>
-<li><p>manually enter attendance,</p></li>
-<li><p>download the attendance report,</p></li>
-<li><p>view the overall report,</p></li>
-<li><p>view attendance.</p></li>
-</ul>
-<p><strong>1. Viewing Daily Attendance</strong></p>
-<p>This feature allows you to quickly view the list of employees present on a specific day. It displays arrival and departure times, as well as any absences or lateness. Change the day by clicking on the calendar where the date is displayed, as shown in the screenshot below:</p>
-<img alt="../_images/image3.png" src="../_images/image3.png" />
-<p><strong>2. Manual Attendance Entry</strong></p>
-<p>This feature allows you to directly and manually record an employee’s attendance for a given day, specifying arrival and departure times.</p>
-<ul class="simple">
-<li><p>Click the <strong>Enter Attendance</strong> button.</p></li>
-</ul>
-<img alt="../_images/image4.png" src="../_images/image4.png" />
-<ul class="simple">
-<li><p>In the dialog box, select the employee concerned, the corresponding site, and then the time and date of attendance. This interface allows you to manually check and record each piece of information to ensure data reliability, particularly in the event of corrections or exceptional additions. Entry is quick thanks to dedicated fields for each element, ensuring that attendance is correctly assigned to the correct employee and site.</p></li>
-</ul>
-<img alt="../_images/image5.png" src="../_images/image5.png" />
-<ul class="simple">
-<li><p>Click <strong>Validate</strong> to record attendance; it will be immediately displayed in the daily summary table.</p></li>
-</ul>
-<img alt="../_images/image50.png" src="../_images/image50.png" />
-<p><strong>Important</strong>: Essential Reminder</p>
-<p>Each employee must record two time and attendance records during the day:</p>
-<ul class="simple">
-<li><p>Arrival time when entering the site</p></li>
-<li><p>Departure time when leaving</p></li>
-</ul>
-<p>This process ensures transparent and rigorous management of attendance times, facilitating HR data tracking and compliance.</p>
-<p><strong>3. Downloading the Attendance Report</strong></p>
-<p>This option allows you to export the attendance report as a file, grouping all employee time and attendance data for the selected period. The report includes arrival and departure times, absences, tardiness, and any other information useful for tracking work time.</p>
-<ul class="simple">
-<li><p>Select the day for which you would like to view the report.</p></li>
-<li><p>Click the <strong>Export</strong> button.</p></li>
-</ul>
-<img alt="../_images/image6.png" src="../_images/image6.png" />
-<ul class="simple">
-<li><p>The Excel or CSV file containing all employee attendance for the selected day will be automatically downloaded, ready for viewing or analysis.</p></li>
-</ul>
-<img alt="../_images/image7.png" src="../_images/image7.png" />
-<p><strong>File Structure</strong>:</p>
-<ul class="simple">
-<li><p><strong>Employee</strong>: Full name of the employee;</p></li>
-<li><p><strong>In/Out</strong>: Corresponding clock-in times;</p></li>
-<li><p><strong>Site</strong>: Clock-in location;</p></li>
-<li><p><strong>Late by</strong>: Possible duration of the delay;</p></li>
-<li><p><strong>In/Out Type</strong>: Clocking method (manual, automatic)</p></li>
-</ul>
-<p><strong>4. View Global Reporting</strong></p>
-<p>This feature provides a consolidated view of employee attendance data over a given period. It allows you to track arrival and departure times, lateness, and absences, providing a comprehensive dashboard for human resources management.</p>
-<img alt="../_images/image8.png" src="../_images/image8.png" />
-<p>You can also search by employee name, filter by site, and switch between pages using the pagination menu.</p>
-<p><strong>5. View Attendance Details</strong></p>
-<img alt="../_images/image9.png" src="../_images/image9.png" />
-<p>This feature provides access to detailed information on employee attendance. It provides a granular view to analyze each employee’s punctuality and attendance.This facilitates operational management and rigorous monitoring of working hours within the company.</p>
-<p><em>View reporting</em></p>
-<p>This involves presenting the collected data in a clear and concise format, often through dashboards, graphs, or key performance indicators (KPIs). This presentation facilitates the analysis of attendance trends, the identification of deviations from planned schedules, and the monitoring of compliance with internal regulations.</p>
-<img alt="../_images/image101.png" src="../_images/image101.png" />
-</section>
-<section id="configuring-your-platform">
-<h1>Configuring your platform<a class="headerlink" href="#configuring-your-platform" title="Permalink to this heading"></a></h1>
-<p>The initial configuration of the platform is reserved for users with administrator roles. It allows you to define sites, work schedules, departments, and positions, thus ensuring a clear and personalized organization of the essential parameters for attendance management.</p>
-<p>To access it, simply click on the <strong>Configurations</strong> tab of the platform.</p>
-<p><strong>1. Add Sites</strong></p>
-<p>To add a new site, go to the <strong>Configurations</strong> tab, then <strong>Add Site</strong></p>
-<img alt="../_images/image12.png" src="../_images/image12.png" />
-<p>A dialog box will open. Enter the following information:</p>
-<ul class="simple">
-<li><p><strong>Site Name</strong></p></li>
-<li><p><strong>Phone Number</strong> (used for the WhatsApp integration of the time clock)</p></li>
-<li><p><strong>Site Address</strong></p></li>
-<li><p><strong>Geographic Coordinates</strong> (click <strong>Get Location</strong>, making sure to enable geolocation on your device).</p></li>
-</ul>
-<img alt="../_images/image13.png" src="../_images/image13.png" />
-<p>Click <strong>Next</strong> to define the working hours:</p>
-<ul class="simple">
-<li><p>Select the <strong>working days</strong>;</p></li>
-<li><p>Indicate the <strong>opening and closing hours</strong> (e.g., 8:30 a.m. – 5:30 p.m.).</p></li>
-</ul>
-<img alt="../_images/image14.png" src="../_images/image14.png" />
-<p>Click <strong>Validate</strong> to finalize.</p>
-<p>Once validated, a <strong>QR Code</strong> is automatically generated. It will serve as a time clock for employees at the site in question.</p>
-<img alt="../_images/image15.png" src="../_images/image15.png" />
-<p><strong>Tip</strong>: Before printing or distributing, be sure to test the QR Code to ensure it correctly redirects to the configured WhatsApp number.</p>
-<p><em>View and edit a site</em></p>
-<p>You can view the list of sites already created.</p>
-<img alt="../_images/image16.png" src="../_images/image16.png" />
-<p>You can edit, delete, or download the QR Code associated with a site by clicking on the three dots to the right of the site name, as shown in the screenshot below.</p>
-<img alt="../_images/image161.png" src="../_images/image161.png" />
-<p><strong>2. Configure work schedules</strong></p>
-<ul class="simple">
-<li><p>Go to the <strong>Hours</strong> sub-tab in the <strong>Settings</strong> tab.</p></li>
-<li><p>Select the relevant site from the drop-down list.</p></li>
-</ul>
-<img alt="../_images/image17.png" src="../_images/image17.png" />
-<ul class="simple">
-<li><p>Modify the schedules as desired (working days, opening/closing hours).</p></li>
-<li><p>Save your changes by clicking <strong>Validate</strong>.</p></li>
-</ul>
-<p><strong>3. Configure departments</strong></p>
-<ul class="simple">
-<li><p>Go to the <strong>Departments</strong> sub-tab.</p></li>
-</ul>
-<img alt="../_images/image18.png" src="../_images/image18.png" />
-<ul class="simple">
-<li><p>You can view the list of existing departments, modify them, or delete them.</p></li>
-</ul>
-<p><strong>4. Configure positions</strong></p>
-<ul class="simple">
-<li><p>Go to the <strong>Positions</strong> sub-tab.</p></li>
-</ul>
-<img alt="../_images/image19.png" src="../_images/image19.png" />
-<ul class="simple">
-<li><p>You can view the list of existing positions, modify them, or delete them.</p></li>
-</ul>
-</section>
-<section id="employee-management">
-<h1>Employee Management<a class="headerlink" href="#employee-management" title="Permalink to this heading"></a></h1>
-<p>From the <strong>Employees</strong> tab, attendance management begins by creating each employee’s profile, which contains their key information: identity, position, department, hours, and work locations. This profile allows you to precisely associate the clocking and attendance records, ensuring reliable and personalized monitoring of attendance, lateness, and absences.</p>
-<img alt="../_images/image20.png" src="../_images/image20.png" />
-<p>On this tab, you can view the employees registered in the company, add an employee, modify an employee’s information, or delete an employee.</p>
-<p><strong>1. Add an Employee</strong></p>
-<p>By clicking the <strong>Add Employee</strong> button, a dialog box will open and you will enter the employee’s name, phone number, email address, position, and department.</p>
-<img alt="../_images/image21.png" src="../_images/image21.png" />
-<p>Note: For the phone number, make sure to enter the number exactly as it is on WhatsApp (for example, numbers without a 6 like 23789898989 and numbers with a 6 like 237689898989).</p>
-<p><strong>2. View, Edit, and Delete an Employee</strong></p>
-<p>From the Employees tab, you can easily edit or delete an employee.</p>
-<img alt="../_images/image22.png" src="../_images/image22.png" />
-</section>
-<section id="account-management">
-<h1>Account Management<a class="headerlink" href="#account-management" title="Permalink to this heading"></a></h1>
-<p>This is done in the <strong>Company Space</strong> tab. Only users with the Admin or Account Manager role can see this tab.</p>
-<img alt="../_images/image23.png" src="../_images/image23.png" />
-<p>In this section, there are two main features: Add a New Company and Add a User.</p>
-<p><strong>1. Add a Company</strong></p>
-<p>This feature allows you to create a new company to which you wish to sell the timekeeping tool. You must add the company here and add a user.</p>
-<p>The user who will manage this company.</p>
-<p>By clicking the <strong>Add Company</strong> button, a dialog box will open and you must enter the information for the company you want to add at this level.</p>
-<img alt="../_images/image24.png" src="../_images/image24.png" />
-<img alt="../_images/image241.png" src="../_images/image241.png" />
-<p>You must enter the company name, the name of a company manager, the email address and phone number of the company or company manager, then click the Confirm button to complete the company creation. You cannot create two companies with the same phone numbers.</p>
-<p><strong>2. View, edit, and delete companies.</strong></p>
-<img alt="../_images/image25.png" src="../_images/image25.png" />
-<p>When you create a new company, it is automatically added to the list of companies, as shown in the image above. Using the edit button on the far right of each company, you can modify the company’s information by clicking Edit or delete the company by clicking Delete.</p>
-<p>Note: If you have the Account Manager role, you can only view and modify companies you have added. Therefore, you cannot modify a company added by the administrator or another user with the Account Manager role.</p>
-<p><strong>3. Add a User</strong></p>
-<p>Generally, when you create a company, you need to add a user to that company who will manage it. You must grant them the Admin role.</p>
-<p>In the User sub-tab, simply click the Add User button to trigger the process of adding a new user.</p>
-<img alt="../_images/image26.png" src="../_images/image26.png" />
-<p>This will open a dialog box and you will need to fill in the various fields for this user.</p>
-<img alt="../_images/image27.png" src="../_images/image27.png" />
-<p>It will be up to you to send these credentials to the user in question so that they can access the platform to manage their business. These include their email address and password. Every user needs these two pieces of information to log in to the platform.</p>
-<p><em>View, edit, and delete a user.</em></p>
-<img alt="../_images/image28.png" src="../_images/image28.png" />
-<p>When you add a new user, they are automatically added to the user list, as shown in the image above. Using the edit button on the far right of each user, you can modify a user’s information by clicking Edit or, if possible, delete them by clicking Delete.</p>
-<p>Note: If you have the Account Manager role, you can only view and edit the users you have added. So you cannot edit a user added by the administrator or another Account-Manager.</p>
-</section>
-
-
-           </div>
-          </div>
-          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="../General_presentation/index.html" class="btn btn-neutral float-left" title="Overview of the pointing tool" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="../Config_guide/index.html" class="btn btn-neutral float-right" title="Introduction" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-    </div>
-
-  <hr/>
-
-  <div role="contentinfo">
-    <p>&#169; Copyright 2025, Kaeyros Analytics.</p>
-  </div>
-
-  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    provided by <a href="https://readthedocs.org">Read the Docs</a>.
-   
-
-</footer>
+    <div class="main">
+      <div class="topbar">
+        <button class="btn-menu" id="btnMenu" aria-label="Open menu">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <rect y="3" width="20" height="2" rx="1" fill="#4a5e72" />
+            <rect y="9" width="20" height="2" rx="1" fill="#4a5e72" />
+            <rect y="15" width="20" height="2" rx="1" fill="#4a5e72" />
+          </svg>
+        </button>
+        <a href="../index.html">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25"
+            />
+          </svg>
+        </a>
+        <span class="sep">›</span>
+        <span class="current">Platform Features</span>
+        <div class="lang-switch">
+          <a href="../../../../fr/build/html/Platform_features/index.html">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253M3 12a8.959 8.959 0 01.284-2.253"
+              />
+            </svg>
+            Français
+          </a>
         </div>
       </div>
-    </section>
-  </div>
-  <script>
-      jQuery(function () {
-          SphinxRtdTheme.Navigation.enable(true);
-      });
-  </script> 
 
-</body>
+      <div class="page-header">
+        <div class="label">Platform Features</div>
+        <h1>Complete feature overview</h1>
+        <div class="underline"></div>
+      </div>
+
+      <nav class="on-page-nav">
+        <a href="#apercu">Overview</a>
+        <a href="#connexion-a-la-plateforme">Login</a>
+        <a href="#journaux-de-presence">Logs</a>
+        <a href="#tableau-de-bord">Dashboard</a>
+        <a href="#employes">Employees</a>
+        <a href="#absences">Absences</a>
+        <a href="#departements">Departments</a>
+        <a href="#sites-qr-codes">Sites & QR</a>
+        <a href="#rapports">Reports</a>
+        <a href="#configurations">Settings</a>
+        <a href="#programmes">Schedules</a>
+      </nav>
+
+      <div class="content">
+        <!-- OVERVIEW -->
+        <div class="doc-section" id="apercu">
+          <div class="section-header">
+            <span class="s-icon">
+              <!-- map -->
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M9 6.75V15m6-6v8.25m.503 3.498l4.875-2.437c.381-.19.622-.58.622-1.006V4.82c0-.836-.88-1.38-1.628-1.006l-3.869 1.934c-.317.159-.69.159-1.006 0L9.503 3.252a1.125 1.125 0 00-1.006 0L3.622 5.689C3.24 5.88 3 6.27 3 6.695V19.18c0 .836.88 1.38 1.628 1.006l3.869-1.934c.317-.159.69-.159 1.006 0l4.994 2.497c.317.158.69.158 1.006 0z"
+                />
+              </svg>
+            </span>
+            <h2>Overview</h2>
+          </div>
+          <p>
+            The attendance tracking platform developed by
+            <strong>Kaeyros Analytics</strong> is designed for two types of
+            organizations, each with access tailored to their needs:
+          </p>
+          <div class="type-cards">
+            <div class="type-card admin">
+              <div class="badge">Internal Administration</div>
+              <h3>Own Management</h3>
+              <p>
+                For companies using the solution to manage their own staff.
+                Enables real-time tracking of attendance, absences and late
+                arrivals, configuration of sites, hours and schedules, and
+                generation of detailed reports.
+              </p>
+            </div>
+            <div class="type-card resell">
+              <div class="badge">Distribution</div>
+              <h3>Reseller Account</h3>
+              <p>
+                For organizations looking to offer the solution to other client
+                companies. Reserved for <strong>Reseller</strong> accounts, with
+                extended access to create and manage multiple company spaces
+                from a single interface.
+              </p>
+            </div>
+          </div>
+          <p>
+            This guide describes step by step how to use the platform, from
+            login to reporting.
+          </p>
+        </div>
+
+        <!-- LOGIN -->
+        <div class="doc-section" id="connexion-a-la-plateforme">
+          <div class="section-header">
+            <span class="s-icon">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"
+                />
+              </svg>
+            </span>
+            <h2>Platform Login</h2>
+          </div>
+          <p>
+            Access to the administration platform is done via a web browser:
+          </p>
+          <div class="url-block">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244"
+              />
+            </svg>
+            <a href="https://pointing-front.kaeyros.org"
+              >https://pointing-front.kaeyros.org</a
+            >
+          </div>
+          <p style="margin-top: 14px">To log in, follow the steps below:</p>
+          <ol class="steps">
+            <li>
+              <p>
+                Open your <strong>web browser</strong> (Google Chrome, Firefox,
+                Edge, etc.);
+              </p>
+            </li>
+            <li><p>Type or click on the URL above;</p></li>
+            <li>
+              <p>
+                Enter your <strong>email address</strong> and
+                <strong>password</strong> as provided during your subscription;
+              </p>
+            </li>
+            <li>
+              <p>
+                Click the <strong>"Login"</strong> button to access your
+                account.
+              </p>
+            </li>
+          </ol>
+          <div class="img-wrap">
+            <img src="../img/connexion.png" alt="Platform login page" />
+            <div class="img-caption">Platform login page</div>
+          </div>
+          <div class="info-block note">
+            <span class="ib-icon">
+              <!-- key -->
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M15.75 5.25a3 3 0 013 3m3 0a6 6 0 01-7.029 5.912c-.563-.097-1.159.026-1.563.43L10.5 17.25H8.25v2.25H6v2.25H2.25v-2.818c0-.597.237-1.17.659-1.591l6.499-6.499c.404-.404.527-1 .43-1.563A6 6 0 1121.75 8.25z"
+                />
+              </svg>
+            </span>
+            <div class="ib-body">
+              <div class="ib-title">Forgot your password?</div>
+              <p>
+                If you cannot remember your password, please contact your
+                administrator or the Kaeyros Analytics team to get a new one.
+              </p>
+            </div>
+          </div>
+          <p>
+            Once logged in, you are automatically redirected to the
+            <strong>attendance logs</strong>.
+          </p>
+        </div>
+
+        <!-- ATTENDANCE LOGS -->
+        <div class="doc-section" id="journaux-de-presence">
+          <div class="section-header">
+            <span class="s-icon">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25zM6.75 12h.008v.008H6.75V12zm0 3h.008v.008H6.75V15zm0 3h.008v.008H6.75V18z"
+                />
+              </svg>
+            </span>
+            <h2>Attendance Logs</h2>
+          </div>
+          <p>
+            The <strong>attendance logs</strong> are the central hub for daily
+            monitoring. This page displays in real time all check-ins recorded
+            by employees, with for each entry the date, employee name, site,
+            department, arrival time, departure time, any late arrival, total
+            hours worked and status.
+          </p>
+          <p>From this page, you can:</p>
+          <ul>
+            <li>view attendance for a given day,</li>
+            <li>manually enter attendance,</li>
+            <li>download the attendance report,</li>
+            <li>view the global report,</li>
+            <li>view an individual employee's attendance details.</li>
+          </ul>
+
+          <div class="sub-title">1. Daily attendance view</div>
+          <p>
+            This feature lets you quickly view the list of employees and their
+            attendance status for a given day. You can refine the display using
+            the available filters: <strong>period</strong>,
+            <strong>site</strong>, <strong>department</strong>,
+            <strong>employee</strong>, <strong>entry type</strong> and
+            <strong>status</strong>. A search field lets you quickly find an
+            employee by name.
+          </p>
+          <div class="img-wrap">
+            <img src="../img/journaux.png" alt="Attendance logs" />
+            <div class="img-caption">Attendance logs view</div>
+          </div>
+
+          <div class="sub-title">2. Manual attendance entry</div>
+          <p>
+            This feature allows you to directly record an employee's attendance
+            for a given day, specifying their arrival or departure time. Useful
+            in case of a missed check-in, correction or exceptional addition.
+          </p>
+          <ul>
+            <li>
+              Click the <strong>"Record attendance"</strong> button at the top
+              right of the page.
+            </li>
+          </ul>
+          <div class="img-wrap">
+            <img src="../img/pointerrr.png" alt="Record attendance button" />
+          </div>
+          <ul>
+            <li>
+              A dialog box opens. Select the <strong>employee</strong>, choose
+              the <strong>site</strong>, then enter the
+              <strong>date</strong> and <strong>time</strong> of the check-in.
+            </li>
+          </ul>
+          <div class="img-wrap">
+            <img src="../img/Pointermod.png" alt="Manual entry modal" />
+            <div class="img-caption">Manual attendance entry form</div>
+          </div>
+          <ul>
+            <li>
+              Click <strong>"Confirm"</strong>. The attendance will immediately
+              appear in the table marked as <strong>Manual</strong>.
+            </li>
+          </ul>
+          <div class="info-block important">
+            <span class="ib-icon">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z"
+                />
+              </svg>
+            </span>
+            <div class="ib-body">
+              <div class="ib-title">Important — Key reminder</div>
+              <p>
+                Each employee must record
+                <strong>two check-ins per day</strong>: the
+                <strong>arrival time</strong> when entering the site, and the
+                <strong>departure time</strong> when leaving.
+              </p>
+            </div>
+          </div>
+
+          <div class="sub-title">3. Downloading the attendance report</div>
+          <p>
+            This option allows you to export attendance data as a file for the
+            selected period.
+          </p>
+          <ul>
+            <li>Select the desired period;</li>
+            <li>
+              Click the <strong>"Export"</strong> button at the top right of the
+              table.
+            </li>
+          </ul>
+          <div class="img-wrap">
+            <img src="../img/exportdraw.png" alt="Export attendance report" />
+          </div>
+          <p><strong>Exported file structure:</strong></p>
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Column</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Employee</strong></td>
+                <td>Full name of the employee</td>
+              </tr>
+              <tr>
+                <td><strong>Arrival / Departure</strong></td>
+                <td>Corresponding check-in times</td>
+              </tr>
+              <tr>
+                <td><strong>Site</strong></td>
+                <td>Location of the check-in</td>
+              </tr>
+              <tr>
+                <td><strong>Department</strong></td>
+                <td>Department the employee belongs to</td>
+              </tr>
+              <tr>
+                <td><strong>Late by</strong></td>
+                <td>Duration of any late arrival</td>
+              </tr>
+              <tr>
+                <td><strong>Working hours</strong></td>
+                <td>Total hours worked during the day</td>
+              </tr>
+              <tr>
+                <td><strong>Entry type</strong></td>
+                <td>Automatic, manual or system</td>
+              </tr>
+              <tr>
+                <td><strong>Status</strong></td>
+                <td>Present, Absent or Late</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="img-wrap">
+            <img src="../img/fichierEXC.png" alt="Exported file example" />
+            <div class="img-caption">
+              Example of an exported attendance file
+            </div>
+          </div>
+          <p>
+            Above the table are a search field, filters by period, site,
+            department, employee, entry type and status, as well as a
+            <strong>"Reset"</strong> button. A legend indicates the check-in
+            entry mode: <strong>Automatic</strong> (light green),
+            <strong>Manual</strong> (orange) and <strong>System</strong> (dark
+            green).
+          </p>
+
+          <div class="sub-title">4. Global report view</div>
+          <p>
+            The page has two parts. <strong>At the top</strong>, a global
+            summary displays three indicators as coloured cards:
+            <strong>On time</strong> (green), <strong>Late</strong> (orange) and
+            <strong>Overtime</strong> (purple). On the right, a global
+            attendance summary shows percentages split into five categories:
+            Present, Absent, On time, Late and Overtime.
+          </p>
+          <p>
+            <strong>At the bottom</strong>, the table lists each employee's
+            check-in details: date, name, site, department, arrival/departure,
+            late arrival, hours worked and status. Filters and a search field
+            allow you to refine the display.
+          </p>
+
+          <div class="sub-title">5. View an employee's attendance details</div>
+          <p>
+            Click on an <strong>employee's name</strong> in the table to access
+            their individual profile. The profile displays their personal
+            information at the top and consists of two tabs:
+          </p>
+          <p>
+            <strong>Reports/Analysis tab</strong> — presents a complete summary
+            for the selected period: number of check-ins by entry mode, six
+            summary metrics (days present, on-time arrivals, late arrivals,
+            absences, attendance %, average lateness) and three analysis charts
+            (pie chart, bar chart, colour-coded monthly calendar).
+          </p>
+          <div class="img-wrap">
+            <img
+              src="../img/detailjourn1.png"
+              alt="Employee detail - Reports and analysis"
+            />
+          </div>
+          <div class="img-wrap">
+            <img src="../img/detailjourn2.png" alt="Employee detail - Charts" />
+          </div>
+          <p>
+            <strong>Attendance Log tab</strong> — lists the employee's check-ins
+            chronologically: date, arrival time, departure time, lateness
+            duration, hours worked and status. An
+            <strong>"Export"</strong> button allows you to download the data.
+          </p>
+          <div class="img-wrap">
+            <img
+              src="../img/detailjourn3.png"
+              alt="Employee detail - Attendance log"
+            />
+          </div>
+        </div>
+
+        <!-- DASHBOARD -->
+        <div class="doc-section" id="tableau-de-bord">
+          <div class="section-header">
+            <span class="s-icon">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M7.5 14.25v2.25m3-4.5v4.5m3-6.75v6.75m3-9v9M6 20.25h12A2.25 2.25 0 0020.25 18V6A2.25 2.25 0 0018 3.75H6A2.25 2.25 0 003.75 6v12A2.25 2.25 0 006 20.25z"
+                />
+              </svg>
+            </span>
+            <h2>Dashboard</h2>
+          </div>
+          <p>
+            The dashboard provides a synthetic, real-time overview of the
+            company's attendance situation. It consists of two main sections.
+          </p>
+          <div class="sub-title">Company summary</div>
+          <p>
+            Filters allow you to refine the display by <strong>period</strong>,
+            <strong>site</strong>, <strong>department</strong> and
+            <strong>employee</strong>. Four coloured cards present the key
+            figures:
+          </p>
+          <ul>
+            <li>
+              <strong>Total employees</strong> (blue): total number of
+              registered employees, with a link to the full list;
+            </li>
+            <li>
+              <strong>Absences</strong> (pink): total number of absences
+              recorded in days;
+            </li>
+            <li>
+              <strong>Late arrivals</strong> (yellow): total number of late
+              arrivals in cumulated minutes;
+            </li>
+            <li>
+              <strong>Overtime</strong> (purple): total overtime volume in
+              minutes.
+            </li>
+          </ul>
+          <div class="img-wrap">
+            <img src="../img/dashboard.png" alt="Dashboard" />
+            <div class="img-caption">Dashboard — Company summary</div>
+          </div>
+          <div class="sub-title">Attendance summary</div>
+          <p>
+            A detailed table shows each employee's individual situation for the
+            period. Filters allow refinement by <strong>period</strong>,
+            <strong>site</strong>, <strong>department</strong>,
+            <strong>employee</strong> and <strong>status</strong>. A
+            <strong>"View all"</strong> button gives access to the full log
+            view. For each employee: days worked / days expected, hours worked /
+            hours expected, absence days, number of late arrivals, cumulated
+            late minutes, <strong>score</strong> (attendance score) and
+            overtime. An <strong>"Export"</strong> button allows data download.
+          </p>
+        </div>
+
+        <!-- EMPLOYEES -->
+        <div class="doc-section" id="employes">
+          <div class="section-header">
+            <span class="s-icon">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z"
+                />
+              </svg>
+            </span>
+            <h2>Employees</h2>
+          </div>
+          <p>
+            The <strong>Employees</strong> tab centralises the management of all
+            staff. It displays the complete list of employees with their ID,
+            name, department, assigned site, work schedule, contact information
+            and status (Active or Inactive). Two display modes are available:
+            <strong>Table view</strong> and <strong>Card view</strong>.
+          </p>
+          <div class="img-wrap">
+            <img src="../img/employes.png" alt="Employee list" />
+            <div class="img-caption">Employee list</div>
+          </div>
+          <div class="sub-title">1. Add an employee</div>
+          <p>
+            Click <strong>"Add an employee"</strong>. Two addition modes are
+            available:
+          </p>
+          <div class="type-cards">
+            <div class="type-card admin">
+              <div class="badge">Individual</div>
+              <h3>Single addition</h3>
+              <p>
+                Manually enter the employee's information: first name, last
+                name, email, phone, department, position, assigned sites and
+                profile photo (optional).
+              </p>
+            </div>
+            <div class="type-card resell">
+              <div class="badge">Import</div>
+              <h3>Bulk addition</h3>
+              <p>
+                Import multiple employees via an
+                <strong>Excel or CSV</strong> file (.xlsx, .xls, .csv — max 10
+                MB) selecting the common site, department and position.
+              </p>
+            </div>
+          </div>
+          <div class="img-wrap">
+            <img src="../img/creeremploye.png" alt="Single addition form" />
+            <div class="img-caption">Single employee addition form</div>
+          </div>
+          <div class="info-block important">
+            <span class="ib-icon">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z"
+                />
+              </svg>
+            </span>
+            <div class="ib-body">
+              <div class="ib-title">Warning — Phone number</div>
+              <p>
+                Enter the phone number
+                <strong>exactly as registered on WhatsApp</strong> (e.g.
+                <strong>23789898989</strong> or <strong>237689898989</strong>).
+                An incorrect number will prevent the employee from checking in
+                via WhatsApp.
+              </p>
+            </div>
+          </div>
+          <div class="img-wrap">
+            <img src="../img/ajoutmasseemploye.png" alt="Bulk addition form" />
+            <div class="img-caption">Bulk addition form</div>
+          </div>
+          <div class="sub-title">2. View, edit and delete an employee</div>
+          <p>
+            From the table, click the <strong>three dots</strong> at the far
+            right of an employee to <strong>edit</strong> their information or
+            <strong>delete</strong> their profile.
+            <strong>Inactive</strong> employees have a
+            <strong>"Reactivate"</strong> button.
+          </p>
+        </div>
+
+        <!-- ABSENCES -->
+        <div class="doc-section" id="absences">
+          <div class="section-header">
+            <span class="s-icon">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5m-9-6h.008v.008H12v-.008zM12 15h.008v.008H12V15zm0 2.25h.008v.008H12v-.008zM9.75 15h.008v.008H9.75V15zm0 2.25h.008v.008H9.75v-.008zM7.5 15h.008v.008H7.5V15zm0 2.25h.008v.008H7.5v-.008zm6.75-4.5h.008v.008h-.008v-.008zm0 2.25h.008v.008h-.008V15zm0 2.25h.008v.008h-.008v-.008zm2.25-4.5h.008v.008H16.5v-.008zm0 2.25h.008v.008H16.5V15z"
+                />
+              </svg>
+            </span>
+            <h2>Absences</h2>
+          </div>
+          <p>
+            The <strong>Absences</strong> tab centralises the tracking of all
+            employee unavailabilities. It displays the complete list of recorded
+            absences with ID, employee name, department, site, duration and
+            status.
+          </p>
+          <div class="img-wrap">
+            <img src="../img/absence.png" alt="Absence list" />
+            <div class="img-caption">Absence list</div>
+          </div>
+          <div class="sub-title">1. Add an absence</div>
+          <p>
+            Click <strong>"+ Add an absence"</strong>. Fill in the following
+            fields:
+          </p>
+          <ul>
+            <li><strong>Employee</strong>: select the employee concerned;</li>
+            <li><strong>Status</strong>: Approved or Not approved;</li>
+            <li>
+              <strong>Absence type</strong>: sick leave, maternity leave,
+              bereavement, etc.;
+            </li>
+            <li><strong>Duration</strong>: start date and end date;</li>
+            <li>
+              <strong>Reason</strong>: description or justification (optional);
+            </li>
+            <li>
+              <strong>Attachment</strong>: supporting document (PNG, JPEG or PDF
+              — max 5 MB).
+            </li>
+          </ul>
+          <div class="img-wrap">
+            <img src="../img/creerabsence.png" alt="Absence creation form" />
+            <div class="img-caption">Absence creation form</div>
+          </div>
+          <div class="sub-title">2. Set absence status</div>
+          <p>Each absence can have one of three statuses:</p>
+          <ul>
+            <li>
+              <strong>Absence</strong>: status automatically assigned when the
+              system detects no check-in;
+            </li>
+            <li>
+              <strong>Approved absence</strong>: the manager has officially
+              validated the absence;
+            </li>
+            <li>
+              <strong>Unapproved absence</strong>: the manager has reviewed the
+              absence but has not validated it.
+            </li>
+          </ul>
+          <p>
+            To change the status, click the <strong>three dots</strong> to the
+            right of the row, then select <strong>Edit</strong>. You can also
+            click directly on the status in the table.
+          </p>
+          <div class="img-wrap">
+            <img
+              src="../img/definistatutabsence.png"
+              alt="Set absence status"
+            />
+          </div>
+          <div class="info-block tip">
+            <span class="ib-icon">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"
+                />
+              </svg>
+            </span>
+            <div class="ib-body">
+              <div class="ib-title">Good to know</div>
+              <p>
+                Unrecorded absences are
+                <strong>automatically detected</strong> by the system when an
+                employee performs no check-in on a scheduled working day, and
+                are assigned <strong>Absence</strong> status by default.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- DEPARTMENTS -->
+        <div class="doc-section" id="departements">
+          <div class="section-header">
+            <span class="s-icon">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 3.75h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008z"
+                />
+              </svg>
+            </span>
+            <h2>Departments</h2>
+          </div>
+          <p>
+            The <strong>Departments</strong> tab allows you to manage all
+            company departments. It displays the list with each department's
+            number and name.
+          </p>
+          <div class="img-wrap">
+            <img src="../img/departement.png" alt="Department list" />
+          </div>
+          <div class="sub-title">1. Add a department</div>
+          <p>
+            Click <strong>"+ Add a department"</strong>, enter the department
+            name, then click <strong>"Add department"</strong>. It is
+            immediately available for employee assignment.
+          </p>
+          <div class="img-wrap">
+            <img src="../img/creerdept.png" alt="Department creation form" />
+          </div>
+          <div class="sub-title">2. Edit a department</div>
+          <p>
+            Click <strong>"Edit"</strong> to the right of the department. Make
+            the changes and confirm.
+          </p>
+          <div class="sub-title">3. Delete a department</div>
+          <p>
+            Click <strong>"Delete"</strong> to the right of the department. A
+            confirmation may be requested before permanent deletion.
+          </p>
+          <div class="info-block tip">
+            <span class="ib-icon">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"
+                />
+              </svg>
+            </span>
+            <div class="ib-body">
+              <div class="ib-title">Good to know</div>
+              <p>
+                Departments allow data to be filtered in other sections of the
+                application, particularly in
+                <strong>Attendance Logs</strong> and <strong>Absences</strong>.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- SITES & QR -->
+        <div class="doc-section" id="sites-qr-codes">
+          <div class="section-header">
+            <span class="s-icon">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"
+                />
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"
+                />
+              </svg>
+            </span>
+            <h2>Sites & QR Codes</h2>
+          </div>
+          <p>
+            The <strong>Sites & QR Codes</strong> tab allows you to configure
+            the company's geographic sites. Each site is displayed as a card
+            showing its name, longitude, latitude and its automatically
+            generated unique QR code.
+          </p>
+          <div class="img-wrap">
+            <img src="../img/sites.png" alt="Site list" />
+          </div>
+          <div class="sub-title">1. Add a site</div>
+          <p>
+            Click <strong>"+ Add a site"</strong>. Creation takes two steps.
+          </p>
+          <div class="step-label">Step 1 — General information</div>
+          <ul>
+            <li><strong>Site name</strong>: enter the site name;</li>
+            <li><strong>Site address</strong>: enter the physical address;</li>
+            <li><strong>Time zone</strong>: select the time zone;</li>
+            <li>
+              <strong>Longitude and Latitude</strong>: enter manually or click
+              <strong>"Get location"</strong>.
+            </li>
+          </ul>
+          <div class="img-wrap">
+            <img src="../img/creersitepart1.png" alt="Site creation - step 1" />
+            <div class="img-caption">Step 1 — General site information</div>
+          </div>
+          <div class="step-label">Step 2 — Working days and hours</div>
+          <ul>
+            <li><strong>Working days</strong>: select the working days;</li>
+            <li>
+              <strong>Same hours every day</strong>: check for a uniform
+              schedule, or uncheck to customise by day;
+            </li>
+            <li>
+              <strong>Opening and closing hours</strong>: set the hours for each
+              selected day.
+            </li>
+          </ul>
+          <div class="img-wrap">
+            <img src="../img/creersitepart2.png" alt="Site creation - step 2" />
+            <div class="img-caption">Step 2 — Working days and hours</div>
+          </div>
+          <div class="sub-title">2. Site actions</div>
+          <p>
+            Click the <strong>three dots</strong> at the top right of a site
+            card:
+          </p>
+          <ul>
+            <li><strong>Edit site</strong>: modify the information;</li>
+            <li><strong>Delete site</strong>: permanently delete;</li>
+            <li>
+              <strong>Download QR</strong>: download the QR code to display at
+              the workplace.
+            </li>
+          </ul>
+          <div class="img-wrap">
+            <img src="../img/actionsites.png" alt="Site actions" />
+          </div>
+          <div class="info-block tip">
+            <span class="ib-icon">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"
+                />
+              </svg>
+            </span>
+            <div class="ib-body">
+              <div class="ib-title">Good to know</div>
+              <p>
+                Each site has a <strong>unique QR code</strong> generated
+                automatically. It must be displayed at the workplace so
+                employees can scan it and record their check-ins.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- REPORTS -->
+        <div class="doc-section" id="rapports">
+          <div class="section-header">
+            <span class="s-icon">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M3 13.5l5.25-5.25 3 3L15 8.25 21 13.5M3 19.5h18"
+                />
+              </svg>
+            </span>
+            <h2>Reports</h2>
+          </div>
+          <p>
+            The <strong>Reports</strong> tab provides a complete analytical view
+            of attendance data. Filters allow data refinement by
+            <strong>period</strong>, <strong>site</strong>,
+            <strong>department</strong> and <strong>employee</strong>.
+          </p>
+          <div class="img-wrap">
+            <img src="../img/report1.png" alt="Reports" />
+          </div>
+          <div class="sub-title">1. Key indicators</div>
+          <p>Five summary indicators at the top of the page:</p>
+          <ul>
+            <li>
+              <strong>Attendance rate</strong>: percentage of employees who
+              actually checked in;
+            </li>
+            <li>
+              <strong>Punctuality rate</strong>: percentage of employees who
+              arrived on time;
+            </li>
+            <li>
+              <strong>Late arrival rate</strong>: percentage of employees who
+              arrived late;
+            </li>
+            <li>
+              <strong>Absence rate</strong>: percentage of absent employees;
+            </li>
+            <li>
+              <strong>Average arrival time</strong>: average arrival time across
+              all employees.
+            </li>
+          </ul>
+          <div class="sub-title">2. Punctuality and late arrival charts</div>
+          <p>
+            Two bar charts by department:
+            <strong>average punctuality percentage</strong> and
+            <strong>average late arrival percentage</strong>.
+          </p>
+          <div class="sub-title">3. Attendance charts</div>
+          <p>
+            Three complementary charts:
+            <strong>Attendance type</strong> (breakdown by entry mode),
+            <strong>Attendance summary</strong> (present vs absent) and
+            <strong>Attendance statistics</strong> (on time vs late).
+          </p>
+          <div class="img-wrap">
+            <img src="../img/report2.png" alt="Attendance charts" />
+          </div>
+          <div class="sub-title">4. Top 5 best performing employees</div>
+          <p>
+            A bar chart highlights the <strong>five employees</strong> with the
+            best attendance rate over the period.
+          </p>
+          <div class="sub-title">
+            5. Average lateness in minutes by department
+          </div>
+          <p>
+            A line chart shows the evolution of average lateness by department,
+            with a distinct line per department.
+          </p>
+          <div class="img-wrap">
+            <img
+              src="../img/report3.png"
+              alt="Average lateness by department"
+            />
+          </div>
+          <div class="info-block tip">
+            <span class="ib-icon">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"
+                />
+              </svg>
+            </span>
+            <div class="ib-body">
+              <div class="ib-title">Good to know</div>
+              <p>
+                All charts are interactive: hover over bars or lines to display
+                detailed values. Filters affect all indicators simultaneously.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- SETTINGS -->
+        <div class="doc-section" id="configurations">
+          <div class="section-header">
+            <span class="s-icon">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.324.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 011.37.49l1.296 2.247a1.125 1.125 0 01-.26 1.431l-1.003.827c-.293.24-.438.613-.431.992a6.759 6.759 0 010 .255c-.007.378.138.75.43.99l1.005.828c.424.35.534.954.26 1.43l-1.298 2.247a1.125 1.125 0 01-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.57 6.57 0 01-.22.128c-.331.183-.581.495-.644.869l-.213 1.28c-.09.543-.56.941-1.11.941h-2.594c-.55 0-1.02-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 01-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 01-1.369-.49l-1.297-2.247a1.125 1.125 0 01.26-1.431l1.004-.827c.292-.24.437-.613.43-.992a6.932 6.932 0 010-.255c.007-.378-.138-.75-.43-.99l-1.004-.828a1.125 1.125 0 01-.26-1.43l1.297-2.247a1.125 1.125 0 011.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.087.22-.128.332-.183.582-.495.644-.869l.214-1.281z"
+                />
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                />
+              </svg>
+            </span>
+            <h2>Settings</h2>
+          </div>
+          <p>
+            The <strong>Settings</strong> tab groups all parameters needed for
+            the system to function properly. It is organised into five sub-tabs:
+            <strong>Shifts</strong>, <strong>Hours</strong>,
+            <strong>Users</strong>, <strong>Positions</strong> and
+            <strong>Absence types</strong>.
+          </p>
+          <div class="sub-title">1. Shifts</div>
+          <p>
+            Configure working time slots. Shifts are displayed as cards showing
+            the name, type (regular or night), start time and end time.
+          </p>
+          <div class="img-wrap">
+            <img src="../img/shift.png" alt="Shift list" />
+          </div>
+          <p>
+            To create a new shift, click
+            <strong>"Create a new shift"</strong> and fill in:
+          </p>
+          <ul>
+            <li><strong>Shift name</strong> (e.g. Morning shift);</li>
+            <li><strong>Start time</strong> and <strong>end time</strong>;</li>
+            <li>
+              <strong>Night shift</strong>: enable if the slot is nocturnal;
+            </li>
+            <li>
+              <strong>Capacity</strong>: maximum number of employees that can be
+              assigned.
+            </li>
+          </ul>
+          <div class="img-wrap">
+            <img src="../img/creershift.png" alt="Shift form" />
+            <div class="img-caption">Shift creation form</div>
+          </div>
+          <div class="sub-title">2. Hours</div>
+          <p>
+            Configure working hours per site. Select the <strong>site</strong>,
+            define the working days and the opening and closing hours — uniform
+            or customised per day.
+          </p>
+          <div class="img-wrap">
+            <img src="../img/Horaire.png" alt="Hours" />
+            <div class="img-caption">Working hours configuration</div>
+          </div>
+          <div class="sub-title">3. Users</div>
+          <p>
+            Manage accounts of users with access to the system. The list shows
+            each user's name, company, role and email address.
+          </p>
+          <div class="img-wrap">
+            <img src="../img/utilisateurs.png" alt="Users" />
+          </div>
+          <p>
+            Click <strong>"+ Add a user"</strong> and fill in: name, email,
+            password and company.
+          </p>
+          <div class="img-wrap">
+            <img src="../img/ajoutuser.png" alt="Add user" />
+            <div class="img-caption">User addition form</div>
+          </div>
+          <div class="sub-title">4. Positions</div>
+          <p>
+            Manage job titles. Click <strong>"+ Add a position"</strong> and
+            enter the name and an optional description.
+          </p>
+          <div class="img-wrap">
+            <img src="../img/postes.png" alt="Positions" />
+          </div>
+          <div class="img-wrap">
+            <img src="../img/ajoutposte.png" alt="Add position" />
+            <div class="img-caption">Position addition form</div>
+          </div>
+          <div class="sub-title">5. Absence types</div>
+          <p>
+            Configure allowed absence categories. Click
+            <strong>"+ Add an absence type"</strong> and enter the name and an
+            optional description.
+          </p>
+          <div class="img-wrap">
+            <img src="../img/ajoutabsence.png" alt="Absence type" />
+            <div class="img-caption">Absence type addition form</div>
+          </div>
+          <div class="info-block tip">
+            <span class="ib-icon">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"
+                />
+              </svg>
+            </span>
+            <div class="ib-body">
+              <div class="ib-title">Good to know</div>
+              <p>
+                <strong>Shifts</strong> and <strong>hours</strong> determine
+                expected attendance windows. <strong>Positions</strong> and
+                <strong>absence types</strong> enrich employee profiles.
+                <strong>Users</strong> control access to the application.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- SCHEDULES -->
+        <div class="doc-section" id="programmes">
+          <div class="section-header">
+            <span class="s-icon">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"
+                />
+              </svg>
+            </span>
+            <h2>Schedules</h2>
+          </div>
+          <p>
+            The <strong>Schedules</strong> tab allows you to define and manage
+            work plans. A schedule groups <strong>shifts</strong>,
+            <strong>working days</strong> and
+            <strong>assigned employees</strong>. It is the reference framework
+            used by the system to evaluate attendance, late arrivals and
+            absences.
+          </p>
+          <p>
+            The list shows for each schedule its name, exception dates, number
+            of associated shifts, number of enrolled employees, maximum capacity
+            and planned working days.
+          </p>
+          <div class="img-wrap">
+            <img src="../img/programs.png" alt="Schedule list" />
+            <div class="img-caption">Schedule list</div>
+          </div>
+          <div class="sub-title">1. Create a schedule</div>
+          <p>Click <strong>"+ Create new schedule"</strong> and fill in:</p>
+          <ul>
+            <li><strong>Schedule name</strong>: give an explicit name;</li>
+            <li>
+              <strong>Select days</strong>: click the desired days (Monday to
+              Sunday);
+            </li>
+            <li>
+              <strong>Schedule capacity</strong>: maximum number of employees
+              across all shifts;
+            </li>
+            <li>
+              <strong>Shifts</strong>: for each shift, select the shift and the
+              employees to assign. Click <strong>"+ Add a shift"</strong> to
+              create multiple blocks. An employee can belong to multiple
+              schedules as long as their shifts do not overlap;
+            </li>
+            <li>
+              <strong>Dates</strong>: <strong>Unlimited</strong>,
+              <strong>Date range</strong> or
+              <strong>Explicit date list</strong>;
+            </li>
+            <li>
+              <strong>Exception dates</strong>: days to exclude from the
+              validity period (public holidays, exceptional closures, etc.).
+            </li>
+          </ul>
+          <div class="img-wrap">
+            <img src="../img/creerprogram.png" alt="Schedule creation form" />
+            <div class="img-caption">Schedule creation form</div>
+          </div>
+          <div class="sub-title">2. View schedule details</div>
+          <p>
+            Click <strong>"View details"</strong> to access the detail page:
+            schedule days, capacity with progress bar, exception dates,
+            available shifts (cards) and enrolled employees table. The
+            <strong>"Remove"</strong> button allows removing an employee from
+            the schedule.
+          </p>
+          <div class="img-wrap">
+            <img src="../img/detailprogram.png" alt="Schedule detail" />
+            <div class="img-caption">Schedule detail page</div>
+          </div>
+          <div class="sub-title">3. Edit or delete a schedule</div>
+          <p>
+            From the list, click the <strong>three dots</strong> to the right of
+            a schedule to <strong>Edit</strong> or <strong>Delete</strong>. From
+            the detail page, the <strong>"Edit schedule"</strong> button at the
+            top right gives direct access to the form.
+          </p>
+          <div class="info-block tip">
+            <span class="ib-icon">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"
+                />
+              </svg>
+            </span>
+            <div class="ib-body">
+              <div class="ib-title">Good to know</div>
+              <p>
+                An employee can be enrolled in multiple schedules
+                simultaneously, as long as their assigned shifts do not overlap.
+                The system uses schedules to automatically calculate expected
+                attendance, detect absences and measure late arrivals.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <footer class="page-footer">
+        <span>© 2026 Kaeyros Analytics</span>
+        <div class="nav-buttons">
+          <a href="../General_presentation/index.html" class="btn-nav">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="2"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"
+              />
+            </svg>
+            Previous
+          </a>
+          <a href="../Config_guide/index.html" class="btn-nav primary">
+            Next
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="2"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"
+              />
+            </svg>
+          </a>
+        </div>
+      </footer>
+    </div>
+
+    <script>
+      const sidebar = document.getElementById("sidebar");
+      const overlay = document.getElementById("sidebarOverlay");
+      const btnMenu = document.getElementById("btnMenu");
+      function openSidebar() {
+        sidebar.classList.add("open");
+        overlay.classList.add("active");
+        document.body.style.overflow = "hidden";
+      }
+      function closeSidebar() {
+        sidebar.classList.remove("open");
+        overlay.classList.remove("active");
+        document.body.style.overflow = "";
+      }
+      btnMenu.addEventListener("click", function (e) {
+        e.stopPropagation();
+        sidebar.classList.contains("open") ? closeSidebar() : openSidebar();
+      });
+      overlay.addEventListener("click", closeSidebar);
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape") closeSidebar();
+      });
+      window.addEventListener("resize", function () {
+        if (window.innerWidth > 768) closeSidebar();
+      });
+
+      (function () {
+        const sectionIds = [
+          "apercu",
+          "connexion-a-la-plateforme",
+          "journaux-de-presence",
+          "tableau-de-bord",
+          "employes",
+          "absences",
+          "departements",
+          "sites-qr-codes",
+          "rapports",
+          "configurations",
+          "programmes",
+        ];
+        const navLinks = {};
+        sectionIds.forEach((id) => {
+          const href = id === "apercu" ? "#" : "#" + id;
+          const el = document.querySelector(
+            `.sidebar-nav .nav-item a[href="${href}"]`,
+          );
+          if (el) navLinks[id] = el.closest(".nav-item");
+        });
+        function setActive(id) {
+          sectionIds.forEach((sid) => {
+            if (navLinks[sid]) navLinks[sid].classList.remove("active");
+          });
+          if (navLinks[id]) navLinks[id].classList.add("active");
+        }
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) setActive(entry.target.id);
+            });
+          },
+          { rootMargin: "-10% 0px -80% 0px", threshold: 0 },
+        );
+        sectionIds.forEach((id) => {
+          const el = document.getElementById(id);
+          if (el) observer.observe(el);
+        });
+      })();
+    </script>
+  </body>
 </html>

@@ -1,310 +1,1098 @@
-
-
-<!DOCTYPE html>
-<html class="writer-html5" lang="fr">
+<!doctype html>
+<html lang="fr">
 <head>
-  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Aperçu &mdash; Documentation Pointage Fr 1.0</title>
-      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
-      <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=4816a4b2" />
+  <title>Fonctionnalités de la plateforme — Documentation Pointage 1.0</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Sora:wght@600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --blue-900: #0f2d57;
+      --blue-700: #1a4d8f;
+      --blue-600: #1e5fad;
+      --blue-500: #2471c8;
+      --blue-100: #ddeeff;
+      --blue-50:  #f0f6ff;
+      --accent:   #f0a500;
+      --text:     #1c2b3a;
+      --text-light: #4a5e72;
+      --border:   #d4e3f5;
+      --white:    #ffffff;
+      --sidebar-w: 280px;
+      --radius:   8px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', sans-serif;
+      font-size: 15px;
+      color: var(--text);
+      background: #f5f8fc;
+      display: flex;
+      min-height: 100vh;
+    }
+    a { color: var(--blue-600); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    p { line-height: 1.75; margin-bottom: 14px; }
+    strong { font-weight: 600; }
+    ul, ol { padding-left: 22px; margin-bottom: 14px; }
+    li { margin-bottom: 6px; line-height: 1.7; }
+    li p { margin-bottom: 4px; }
 
-  
-      <script src="../_static/jquery.js?v=5d32c60e"></script>
-      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=bd10cbeb"></script>
-      <script src="../_static/doctools.js?v=888ff710"></script>
-      <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
-      <script src="../_static/translations.js?v=d99ca74e"></script>
-    <script src="../_static/js/theme.js"></script>
-    <link rel="index" title="Index" href="../genindex.html" />
-    <link rel="search" title="Recherche" href="../search.html" />
-    <link rel="next" title="Introduction" href="../Config_guide/index.html" />
-    <link rel="prev" title="Présentation générale de l’outil de pointage" href="../General_presentation/index.html" /> 
+    /* ── Overlay (mobile) ──────────────────────────────────── */
+    .sidebar-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.45);
+      z-index: 98;
+      opacity: 0;
+      transition: opacity 0.25s;
+      pointer-events: none;
+    }
+    .sidebar-overlay.active { opacity: 1; pointer-events: all; }
+
+    /* ── Sidebar ── */
+    .sidebar {
+      width: var(--sidebar-w);
+      min-height: 100vh;
+      background: var(--blue-900);
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+      z-index: 100;
+    }
+    .sidebar-logo { padding: 24px 20px 20px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+    .sidebar-logo a {
+      font-family: 'Sora', sans-serif;
+      font-size: 18px; font-weight: 700;
+      color: var(--white);
+      display: flex; align-items: center; gap: 10px;
+      text-decoration: none;
+    }
+    .sidebar-search { padding: 14px 16px; border-bottom: 1px solid rgba(255,255,255,0.08); }
+    .sidebar-search input {
+      width: 100%; padding: 8px 12px;
+      border-radius: 6px; border: 1px solid rgba(255,255,255,0.15);
+      background: rgba(255,255,255,0.08); color: var(--white);
+      font-size: 13px; outline: none;
+    }
+    .sidebar-search input::placeholder { color: rgba(255,255,255,0.4); }
+    .sidebar-nav { padding: 12px 0 24px; flex: 1; }
+    .nav-section-title {
+      font-size: 10px; font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; color: rgba(255,255,255,0.4);
+      padding: 16px 20px 6px;
+    }
+    .nav-item a {
+      display: flex; align-items: center; gap: 8px;
+      padding: 7px 20px; font-size: 13px;
+      color: rgba(255,255,255,0.75);
+      transition: background 0.15s, color 0.15s;
+      border-left: 3px solid transparent;
+    }
+    .nav-item a svg { width: 15px; height: 15px; flex-shrink: 0; opacity: 0.6; }
+    .nav-item a:hover { background: rgba(255,255,255,0.06); color: var(--white); text-decoration: none; }
+    .nav-item.active a { color: var(--white); border-left-color: var(--accent); background: rgba(255,255,255,0.08); font-weight: 600; }
+    .nav-item.active a svg { opacity: 1; }
+
+    /* ── Main ── */
+    .main { flex: 1; display: flex; flex-direction: column; min-width: 0; }
+
+    /* ── Topbar ── */
+    .topbar {
+      background: var(--white); border-bottom: 1px solid var(--border);
+      padding: 0 40px; height: 52px;
+      display: flex; align-items: center; gap: 6px;
+      font-size: 13px; color: var(--text-light);
+      position: sticky; top: 0; z-index: 10;
+    }
+    .topbar a { color: var(--text-light); display: flex; align-items: center; }
+    .topbar a svg { width: 16px; height: 16px; }
+    .topbar .sep { color: #b0bec9; margin: 0 2px; }
+    .topbar .current { color: var(--text); font-weight: 500; }
+
+    /* ── Hamburger button ── */
+    .btn-menu {
+      display: none; align-items: center; justify-content: center;
+      width: 36px; height: 36px; margin-right: 8px;
+      border: none; background: transparent; cursor: pointer;
+      border-radius: 6px; padding: 0; flex-shrink: 0;
+      transition: background 0.15s;
+    }
+    .btn-menu:hover { background: var(--blue-50); }
+    .btn-menu svg { display: block; }
+
+    /* ── Page header ── */
+    .page-header {
+      background: var(--white); border-bottom: 1px solid var(--border);
+      padding: 32px 48px 28px;
+    }
+    .page-header .label {
+      font-size: 11px; font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--blue-500); margin-bottom: 8px;
+    }
+    .page-header h1 {
+      font-family: 'Sora', sans-serif; font-size: 26px;
+      font-weight: 700; color: var(--blue-900); line-height: 1.25;
+    }
+    .page-header .underline {
+      width: 48px; height: 3px; background: var(--accent);
+      border-radius: 2px; margin-top: 12px;
+    }
+
+    /* ── On-page nav pills ── */
+    .on-page-nav {
+      background: var(--white); border-bottom: 1px solid var(--border);
+      padding: 0 48px; display: flex; gap: 4px;
+      overflow-x: auto; flex-wrap: nowrap;
+    }
+    .on-page-nav a {
+      display: inline-block; padding: 12px 14px;
+      font-size: 13px; font-weight: 500; color: var(--text-light);
+      border-bottom: 2px solid transparent; white-space: nowrap;
+      text-decoration: none; transition: color 0.15s, border-color 0.15s;
+    }
+    .on-page-nav a:hover { color: var(--blue-600); border-bottom-color: var(--blue-100); }
+
+    /* ── Content ── */
+    .content { padding: 40px 48px 60px; max-width: 900px; }
+
+    /* ── Section block ── */
+    .doc-section { margin-bottom: 56px; }
+    .doc-section:last-child { margin-bottom: 0; }
+
+    .section-header {
+      display: flex; align-items: center; gap: 14px;
+      margin-bottom: 20px; padding-bottom: 14px;
+      border-bottom: 2px solid var(--blue-50);
+    }
+    .section-header .s-icon {
+      width: 40px; height: 40px;
+      border-radius: 10px;
+      background: var(--blue-50);
+      border: 1px solid var(--blue-100);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .section-header .s-icon svg { width: 22px; height: 22px; stroke: var(--blue-600); }
+    .section-header h2 {
+      font-family: 'Sora', sans-serif;
+      font-size: 20px; font-weight: 700; color: var(--blue-900);
+    }
+    .section-header .s-badge {
+      margin-left: auto;
+      font-size: 11px; font-weight: 600;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      color: var(--blue-600); background: var(--blue-50);
+      border: 1px solid var(--blue-100);
+      padding: 3px 10px; border-radius: 12px;
+    }
+
+    /* ── Sub-section title ── */
+    .sub-title {
+      font-family: 'Sora', sans-serif;
+      font-size: 15px; font-weight: 600; color: var(--blue-900);
+      margin: 28px 0 10px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .sub-title::before {
+      content: '';
+      width: 4px; height: 16px;
+      background: var(--accent); border-radius: 2px; flex-shrink: 0;
+    }
+
+    /* ── Images ── */
+    .img-wrap {
+      margin: 20px 0; border-radius: var(--radius);
+      overflow: hidden; border: 1px solid var(--border); background: var(--white);
+    }
+    .img-wrap img { display: block; width: 100%; height: auto; }
+    .img-caption {
+      padding: 8px 14px; font-size: 12px; color: var(--text-light);
+      border-top: 1px solid var(--border); background: #fafcff; font-style: italic;
+    }
+
+    /* ── Info blocks ── */
+    .info-block {
+      border-radius: var(--radius); padding: 14px 18px;
+      margin: 20px 0; display: flex; gap: 12px; align-items: flex-start;
+    }
+    .info-block.tip { background: var(--blue-50); border: 1px solid var(--blue-100); border-left: 4px solid var(--blue-500); }
+    .info-block.important { background: #fff8ee; border: 1px solid #fde9b0; border-left: 4px solid var(--accent); }
+    .info-block.note { background: #f6fff8; border: 1px solid #c3e8cc; border-left: 4px solid #3cb96a; }
+    .info-block .ib-icon { flex-shrink: 0; margin-top: 1px; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; }
+    .info-block.tip .ib-icon svg { stroke: var(--blue-600); width: 20px; height: 20px; }
+    .info-block.important .ib-icon svg { stroke: #c87000; width: 20px; height: 20px; }
+    .info-block.note .ib-icon svg { stroke: #2a9d60; width: 20px; height: 20px; }
+    .info-block .ib-body { flex: 1; }
+    .info-block .ib-title { font-weight: 600; font-size: 13px; margin-bottom: 4px; color: var(--text); }
+    .info-block p { font-size: 13.5px; color: var(--text-light); margin: 0; line-height: 1.6; }
+
+    /* ── Type cards ── */
+    .type-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 20px 0; }
+    .type-card {
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 20px; position: relative;
+    }
+    .type-card.admin { border-top: 3px solid var(--blue-500); }
+    .type-card.resell { border-top: 3px solid var(--accent); }
+    .type-card .badge {
+      display: inline-block; font-size: 10px; font-weight: 700;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      padding: 2px 8px; border-radius: 10px; margin-bottom: 8px;
+    }
+    .type-card.admin .badge { background: var(--blue-50); color: var(--blue-600); }
+    .type-card.resell .badge { background: #fff8ee; color: #b87c00; }
+    .type-card h3 { font-size: 14px; font-weight: 600; margin-bottom: 8px; color: var(--text); }
+    .type-card p { font-size: 13px; color: var(--text-light); margin: 0; line-height: 1.55; }
+
+    /* ── Ordered steps ── */
+    ol.steps { padding-left: 0; list-style: none; counter-reset: steps; margin-bottom: 14px; }
+    ol.steps li { counter-increment: steps; display: flex; gap: 14px; align-items: flex-start; margin-bottom: 10px; }
+    ol.steps li::before {
+      content: counter(steps);
+      width: 26px; height: 26px;
+      background: var(--blue-600); color: var(--white);
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      font-size: 12px; font-weight: 700; flex-shrink: 0; margin-top: 2px;
+    }
+    ol.steps li p { margin: 0; }
+
+    /* ── Step label ── */
+    .step-label {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--blue-900); color: var(--white);
+      font-size: 12px; font-weight: 600;
+      padding: 4px 12px; border-radius: 4px; margin: 16px 0 10px;
+    }
+
+    /* ── Table ── */
+    .data-table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 13.5px; }
+    .data-table th { background: var(--blue-900); color: var(--white); padding: 10px 14px; text-align: left; font-weight: 600; font-size: 12px; }
+    .data-table td { padding: 9px 14px; border-bottom: 1px solid var(--border); }
+    .data-table tr:last-child td { border-bottom: none; }
+    .data-table tr:nth-child(even) td { background: var(--blue-50); }
+
+    /* ── URL block ── */
+    .url-block {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--blue-50); border: 1px solid var(--blue-100);
+      border-radius: 6px; padding: 10px 16px;
+      font-size: 14px; font-weight: 500; color: var(--blue-600); margin: 10px 0;
+    }
+    .url-block svg { width: 16px; height: 16px; stroke: var(--blue-600); flex-shrink: 0; }
+
+    /* ── Footer ── */
+    .page-footer {
+      margin-top: auto; padding: 20px 48px;
+      border-top: 1px solid var(--border); background: var(--white);
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: 12px; color: var(--text-light);
+    }
+    .page-footer a { color: var(--text-light); }
+    .nav-buttons { display: flex; gap: 10px; }
+    .btn-nav {
+      display: inline-flex; align-items: center; gap: 7px;
+      padding: 8px 16px; border-radius: 6px;
+      font-size: 13px; font-weight: 500;
+      text-decoration: none !important; transition: background 0.15s;
+      border: 1px solid var(--border); color: var(--text) !important; background: var(--white);
+    }
+    .btn-nav svg { width: 16px; height: 16px; stroke: currentColor; }
+    .btn-nav:hover { background: var(--blue-50); border-color: var(--blue-100); }
+    .btn-nav.primary { background: var(--blue-600); color: var(--white) !important; border-color: var(--blue-600); }
+    .btn-nav.primary:hover { background: var(--blue-700); border-color: var(--blue-700); }
+    .btn-nav.primary svg { stroke: var(--white); }
+
+    /* ── Language switcher ── */
+    .lang-switch { margin-left: auto; display: flex; align-items: center; }
+    .lang-switch a {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 5px 12px; border-radius: 6px; font-size: 12px; font-weight: 600;
+      border: 1.5px solid var(--border); color: var(--text-light); background: var(--white);
+      text-decoration: none; transition: background 0.15s, border-color 0.15s, color 0.15s;
+      letter-spacing: 0.02em;
+    }
+    .lang-switch a svg { width: 15px; height: 15px; stroke: currentColor; }
+    .lang-switch a:hover { background: var(--blue-50); border-color: var(--blue-500); color: var(--blue-600); text-decoration: none; }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .btn-menu { display: flex; }
+      .sidebar-overlay { display: block; }
+      .sidebar {
+        position: fixed !important; top: 0; left: 0;
+        height: 100vh; min-height: 100vh;
+        transform: translateX(-100%);
+        transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: none;
+      }
+      .sidebar.open { transform: translateX(0) !important; box-shadow: 6px 0 32px rgba(0,0,0,0.22); }
+      .main { width: 100%; }
+      .topbar { padding: 0 16px; }
+      .page-header { padding: 24px 20px 20px; }
+      .page-header h1 { font-size: 20px; }
+      .on-page-nav { padding: 0 16px; }
+      .content { padding: 24px 16px 40px; }
+      .type-cards { grid-template-columns: 1fr; }
+      .data-table { font-size: 12px; }
+      .data-table th, .data-table td { padding: 8px 10px; }
+      .page-footer { padding: 16px; flex-direction: column; gap: 12px; text-align: center; }
+    }
+  </style>
 </head>
+<body>
 
-<body class="wy-body-for-nav"> 
-  <div class="wy-grid-for-nav">
-    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
-      <div class="wy-side-scroll">
-        <div class="wy-side-nav-search" >
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
-          
-          
-          <a href="../index.html" class="icon icon-home">
-            Pointage Fr
-          </a>
-<div role="search">
-  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Rechercher docs" aria-label="Rechercher docs" />
-    <input type="hidden" name="check_keywords" value="yes" />
-    <input type="hidden" name="area" value="default" />
-  </form>
-</div>
-        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption" role="heading"><span class="caption-text">Présentation générale</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../General_presentation/index.html">Présentation générale de l’outil de pointage</a></li>
-</ul>
-<p class="caption" role="heading"><span class="caption-text">Fonctionnalités de la plateforme</span></p>
-<ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Aperçu</a></li>
-<li class="toctree-l1"><a class="reference internal" href="#connexion-a-la-plateforme">Connexion à la plateforme</a></li>
-<li class="toctree-l1"><a class="reference internal" href="#journaux-de-presence">Journaux de présence</a></li>
-<li class="toctree-l1"><a class="reference internal" href="#parametrer-sa-plateforme">Paramétrer sa plateforme</a></li>
-<li class="toctree-l1"><a class="reference internal" href="#gestion-des-employes">Gestion des employés</a></li>
-<li class="toctree-l1"><a class="reference internal" href="#gestion-des-comptes">Gestion des comptes</a></li>
-</ul>
-<p class="caption" role="heading"><span class="caption-text">Guide pratique de configuration</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../Config_guide/index.html">Introduction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Config_guide/index.html#etape-1-connexion-a-la-plateforme-dediee">Étape 1 : Connexion à la plateforme dédiée.</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Config_guide/index.html#etape-2-parametrage-de-lentreprise">Étape 2 : Paramétrage de l’entreprise.</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Config_guide/index.html#etape-3-ajout-dutilisateurs-supplementaires">Étape 3 : Ajout d’utilisateurs supplémentaires.</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Config_guide/index.html#etape-4-enregistrement-des-employes">Étape 4 : Enregistrement des employés.</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Config_guide/index.html#etape-5-mise-en-place-sur-site-et-phase-de-test">Étape 5 : Mise en place sur site et phase de test.</a></li>
-</ul>
-
-        </div>
+  <!-- ── Sidebar ── -->
+  <nav class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+      <a href="../index.html">
+        <span><img src="../img/sema-pointage-logo.png" alt="sema-pointage-logo" /></span>
+      </a>
+    </div>
+    <div class="sidebar-search">
+      <input type="text" placeholder="Rechercher dans la doc…" />
+    </div>
+    <div class="sidebar-nav">
+      <div class="nav-section-title">Présentation générale</div>
+      <div class="nav-item">
+        <a href="../General_presentation/index.html">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" /></svg>
+          Présentation générale
+        </a>
       </div>
-    </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
-          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../index.html">Pointage Fr</a>
-      </nav>
+      <div class="nav-section-title">Fonctionnalités</div>
+      <div class="nav-item active">
+        <a href="#">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z" /></svg>
+          Aperçu
+        </a>
+      </div>
+      <div class="nav-item">
+        <a href="#connexion-a-la-plateforme">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" /></svg>
+          Connexion à la plateforme
+        </a>
+      </div>
+      <div class="nav-item">
+        <a href="#journaux-de-presence">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25zM6.75 12h.008v.008H6.75V12zm0 3h.008v.008H6.75V15zm0 3h.008v.008H6.75V18z" /></svg>
+          Journaux de présence
+        </a>
+      </div>
+      <div class="nav-item">
+        <a href="#tableau-de-bord">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M7.5 14.25v2.25m3-4.5v4.5m3-6.75v6.75m3-9v9M6 20.25h12A2.25 2.25 0 0020.25 18V6A2.25 2.25 0 0018 3.75H6A2.25 2.25 0 003.75 6v12A2.25 2.25 0 006 20.25z" /></svg>
+          Tableau de Bord
+        </a>
+      </div>
+      <div class="nav-item">
+        <a href="#employes">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" /></svg>
+          Employés
+        </a>
+      </div>
+      <div class="nav-item">
+        <a href="#absences">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5m-9-6h.008v.008H12v-.008zM12 15h.008v.008H12V15zm0 2.25h.008v.008H12v-.008zM9.75 15h.008v.008H9.75V15zm0 2.25h.008v.008H9.75v-.008zM7.5 15h.008v.008H7.5V15zm0 2.25h.008v.008H7.5v-.008zm6.75-4.5h.008v.008h-.008v-.008zm0 2.25h.008v.008h-.008V15zm0 2.25h.008v.008h-.008v-.008zm2.25-4.5h.008v.008H16.5v-.008zm0 2.25h.008v.008H16.5V15z" /></svg>
+          Absences
+        </a>
+      </div>
+      <div class="nav-item">
+        <a href="#departements">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 3.75h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008z" /></svg>
+          Départements
+        </a>
+      </div>
+      <div class="nav-item">
+        <a href="#sites-qr-codes">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 013.75 9.375v-4.5zM3.75 14.625c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5a1.125 1.125 0 01-1.125-1.125v-4.5zM13.5 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 0113.5 9.375v-4.5z" /><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 6.75h.75v.75h-.75v-.75zM6.75 17.25h.75v.75h-.75v-.75zM16.5 6.75h.75v.75h-.75v-.75zM13.5 13.5h.75v.75h-.75v-.75zM13.5 19.5h.75v.75h-.75v-.75zM19.5 13.5h.75v.75h-.75v-.75zM19.5 19.5h.75v.75h-.75v-.75zM16.5 16.5h.75v.75h-.75v-.75z" /></svg>
+          Sites et codes QR
+        </a>
+      </div>
+      <div class="nav-item">
+        <a href="#rapports">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25M9 16.5v.75m3-3v3M15 12v5.25m-4.5-11.625h.375a3 3 0 013 3v1.5a3 3 0 003 3h1.5m-10.875-5.25h9.375M6.75 19.5h10.5a2.25 2.25 0 002.25-2.25V7.5a2.25 2.25 0 00-2.25-2.25H6.75A2.25 2.25 0 004.5 7.5v9.75A2.25 2.25 0 006.75 19.5z" /></svg>
+          Rapports
+        </a>
+      </div>
+      <div class="nav-item">
+        <a href="#configurations">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.324.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 011.37.49l1.296 2.247a1.125 1.125 0 01-.26 1.431l-1.003.827c-.293.24-.438.613-.431.992a6.759 6.759 0 010 .255c-.007.378.138.75.43.99l1.005.828c.424.35.534.954.26 1.43l-1.298 2.247a1.125 1.125 0 01-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.57 6.57 0 01-.22.128c-.331.183-.581.495-.644.869l-.213 1.28c-.09.543-.56.941-1.11.941h-2.594c-.55 0-1.02-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 01-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 01-1.369-.49l-1.297-2.247a1.125 1.125 0 01.26-1.431l1.004-.827c.292-.24.437-.613.43-.992a6.932 6.932 0 010-.255c.007-.378-.138-.75-.43-.99l-1.004-.828a1.125 1.125 0 01-.26-1.43l1.297-2.247a1.125 1.125 0 011.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.087.22-.128.332-.183.582-.495.644-.869l.214-1.281z" /><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+          Configurations
+        </a>
+      </div>
+      <div class="nav-item">
+        <a href="#programmes">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+          Programmes
+        </a>
+      </div>
 
-      <div class="wy-nav-content">
-        <div class="rst-content">
-          <div role="navigation" aria-label="Page navigation">
-  <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">Aperçu</li>
-      <li class="wy-breadcrumbs-aside">
-            <a href="../_sources/Platform_features/index.rst.txt" rel="nofollow"> Afficher la source de la page</a>
-      </li>
-  </ul>
-  <hr/>
-</div>
-          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
-           <div itemprop="articleBody">
-             
-  <section id="apercu">
-<h1>Aperçu<a class="headerlink" href="#apercu" title="Lien permanent vers cette rubrique"></a></h1>
-<p>La plateforme de pointage développée par <strong>Kaeyros Analytics</strong> permet deux types d’utilisation :</p>
-<ul class="simple">
-<li><p><strong>Administration interne</strong> : suivi des présences et gestion des utilisateurs de votre entreprise ;</p></li>
-<li><p><strong>Distribution</strong> : gestion de la solution pour d’autres structures clientes (fonction réservée aux comptes <strong>Reseller</strong>).</p></li>
-</ul>
-<p>Ce guide décrit étape par étape l’utilisation de la plateforme, depuis la connexion jusqu’au reporting.</p>
-</section>
-<section id="connexion-a-la-plateforme">
-<h1>Connexion à la plateforme<a class="headerlink" href="#connexion-a-la-plateforme" title="Lien permanent vers cette rubrique"></a></h1>
-<p>L’accès à la plateforme d’administration se fait via un navigateur web. Voici les étapes à suivre pour se connecter :</p>
-<ul class="simple">
-<li><p><strong>Ouvrez votre navigateur</strong> (Google Chrome, Firefox, Edge, etc.) ;</p></li>
-<li><p>Saisissez l’URL suivante : « <a class="reference external" href="https://pointing-front.kaeyros.org">https://pointing-front.kaeyros.org</a> » ;</p></li>
-<li><p>Renseignez les <strong>identifiants fournis</strong> lors de la souscription au <strong>service</strong> (adresse e-mail et mot de passe) ;</p></li>
-<li><p>Cliquez sur <strong>« Connexion »</strong> pour accéder à votre espace.</p></li>
-</ul>
-<img alt="../_images/image1.png" src="../_images/image1.png" />
-<p>En cas d’oubli de mot de passe, veuillez nous contacter afin d’en obtenir un nouveau.</p>
-<p>Une fois connecté, vous aurez un accès direct aux journaux de présence, où vous pourrez consulter les données de présence des employés pour la journée de votre choix.</p>
-<img alt="../_images/image2.png" src="../_images/image2.png" />
-</section>
-<section id="journaux-de-presence">
-<h1>Journaux de présence<a class="headerlink" href="#journaux-de-presence" title="Lien permanent vers cette rubrique"></a></h1>
-<p>Une fois connecté aux journaux de présence, vous pouvez :</p>
-<ul class="simple">
-<li><p>visualiser les présences pour une journée donnée,</p></li>
-<li><p>saisir manuellement une présence,</p></li>
-<li><p>télécharger le rapport de présence,</p></li>
-<li><p>consulter le reporting global,</p></li>
-<li><p>consulter les présences.</p></li>
-</ul>
-<p><strong>1. Visualisation des présences journalières</strong></p>
-<p>Cette fonctionnalité permet de consulter rapidement la liste des employés présents sur une journée spécifique. Elle affiche les heures d’arrivée et de départ, ainsi que les éventuelles absences ou retards. Changez de jour en cliquant sur le calendrier où la date est affichée, comme illustrée dans la capture ci-dessous:</p>
-<img alt="../_images/image3.png" src="../_images/image3.png" />
-<p><strong>2. Saisie manuelle des présences</strong></p>
-<p>Cette fonctionnalité permet d’enregistrer directement et manuellement la présence d’un employé pour une journée donnée, en spécifiant les heures d’arrivée, de départ.</p>
-<ul class="simple">
-<li><p>Cliquez sur le bouton <strong>Saisir la présence</strong>.</p></li>
-</ul>
-<img alt="../_images/image4.png" src="../_images/image4.png" />
-<ul class="simple">
-<li><p>Dans la boîte de dialogue, sélectionnez l’employé concerné, le site correspondant, puis  l’heure et la date de présence. Cette interface permet de contrôler et d’enregistrer chaque information à la main pour garantir la fiabilité des données, notamment en cas de correction ou d’ajout exceptionnel. La saisie se fait rapidement grâce à des champs dédiés pour chaque élément, assurant que la présence soit bien rattachée au bon salarié et au bon site.</p></li>
-</ul>
-<img alt="../_images/image5.png" src="../_images/image5.png" />
-<ul class="simple">
-<li><p>Cliquez sur <strong>Valider</strong> pour enregistrer la présence, elle sera immédiatement affichée dans le tableau récapitulatif de la journée.</p></li>
-</ul>
-<img alt="../_images/image50.png" src="../_images/image50.png" />
-<p><strong>Important</strong> : Rappel essentiel</p>
-<p>Chaque salarié doit enregistrer deux pointages au cours de la journée :</p>
-<ul class="simple">
-<li><p>Heure d’arrivée lors de l’entrée sur le site</p></li>
-<li><p>Heure de départ à la sortie</p></li>
-</ul>
-<p>Ce processus garantit une gestion transparente et rigoureuse des temps de présence, facilitant le suivi et la conformité des données RH.</p>
-<p><strong>3. Téléchargement du rapport de présence</strong></p>
-<p>Cette option permet d’exporter le rapport de présence sous forme de fichier, regroupant toutes les données de pointage des salariés pour la période sélectionnée. Le rapport inclut les horaires d’arrivée et de départ, les absences, les retards et toute information utile au suivi du temps de travail.</p>
-<ul class="simple">
-<li><p>Sélectionnez le jour pour lequel vous souhaitez obtenir le rapport.</p></li>
-<li><p>Cliquez sur le bouton <strong>Exporter</strong>.</p></li>
-</ul>
-<img alt="../_images/image6.png" src="../_images/image6.png" />
-<ul class="simple">
-<li><p>Le fichier Excel ou CSV regroupant les présences de tous les employés pour la journée sélectionnée sera téléchargé automatiquement, prêt à être consulté ou analysé.</p></li>
-</ul>
-<img alt="../_images/image7.png" src="../_images/image7.png" />
-<p><strong>Structure du fichier</strong> :</p>
-<ul class="simple">
-<li><p><strong>Employé</strong> : nom complet de l’employé ;</p></li>
-<li><p><strong>Entrée / Sortie</strong> : heures de pointage correspondantes ;</p></li>
-<li><p><strong>Site</strong> : lieu du pointage ;</p></li>
-<li><p><strong>En retard de</strong> : durée éventuelle du retard ;</p></li>
-<li><p><strong>Type entrée / sortie</strong> : mode de réalisation du pointage (manuel, automatique)</p></li>
-</ul>
-<p><strong>4. Consultation du reporting global</strong></p>
-<p>Cette fonctionnalité offre une vue consolidée des données de présence des employés sur une période donnée. Elle permet de suivre les heures d’arrivée et de départ, les retards et absences, offrant ainsi un tableau de bord complet pour le pilotage des ressources humaines.</p>
-<img alt="../_images/image8.png" src="../_images/image8.png" />
-<p>Vous pouvez aussi faire une recherche à partir du nom de l’employé, filtrer par le site, et basculer entre les pages en utilisant le menu de pagination.</p>
-<p><strong>5. Voir les détails sur les présences</strong></p>
-<img alt="../_images/image9.png" src="../_images/image9.png" />
-<p>Cette fonctionnalité permet d’accéder aux informations précises sur les présences des employés. Elle offre une vision granulaire pour analyser la ponctualité et l’assiduité de chaque salarié, facilitant ainsi la gestion opérationnelle et le suivi rigoureux des temps de travail au sein de l’entreprise.</p>
-<p><em>Visualiser le reporting</em></p>
-<p>Elle consiste à présenter les données collectées sous forme claire et synthétique, souvent à travers des tableaux de bord, graphiques ou indicateurs clés (KPIs). Cette présentation facilite l’analyse des tendances de présence, l’identification des écarts par rapport aux horaires prévus, et le suivi de la conformité aux règles internes.</p>
-<img alt="../_images/image101.png" src="../_images/image101.png" />
-</section>
-<section id="parametrer-sa-plateforme">
-<h1>Paramétrer sa plateforme<a class="headerlink" href="#parametrer-sa-plateforme" title="Lien permanent vers cette rubrique"></a></h1>
-<p>La configuration initiale de la plateforme est réservée aux utilisateurs disposant d’un rôle administrateur. Elle permet de définir les sites, les horaires de travail, les départements ainsi que les postes, garantissant ainsi une organisation claire et personnalisée des paramètres essentiels à la gestion des présences.</p>
-<p>Pour y acceder, il suffit de cliquet sur l’onglet <strong>Configurations</strong> de la plateforme.</p>
-<p><strong>1. Ajouter les sites</strong></p>
-<p>Pour ajouter un nouveau site, depuis l’onglet <strong>Configurations</strong>, puis <strong>Ajouter un site</strong></p>
-<img alt="../_images/image12.png" src="../_images/image12.png" />
-<p>Une boîte de dialogue s’ouvre. Renseignez les informations suivantes :</p>
-<ul class="simple">
-<li><p><strong>Nom du site</strong></p></li>
-<li><p><strong>Numéro de téléphone</strong> (utilisé pour l’intégration WhatsApp du pointage)</p></li>
-<li><p><strong>Adresse du site</strong></p></li>
-<li><p><strong>Coordonnées géographiques</strong> (cliquez sur <strong>Obtenir la localisation</strong>, en veillant à activer la géolocalisation sur votre appareil).</p></li>
-</ul>
-<img alt="../_images/image13.png" src="../_images/image13.png" />
-<p>Cliquez sur <strong>Suivant</strong> pour définir les horaires de travail :</p>
-<ul class="simple">
-<li><p>Sélectionnez les <strong>jours ouvrables</strong> ;</p></li>
-<li><p>Indiquez les <strong>heures d’ouverture et de fermeture</strong> (ex. : 08h30 – 17h30).</p></li>
-</ul>
-<img alt="../_images/image14.png" src="../_images/image14.png" />
-<p>Cliquez sur <strong>Valider</strong> pour finaliser.</p>
-<p>Une fois validé, un <strong>QR Code</strong> est automatiquement généré. Il sert de pointage pour les employés sur le site concerné.</p>
-<img alt="../_images/image15.png" src="../_images/image15.png" />
-<p><strong>Conseil</strong> : Avant toute impression ou diffusion, veillez à tester le QR Code afin de vous assurer qu’il redirige correctement vers le numéro WhatsApp configuré.</p>
-<p><em>Visualiser et modifier un site</em></p>
-<p>Vous pouvez consulter la liste des sites déjà créés.</p>
-<img alt="../_images/image16.png" src="../_images/image16.png" />
-<p>Vous pouvez éditer, supprimer ou télécharger le QR Code associé à un site en cliquant sur les trois points situés à droite du nom du site, comme illustré dans la capture ci-dessous.</p>
-<img alt="../_images/image161.png" src="../_images/image161.png" />
-<p><strong>2.Configurer les horaires de travail</strong></p>
-<ul class="simple">
-<li><p>Accédez au sous-onglet <strong>Horaires</strong> dans l’onglet <strong>Paramètres</strong>.</p></li>
-<li><p>Sélectionnez le site concerné dans la liste déroulante.</p></li>
-</ul>
-<img alt="../_images/image17.png" src="../_images/image17.png" />
-<ul class="simple">
-<li><p>Modifiez les horaires comme souhaité (jours ouvrables, heures d’ouverture/fermeture).</p></li>
-<li><p>Enregistrez vos modifications en cliquant sur <strong>Valider</strong>.</p></li>
-</ul>
-<p><strong>3. Configurer les départements</strong></p>
-<ul class="simple">
-<li><p>Rendez-vous dans le sous-onglet <strong>Départements</strong>.</p></li>
-</ul>
-<img alt="../_images/image18.png" src="../_images/image18.png" />
-<ul class="simple">
-<li><p>Vous pouvez visualiser la liste des départements existants, les modifier ou supprimer.</p></li>
-</ul>
-<p><strong>4. Configurer les postes</strong></p>
-<ul class="simple">
-<li><p>Accédez au sous-onglet <strong>Postes</strong>.</p></li>
-</ul>
-<img alt="../_images/image19.png" src="../_images/image19.png" />
-<ul class="simple">
-<li><p>Vous pouvez visualiser la liste des postes existants, les modifier ou supprimer.</p></li>
-</ul>
-</section>
-<section id="gestion-des-employes">
-<h1>Gestion des employés<a class="headerlink" href="#gestion-des-employes" title="Lien permanent vers cette rubrique"></a></h1>
-<p>Depuis l’onglet <strong>Employés</strong>, la gestion de la présence débute par la création du profil de chaque employé, qui contient ses informations clés : identité, poste, département, horaires et sites d’affectation. Ce profil permet d’associer précisément les pointages effectués, assurant ainsi un suivi fiable et personnalisé des présences, retards et absences.</p>
-<img alt="../_images/image20.png" src="../_images/image20.png" />
-<p>Sur cet onglet, on peut visualiser les employés enregistrés dans l’entreprise, ajouter un employé, modifier les informations d’un employé ou supprimer un employé.</p>
-<p><strong>1. Ajouter un employé</strong></p>
-<p>En cliquant sur le bouton <strong>Ajouter un employé</strong>, une boîte de dialogue va s’ouvrir et vous allez renseigner le nom de l’employé, son numéro de téléphone, l’adresse mail, le poste et le département de l’employé.</p>
-<img alt="../_images/image21.png" src="../_images/image21.png" />
-<p>Attention : pour le numéro de téléphone, il faut se rassurer de renseigner le numéro tel qu’il est renseigné sur WhatsApp (par exemple, les numéros sans 6 comme 23789898989 et les numéros avec 6 tels que 237689898989).</p>
-<p><strong>2. Visualiser, modifier et supprimer un employé</strong></p>
-<p>Depuis l’onglet Employés, vous pouvez modifier ou supprimer un employé facilement.</p>
-<img alt="../_images/image22.png" src="../_images/image22.png" />
-</section>
-<section id="gestion-des-comptes">
-<h1>Gestion des comptes<a class="headerlink" href="#gestion-des-comptes" title="Lien permanent vers cette rubrique"></a></h1>
-<p>Elle se fait dans l’onglet <strong>Espace entreprise</strong>. Seuls les utilisateurs qui ont le rôle d’Admin ou d’account manager peuvent voir cet onglet.</p>
-<img alt="../_images/image23.png" src="../_images/image23.png" />
-<p>Sur cette section, il y a deux principales fonctionnalités : Ajouter une nouvelle société et Ajouter un utilisateur.</p>
-<p><strong>1. Ajouter une Société</strong></p>
-<p>Cette fonctionnalité vous permet de créer une nouvelle société à qui vous souhaitez vendre l’outil de pointage. Vous devez ajouter la société ici et ajouter un utilisateur qui va gérer cette société.</p>
-<p>En cliquant sur le bouton <strong>Ajouter une société</strong>, une boîte de dialogue va s’ouvrir et vous devez renseigner les informations de la société que vous voulez ajouter à ce niveau.</p>
-<img alt="../_images/image24.png" src="../_images/image24.png" />
-<img alt="../_images/image241.png" src="../_images/image241.png" />
-<p>Il faut renseigner le nom de la compagnie, le nom d’un responsable de la compagnie, l’adresse mail et le téléphone de la société ou du responsable d’une société, puis cliquer sur le bouton de validation pour terminer la création de la société. Vous ne pouvez pas créer deux sociétés avec les mêmes numéros de téléphone.</p>
-<p><strong>2. Visualiser, modifier, supprimer les sociétés.</strong></p>
-<img alt="../_images/image25.png" src="../_images/image25.png" />
-<p>Lorsque vous créez une nouvelle société, elle s’ajoute automatiquement dans la liste des sociétés comme le montre l’image ci-dessus. En utilisant le bouton d’édition à l’extrême droite de chaque société, vous avez la possibilité de modifier les informations de la société en cliquant sur Modifier ou alors de supprimer la société en cliquant sur Supprimer.</p>
-<p>NB : Si vous avez le rôle d’Account-Manager, vous ne pouvez voir et modifier que les sociétés que vous avez ajoutées. Donc, vous ne pouvez pas modifier une société ajoutée par l’administrateur ou par un autre utilisateur avec le rôle Account-Manager.</p>
-<p><strong>3. Ajouter un utilisateur</strong></p>
-<p>En général, lorsque vous créez une société, il faut ajouter un utilisateur de cette société qui va gérer la société en question. Et vous devez lui donner le rôle d’Admin.</p>
-<p>Dans le sous-onglet Utilisateur, il suffit de cliquer sur le bouton Ajouter un utilisateur pour déclencher le processus d’ajout d’un nouvel utilisateur.</p>
-<img alt="../_images/image26.png" src="../_images/image26.png" />
-<p>Cela va ouvrir une boîte de dialogue et vous allez devoir renseigner les différents champs concernant cet utilisateur.</p>
-<img alt="../_images/image27.png" src="../_images/image27.png" />
-<p>Ce sera à vous d’envoyer ces identifiants à l’utilisateur en question pour qu’il puisse accéder à la plateforme pour gérer son entreprise. Il s’agit notamment de l’adresse mail et du mot de passe. Tout utilisateur a besoin de ces deux informations pour se connecter à la plateforme.</p>
-<p><em>Visualiser, modifier, supprimer un utilisateur.</em></p>
-<img alt="../_images/image28.png" src="../_images/image28.png" />
-<p>Lorsque vous ajoutez un nouvel utilisateur, il s’ajoute automatiquement dans la liste des utilisateurs comme le montre l’image ci-dessus. En utilisant le bouton d’édition à l’extrême droite de chaque utilisateur, vous avez la possibilité de modifier les informations d’un utilisateur en cliquant sur Modifier ou alors de le supprimer dans la mesure du possible en cliquant sur Supprimer.</p>
-<p>NB : Si vous avez le rôle d’Account-Manager, vous ne pouvez voir et modifier que les utilisateurs que vous avez ajoutés. Donc, vous ne pouvez pas modifier un utilisateur ajouté par l’administrateur ou par un autre Account-Manager.</p>
-</section>
+      <div class="nav-section-title">Guide de configuration</div>
+      <div class="nav-item">
+        <a href="../Config_guide/index.html">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" /></svg>
+          Introduction
+        </a>
+      </div>
+      <div class="nav-item">
+        <a href="../Config_guide/index.html#etape-1-connexion-a-la-plateforme-dediee">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9" /></svg>
+          Étape 1 : Connexion
+        </a>
+      </div>
+      <div class="nav-item">
+        <a href="../Config_guide/index.html#etape-2-configuration-des-parametres-de-base">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 11-3 0m3 0a1.5 1.5 0 10-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-9.75 0h9.75" /></svg>
+          Étape 2 : Paramètres de base
+        </a>
+      </div>
+      <div class="nav-item">
+        <a href="../Config_guide/index.html#etape-3-ajout-dutilisateurs-supplementaires">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zM4 19.235v-.11a6.375 6.375 0 0112.75 0v.109A12.318 12.318 0 0110.374 21c-2.331 0-4.512-.645-6.374-1.766z" /></svg>
+          Étape 3 : Utilisateurs
+        </a>
+      </div>
+      <div class="nav-item">
+        <a href="../Config_guide/index.html#etape-4-enregistrement-des-employes">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15 9h3.75M15 12h3.75M15 15h3.75M4.5 19.5h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5zm6-10.125a1.875 1.875 0 11-3.75 0 1.875 1.875 0 013.75 0zm1.294 6.336a6.721 6.721 0 01-3.17.789 6.721 6.721 0 01-3.168-.789 3.376 3.376 0 016.338 0z" /></svg>
+          Étape 4 : Employés
+        </a>
+      </div>
+      <div class="nav-item">
+        <a href="../Config_guide/index.html#etape-5-creation-des-programmes-de-travail">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" /></svg>
+          Étape 5 : Programmes
+        </a>
+      </div>
+      <div class="nav-item">
+        <a href="../Config_guide/index.html#etape-6-mise-en-place-sur-site-et-phase-de-test">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-.45 3.867 3.745 3.745 0 01-3.867.45A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.867-.45 3.745 3.745 0 01-.45-3.867A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 01.45-3.867 3.746 3.746 0 013.867-.45A3.745 3.745 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.867.45 3.745 3.745 0 01.45 3.867A3.745 3.745 0 0121 12z" /></svg>
+          Étape 6 : Mise en place
+        </a>
+      </div>
+    </div>
+  </nav>
 
+  <!-- ── Main ── -->
+  <div class="main">
 
-           </div>
-          </div>
-          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Pied de page">
-        <a href="../General_presentation/index.html" class="btn btn-neutral float-left" title="Présentation générale de l’outil de pointage" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Précédent</a>
-        <a href="../Config_guide/index.html" class="btn btn-neutral float-right" title="Introduction" accesskey="n" rel="next">Suivant <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    <div class="topbar">
+      <button class="btn-menu" id="btnMenu" aria-label="Ouvrir le menu">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect y="3" width="20" height="2" rx="1" fill="#4a5e72"/><rect y="9" width="20" height="2" rx="1" fill="#4a5e72"/><rect y="15" width="20" height="2" rx="1" fill="#4a5e72"/></svg>
+      </button>
+      <a href="../index.html">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" /></svg>
+      </a>
+      <span class="sep">›</span>
+      <span class="current">Fonctionnalités de la plateforme</span>
+      <div class="lang-switch">
+        <a href="../../../../en/build/html/Platform_features/index.html">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253M3 12a8.959 8.959 0 01.284-2.253" /></svg>
+          English
+        </a>
+      </div>
     </div>
 
-  <hr/>
+    <div class="page-header">
+      <div class="label">Fonctionnalités de la plateforme</div>
+      <h1>Aperçu complet des fonctionnalités</h1>
+      <div class="underline"></div>
+    </div>
 
-  <div role="contentinfo">
-    <p>&#169; Droits d'auteur 2025, Kaeyros Analytics.</p>
-  </div>
+    <nav class="on-page-nav">
+      <a href="#apercu">Aperçu</a>
+      <a href="#connexion-a-la-plateforme">Connexion</a>
+      <a href="#journaux-de-presence">Journaux</a>
+      <a href="#tableau-de-bord">Tableau de bord</a>
+      <a href="#employes">Employés</a>
+      <a href="#absences">Absences</a>
+      <a href="#departements">Départements</a>
+      <a href="#sites-qr-codes">Sites & QR</a>
+      <a href="#rapports">Rapports</a>
+      <a href="#configurations">Configurations</a>
+      <a href="#programmes">Programmes</a>
+    </nav>
 
-  Compilé avec <a href="https://www.sphinx-doc.org/">Sphinx</a> en utilisant un
-    <a href="https://github.com/readthedocs/sphinx_rtd_theme">thème</a>
-    fourni par <a href="https://readthedocs.org">Read the Docs</a>.
-   
+    <div class="content">
 
-</footer>
+      <!-- ══ APERÇU ══ -->
+      <div class="doc-section" id="apercu">
+        <div class="section-header">
+          <span class="s-icon">
+            <!-- Heroicon: map -->
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 6.75V15m6-6v8.25m.503 3.498l4.875-2.437c.381-.19.622-.58.622-1.006V4.82c0-.836-.88-1.38-1.628-1.006l-3.869 1.934c-.317.159-.69.159-1.006 0L9.503 3.252a1.125 1.125 0 00-1.006 0L3.622 5.689C3.24 5.88 3 6.27 3 6.695V19.18c0 .836.88 1.38 1.628 1.006l3.869-1.934c.317-.159.69-.159 1.006 0l4.994 2.497c.317.158.69.158 1.006 0z" /></svg>
+          </span>
+          <h2>Aperçu</h2>
+        </div>
+        <p>La plateforme de pointage développée par <strong>Kaeyros Analytics</strong> s'adresse à deux types de structures, chacune disposant d'un accès adapté à ses besoins :</p>
+        <div class="type-cards">
+          <div class="type-card admin">
+            <div class="badge">Administration interne</div>
+            <h3>Gestion propre</h3>
+            <p>Destinée aux entreprises qui utilisent la solution pour gérer leur propre personnel. Permet de suivre en temps réel les présences, absences et retards, de configurer les sites, horaires et programmes, et de générer des rapports détaillés.</p>
+          </div>
+          <div class="type-card resell">
+            <div class="badge">Distribution</div>
+            <h3>Compte Reseller</h3>
+            <p>Destinée aux structures souhaitant proposer la solution à d'autres entreprises clientes. Réservée aux comptes <strong>Reseller</strong>, avec un accès étendu permettant de créer et gérer plusieurs espaces entreprises depuis une seule interface.</p>
+          </div>
+        </div>
+        <p>Ce guide décrit étape par étape l'utilisation de la plateforme, depuis la connexion jusqu'au reporting.</p>
+      </div>
+
+      <!-- ══ CONNEXION ══ -->
+      <div class="doc-section" id="connexion-a-la-plateforme">
+        <div class="section-header">
+          <span class="s-icon">
+            <!-- Heroicon: lock-closed -->
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" /></svg>
+          </span>
+          <h2>Connexion à la plateforme</h2>
+        </div>
+        <p>L'accès à la plateforme d'administration se fait via un navigateur web :</p>
+        <div class="url-block">
+          <!-- Heroicon: link -->
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244" /></svg>
+          <a href="https://pointing-front.kaeyros.org">https://pointing-front.kaeyros.org</a>
+        </div>
+        <p style="margin-top:14px;">Pour vous connecter, suivez les étapes ci-dessous :</p>
+        <ol class="steps">
+          <li><p>Ouvrez votre <strong>navigateur web</strong> (Google Chrome, Firefox, Edge, etc.) ;</p></li>
+          <li><p>Saisissez ou cliquez sur l'URL ci-dessus ;</p></li>
+          <li><p>Renseignez votre <strong>adresse e-mail</strong> et votre <strong>mot de passe</strong>, tels que fournis lors de votre souscription ;</p></li>
+          <li><p>Cliquez sur le bouton <strong>« Connexion »</strong> pour accéder à votre espace.</p></li>
+        </ol>
+        <div class="img-wrap">
+          <img src="../img/connexion.png" alt="Page de connexion à la plateforme" />
+          <div class="img-caption">Page de connexion à la plateforme</div>
+        </div>
+        <div class="info-block note">
+          <span class="ib-icon">
+            <!-- Heroicon: key -->
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 5.25a3 3 0 013 3m3 0a6 6 0 01-7.029 5.912c-.563-.097-1.159.026-1.563.43L10.5 17.25H8.25v2.25H6v2.25H2.25v-2.818c0-.597.237-1.17.659-1.591l6.499-6.499c.404-.404.527-1 .43-1.563A6 6 0 1121.75 8.25z" /></svg>
+          </span>
+          <div class="ib-body">
+            <div class="ib-title">Mot de passe oublié ?</div>
+            <p>Si vous ne vous souvenez plus de votre mot de passe, veuillez contacter votre administrateur ou l'équipe Kaeyros Analytics afin d'en obtenir un nouveau.</p>
+          </div>
+        </div>
+        <p>Une fois connecté, vous êtes automatiquement redirigé vers les <strong>journaux de présence</strong>.</p>
+      </div>
+
+      <!-- ══ JOURNAUX ══ -->
+      <div class="doc-section" id="journaux-de-presence">
+        <div class="section-header">
+          <span class="s-icon">
+            <!-- Heroicon: clipboard-document-list -->
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25zM6.75 12h.008v.008H6.75V12zm0 3h.008v.008H6.75V15zm0 3h.008v.008H6.75V18z" /></svg>
+          </span>
+          <h2>Journaux de présence</h2>
+        </div>
+        <p>Les <strong>journaux de présence</strong> constituent le point central du suivi quotidien. Cette page affiche en temps réel l'ensemble des pointages effectués par les employés, avec pour chaque entrée la date, le nom de l'employé, le site, le département, l'heure d'entrée, l'heure de sortie, le retard éventuel, le total des heures travaillées et le statut.</p>
+        <p>Depuis cette page, vous pouvez :</p>
+        <ul>
+          <li>visualiser les présences pour une journée donnée,</li>
+          <li>saisir manuellement une présence,</li>
+          <li>télécharger le rapport de présence,</li>
+          <li>consulter le reporting global,</li>
+          <li>consulter le détail des présences d'un employé.</li>
+        </ul>
+
+        <div class="sub-title">1. Visualisation des présences journalières</div>
+        <p>Cette fonctionnalité permet de consulter rapidement la liste des employés et leur statut de présence pour une journée donnée. Vous pouvez affiner l'affichage grâce aux filtres disponibles : <strong>période</strong>, <strong>site</strong>, <strong>département</strong>, <strong>employé</strong>, <strong>type de saisie</strong> et <strong>statut</strong>. Un champ de recherche permet de retrouver rapidement un employé par son nom.</p>
+        <div class="img-wrap">
+          <img src="../img/journaux.png" alt="Journaux de présence" />
+          <div class="img-caption">Vue des journaux de présence</div>
+        </div>
+
+        <div class="sub-title">2. Saisie manuelle des présences</div>
+        <p>Cette fonctionnalité permet d'enregistrer directement la présence d'un employé pour une journée donnée, en spécifiant son heure d'arrivée ou de départ. Utile en cas d'oubli de pointage, de correction ou d'ajout exceptionnel.</p>
+        <ul><li>Cliquez sur le bouton <strong>« Saisir la présence »</strong> situé en haut à droite de la page.</li></ul>
+        <div class="img-wrap"><img src="../img/pointerrr.png" alt="Bouton saisir la présence" /></div>
+        <ul><li>Une boîte de dialogue s'ouvre. Sélectionnez l'<strong>employé</strong> concerné, choisissez le <strong>site</strong>, puis renseignez la <strong>date</strong> et l'<strong>heure</strong> de pointage.</li></ul>
+        <div class="img-wrap">
+          <img src="../img/Pointermod.png" alt="Modal de saisie manuelle" />
+          <div class="img-caption">Formulaire de saisie manuelle d'une présence</div>
+        </div>
+        <ul><li>Cliquez sur <strong>« Valider »</strong>. La présence sera immédiatement visible dans le tableau avec la mention <strong>Manuel</strong>.</li></ul>
+        <div class="info-block important">
+          <span class="ib-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" /></svg>
+          </span>
+          <div class="ib-body">
+            <div class="ib-title">Important — Rappel essentiel</div>
+            <p>Chaque employé doit enregistrer <strong>deux pointages</strong> par jour : l'<strong>heure d'arrivée</strong> lors de l'entrée sur le site, et l'<strong>heure de départ</strong> à la sortie.</p>
+          </div>
+        </div>
+
+        <div class="sub-title">3. Téléchargement du rapport de présence</div>
+        <p>Cette option permet d'exporter les données de présence sous forme de fichier pour la période sélectionnée.</p>
+        <ul>
+          <li>Sélectionnez la période souhaitée ;</li>
+          <li>Cliquez sur le bouton <strong>« Exporter »</strong> en haut à droite du tableau.</li>
+        </ul>
+        <div class="img-wrap"><img src="../img/exportdraw.png" alt="Export du rapport de présence" /></div>
+        <p><strong>Structure du fichier exporté :</strong></p>
+        <table class="data-table">
+          <thead><tr><th>Colonne</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Employé</strong></td><td>Nom complet de l'employé</td></tr>
+            <tr><td><strong>Entrée / Sortie</strong></td><td>Heures de pointage correspondantes</td></tr>
+            <tr><td><strong>Site</strong></td><td>Lieu du pointage</td></tr>
+            <tr><td><strong>Département</strong></td><td>Département auquel est rattaché l'employé</td></tr>
+            <tr><td><strong>En retard de</strong></td><td>Durée éventuelle du retard</td></tr>
+            <tr><td><strong>Heures de travail</strong></td><td>Total des heures effectuées sur la journée</td></tr>
+            <tr><td><strong>Type de saisie</strong></td><td>Automatique, manuel ou système</td></tr>
+            <tr><td><strong>Statut</strong></td><td>Présent, Absent ou En retard</td></tr>
+          </tbody>
+        </table>
+        <div class="img-wrap">
+          <img src="../img/fichierEXC.png" alt="Exemple de fichier exporté" />
+          <div class="img-caption">Exemple de fichier de présence exporté</div>
+        </div>
+        <p>Au-dessus du tableau figurent un champ de recherche, des filtres par période, site, département, employé, type de saisie et statut, ainsi qu'un bouton <strong>« Réinitialiser »</strong>. Une légende indique le mode de saisie de chaque pointage : <strong>Automatique</strong> (vert clair), <strong>Manuel</strong> (orange) et <strong>Système</strong> (vert foncé).</p>
+
+        <div class="sub-title">4. Consultation du reporting global</div>
+        <p>La page se compose de deux parties. <strong>En haut</strong>, un résumé global affiche trois indicateurs sous forme de cartes colorées : <strong>À l'heure</strong> (vert), <strong>En retard</strong> (orange) et <strong>Heure supplémentaire</strong> (violet). À droite, un résumé de présence global affiche les pourcentages répartis en cinq catégories : Présent, Absent, À l'heure, En retard et Supplémentaires.</p>
+        <p><strong>En bas</strong>, le tableau liste le détail des pointages de chaque employé : date, nom, site, département, entrée/sortie, retard, heures travaillées et statut. Des filtres et un champ de recherche permettent d'affiner l'affichage.</p>
+
+        <div class="sub-title">5. Voir les détails des présences d'un employé</div>
+        <p>Cliquez sur le <strong>nom d'un employé</strong> dans le tableau pour accéder à sa fiche individuelle. La fiche affiche en en-tête ses informations personnelles et se compose de deux onglets :</p>
+        <p><strong>Onglet Rapports/analyses</strong> — présente une synthèse complète sur la période sélectionnée : nombre de pointages par mode de saisie, six métriques récapitulatives (jours présents, arrivées à l'heure, retards, absences, % de présence, retard moyen) et trois graphiques d'analyse (camembert, histogramme, calendrier mensuel coloré).</p>
+        <div class="img-wrap"><img src="../img/detailjourn1.png" alt="Détail employé - Rapports et analyses" /></div>
+        <div class="img-wrap"><img src="../img/detailjourn2.png" alt="Détail employé - Graphiques" /></div>
+        <p><strong>Onglet Journal de présence</strong> — liste de façon chronologique les pointages de l'employé : date, heure d'entrée, heure de sortie, durée du retard, heures travaillées et statut. Un bouton <strong>« Exporter »</strong> permet de télécharger les données.</p>
+        <div class="img-wrap"><img src="../img/detailjourn3.png" alt="Détail employé - Journal de présence" /></div>
+      </div>
+
+      <!-- ══ TABLEAU DE BORD ══ -->
+      <div class="doc-section" id="tableau-de-bord">
+        <div class="section-header">
+          <span class="s-icon">
+            <!-- Heroicon: chart-bar-square -->
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M7.5 14.25v2.25m3-4.5v4.5m3-6.75v6.75m3-9v9M6 20.25h12A2.25 2.25 0 0020.25 18V6A2.25 2.25 0 0018 3.75H6A2.25 2.25 0 003.75 6v12A2.25 2.25 0 006 20.25z" /></svg>
+          </span>
+          <h2>Tableau de Bord</h2>
+        </div>
+        <p>Le tableau de bord offre une vue d'ensemble synthétique et en temps réel de la situation de présence de l'ensemble de l'entreprise. Il se compose de deux sections principales.</p>
+
+        <div class="sub-title">Résumé de l'entreprise</div>
+        <p>Des filtres permettent d'affiner l'affichage par <strong>période</strong>, <strong>site</strong>, <strong>département</strong> et <strong>employé</strong>. Quatre cartes colorées présentent les chiffres essentiels :</p>
+        <ul>
+          <li><strong>Total des employés</strong> (bleu) : nombre total d'employés enregistrés, avec un lien vers la liste complète ;</li>
+          <li><strong>Absences</strong> (rose) : nombre total d'absences enregistrées en nombre de jours ;</li>
+          <li><strong>Retards</strong> (jaune) : nombre total de retards en minutes cumulées ;</li>
+          <li><strong>Heures supplémentaires</strong> (violet) : volume total des heures supplémentaires en minutes.</li>
+        </ul>
+        <div class="img-wrap">
+          <img src="../img/dashboard.png" alt="Tableau de bord" />
+          <div class="img-caption">Tableau de bord — Résumé de l'entreprise</div>
+        </div>
+
+        <div class="sub-title">Résumé de présence</div>
+        <p>Un tableau détaillé présente la situation individuelle de chaque employé sur la période. Des filtres permettent d'affiner par <strong>période</strong>, <strong>site</strong>, <strong>département</strong>, <strong>employé</strong> et <strong>statut</strong>. Un bouton <strong>« Voir tout »</strong> donne accès à la vue complète des journaux. Pour chaque employé sont affichés : jours travaillés / jours attendus, heures travaillées / heures attendues, jours d'absence, nombre de retards, minutes de retard cumulées, <strong>notes</strong> (score de présence) et heures supplémentaires. Un bouton <strong>« Exporter »</strong> permet de télécharger les données.</p>
+      </div>
+
+      <!-- ══ EMPLOYÉS ══ -->
+      <div class="doc-section" id="employes">
+        <div class="section-header">
+          <span class="s-icon">
+            <!-- Heroicon: users -->
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" /></svg>
+          </span>
+          <h2>Employés</h2>
+        </div>
+        <p>L'onglet <strong>Employés</strong> centralise la gestion de l'ensemble du personnel. Il affiche la liste complète des employés avec leur identifiant, nom, département, site assigné, programme de travail, informations de contact et statut (Actif ou Inactif). Deux modes d'affichage sont disponibles : <strong>Vue en tableau</strong> et <strong>Vue en carte</strong>.</p>
+        <div class="img-wrap">
+          <img src="../img/employes.png" alt="Liste des employés" />
+          <div class="img-caption">Liste des employés</div>
+        </div>
+
+        <div class="sub-title">1. Ajouter un employé</div>
+        <p>Cliquez sur <strong>« Ajouter un employé »</strong>. Deux modes d'ajout sont disponibles :</p>
+        <div class="type-cards">
+          <div class="type-card admin">
+            <div class="badge">Individuel</div>
+            <h3>Ajout singulier</h3>
+            <p>Renseignez manuellement les informations : nom, prénom, e-mail, téléphone, département, poste, sites assignés et photo de profil (optionnelle).</p>
+          </div>
+          <div class="type-card resell">
+            <div class="badge">Import</div>
+            <h3>Ajout en masse</h3>
+            <p>Importez plusieurs employés via un fichier <strong>Excel ou CSV</strong> (.xlsx, .xls, .csv — max 10 Mo) en sélectionnant le site, département et poste communs.</p>
+          </div>
+        </div>
+        <div class="img-wrap">
+          <img src="../img/creeremploye.png" alt="Formulaire ajout singulier" />
+          <div class="img-caption">Formulaire d'ajout singulier d'un employé</div>
+        </div>
+        <div class="info-block important">
+          <span class="ib-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" /></svg>
+          </span>
+          <div class="ib-body">
+            <div class="ib-title">Attention — Numéro de téléphone</div>
+            <p>Renseignez le numéro <strong>tel qu'il est enregistré sur WhatsApp</strong> (ex. : <strong>23789898989</strong> ou <strong>237689898989</strong>). Un numéro incorrect empêchera l'employé de pointer via WhatsApp.</p>
+          </div>
+        </div>
+        <div class="img-wrap">
+          <img src="../img/ajoutmasseemploye.png" alt="Formulaire ajout en masse" />
+          <div class="img-caption">Formulaire d'ajout en masse</div>
+        </div>
+
+        <div class="sub-title">2. Visualiser, modifier et supprimer un employé</div>
+        <p>Depuis le tableau, cliquez sur les <strong>trois points</strong> à l'extrême droite d'un employé pour <strong>modifier</strong> ses informations ou <strong>supprimer</strong> son profil. Les employés <strong>inactifs</strong> disposent d'un bouton <strong>« Réactiver »</strong>.</p>
+      </div>
+
+      <!-- ══ ABSENCES ══ -->
+      <div class="doc-section" id="absences">
+        <div class="section-header">
+          <span class="s-icon">
+            <!-- Heroicon: calendar (absences) -->
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5m-9-6h.008v.008H12v-.008zM12 15h.008v.008H12V15zm0 2.25h.008v.008H12v-.008zM9.75 15h.008v.008H9.75V15zm0 2.25h.008v.008H9.75v-.008zM7.5 15h.008v.008H7.5V15zm0 2.25h.008v.008H7.5v-.008zm6.75-4.5h.008v.008h-.008v-.008zm0 2.25h.008v.008h-.008V15zm0 2.25h.008v.008h-.008v-.008zm2.25-4.5h.008v.008H16.5v-.008zm0 2.25h.008v.008H16.5V15z" /></svg>
+          </span>
+          <h2>Absences</h2>
+        </div>
+        <p>L'onglet <strong>Absences</strong> centralise le suivi de toutes les indisponibilités des employés. Il affiche la liste complète des absences enregistrées avec identifiant, nom de l'employé, département, site, durée et statut.</p>
+        <div class="img-wrap">
+          <img src="../img/absence.png" alt="Liste des absences" />
+          <div class="img-caption">Liste des absences</div>
+        </div>
+
+        <div class="sub-title">1. Ajouter une absence</div>
+        <p>Cliquez sur <strong>« + Ajouter une absence »</strong>. Renseignez les champs suivants :</p>
+        <ul>
+          <li><strong>Employé</strong> : sélectionnez l'employé concerné ;</li>
+          <li><strong>Statut</strong> : Approuvée ou Non approuvée ;</li>
+          <li><strong>Type d'absence</strong> : congé maladie, congé de maternité, deuil, etc. ;</li>
+          <li><strong>Durée</strong> : date de début et date de fin ;</li>
+          <li><strong>Raison</strong> : description ou justification (optionnel) ;</li>
+          <li><strong>Pièce jointe</strong> : document justificatif (PNG, JPEG ou PDF — max 5 Mo).</li>
+        </ul>
+        <div class="img-wrap">
+          <img src="../img/creerabsence.png" alt="Formulaire de création d'une absence" />
+          <div class="img-caption">Formulaire de création d'une absence</div>
+        </div>
+
+        <div class="sub-title">2. Définir le statut d'une absence</div>
+        <p>Chaque absence peut avoir l'un des trois statuts suivants :</p>
+        <ul>
+          <li><strong>Absence</strong> : statut attribué automatiquement lorsque le système détecte l'absence de pointage ;</li>
+          <li><strong>Absence approuvée</strong> : le responsable a officiellement validé l'absence ;</li>
+          <li><strong>Absence non approuvée</strong> : le responsable a examiné l'absence mais ne l'a pas validée.</li>
+        </ul>
+        <p>Pour modifier le statut, cliquez sur les <strong>trois points</strong> à droite de la ligne, puis choisissez <strong>Modifier</strong>. Vous pouvez aussi cliquer directement sur le statut dans le tableau.</p>
+        <div class="img-wrap"><img src="../img/definistatutabsence.png" alt="Définir le statut d'une absence" /></div>
+        <div class="info-block tip">
+          <span class="ib-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" /></svg>
+          </span>
+          <div class="ib-body">
+            <div class="ib-title">Bon à savoir</div>
+            <p>Les absences non saisies sont <strong>détectées automatiquement</strong> par le système lorsqu'un employé n'effectue aucun pointage lors d'un jour de travail prévu, et reçoivent le statut <strong>Absence</strong> par défaut.</p>
+          </div>
         </div>
       </div>
-    </section>
-  </div>
+
+      <!-- ══ DÉPARTEMENTS ══ -->
+      <div class="doc-section" id="departements">
+        <div class="section-header">
+          <span class="s-icon">
+            <!-- Heroicon: building-office-2 -->
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 3.75h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008z" /></svg>
+          </span>
+          <h2>Départements</h2>
+        </div>
+        <p>L'onglet <strong>Départements</strong> permet de gérer l'ensemble des départements de l'entreprise. Il affiche la liste avec pour chacun son numéro et son nom.</p>
+        <div class="img-wrap"><img src="../img/departement.png" alt="Liste des départements" /></div>
+
+        <div class="sub-title">1. Ajouter un département</div>
+        <p>Cliquez sur <strong>« + Ajouter un département »</strong>, saisissez le nom du département, puis cliquez sur <strong>« Ajouter département »</strong>. Il est immédiatement disponible pour l'affectation des employés.</p>
+        <div class="img-wrap"><img src="../img/creerdept.png" alt="Formulaire de création d'un département" /></div>
+
+        <div class="sub-title">2. Modifier un département</div>
+        <p>Cliquez sur <strong>« Modifier »</strong> à droite du département concerné. Apportez les modifications puis validez.</p>
+
+        <div class="sub-title">3. Supprimer un département</div>
+        <p>Cliquez sur <strong>« Supprimer »</strong> à droite du département concerné. Une confirmation peut être demandée avant la suppression définitive.</p>
+
+        <div class="info-block tip">
+          <span class="ib-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" /></svg>
+          </span>
+          <div class="ib-body">
+            <div class="ib-title">Bon à savoir</div>
+            <p>Les départements permettent de filtrer les données dans les autres sections de l'application, notamment dans les <strong>Journaux de présence</strong> et les <strong>Absences</strong>.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ SITES & QR ══ -->
+      <div class="doc-section" id="sites-qr-codes">
+        <div class="section-header">
+          <span class="s-icon">
+            <!-- Heroicon: map-pin -->
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" /></svg>
+          </span>
+          <h2>Sites et codes QR</h2>
+        </div>
+        <p>L'onglet <strong>Sites et codes QR</strong> permet de configurer les sites géographiques de l'entreprise. Chaque site est représenté sous forme de carte affichant son nom, sa longitude, sa latitude et son code QR unique généré automatiquement.</p>
+        <div class="img-wrap"><img src="../img/sites.png" alt="Liste des sites" /></div>
+
+        <div class="sub-title">1. Ajouter un site</div>
+        <p>Cliquez sur <strong>« + Ajouter un site »</strong>. La création se déroule en deux étapes.</p>
+        <div class="step-label">Étape 1 — Informations générales</div>
+        <ul>
+          <li><strong>Nom du site</strong> : saisissez le nom du site ;</li>
+          <li><strong>Adresse du site</strong> : renseignez l'adresse physique ;</li>
+          <li><strong>Fuseau horaire</strong> : sélectionnez le fuseau horaire ;</li>
+          <li><strong>Longitude et Latitude</strong> : saisissez manuellement ou cliquez sur <strong>« Obtenir la localisation »</strong>.</li>
+        </ul>
+        <div class="img-wrap">
+          <img src="../img/creersitepart1.png" alt="Création d'un site - étape 1" />
+          <div class="img-caption">Étape 1 — Informations générales du site</div>
+        </div>
+        <div class="step-label">Étape 2 — Jours et horaires de travail</div>
+        <ul>
+          <li><strong>Jours de travail</strong> : sélectionnez les jours ouvrés ;</li>
+          <li><strong>La même heure tous les jours</strong> : cochez pour un horaire uniforme, ou décochez pour personnaliser par jour ;</li>
+          <li><strong>Horaire d'ouverture et de fermeture</strong> : définissez les heures pour chaque jour sélectionné.</li>
+        </ul>
+        <div class="img-wrap">
+          <img src="../img/creersitepart2.png" alt="Création d'un site - étape 2" />
+          <div class="img-caption">Étape 2 — Jours et horaires de travail</div>
+        </div>
+
+        <div class="sub-title">2. Actions sur un site</div>
+        <p>Cliquez sur les <strong>trois points</strong> en haut à droite de la carte d'un site :</p>
+        <ul>
+          <li><strong>Éditer le site</strong> : modifiez les informations ;</li>
+          <li><strong>Supprimer le site</strong> : supprimez définitivement ;</li>
+          <li><strong>Télécharger QR</strong> : téléchargez le code QR pour l'afficher sur le lieu de travail.</li>
+        </ul>
+        <div class="img-wrap"><img src="../img/actionsites.png" alt="Actions sur un site" /></div>
+        <div class="info-block tip">
+          <span class="ib-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" /></svg>
+          </span>
+          <div class="ib-body">
+            <div class="ib-title">Bon à savoir</div>
+            <p>Chaque site dispose d'un <strong>code QR unique</strong> généré automatiquement. Il doit être affiché sur le lieu de travail pour que les employés puissent scanner et enregistrer leurs pointages.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ RAPPORTS ══ -->
+      <div class="doc-section" id="rapports">
+        <div class="section-header">
+          <span class="s-icon">
+            <!-- Heroicon: presentation-chart-line -->
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3v11.25A2.25 2.25 0 006 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0118 16.5h-2.25m-7.5 0h7.5m-7.5 0l-1 3m8.5-3l1 3m0 0l.5 1.5m-.5-1.5h-9.5m0 0l-.5 1.5M9 11.25v1.5M12 9v3.75m3-6v6" /></svg>
+          </span>
+          <h2>Rapports</h2>
+        </div>
+        <p>L'onglet <strong>Rapports</strong> offre une vue analytique complète des données de présence. Des filtres permettent d'affiner les données par <strong>période</strong>, <strong>site</strong>, <strong>département</strong> et <strong>employé</strong>.</p>
+        <div class="img-wrap"><img src="../img/report1.png" alt="Rapports" /></div>
+
+        <div class="sub-title">1. Indicateurs clés</div>
+        <p>Cinq indicateurs synthétiques en haut de page :</p>
+        <ul>
+          <li><strong>Taux de présence</strong> : pourcentage d'employés ayant effectivement pointé ;</li>
+          <li><strong>Taux de ponctualité</strong> : pourcentage d'employés arrivés à l'heure ;</li>
+          <li><strong>Taux de retard</strong> : pourcentage d'employés arrivés en retard ;</li>
+          <li><strong>Taux d'absence</strong> : pourcentage d'employés absents ;</li>
+          <li><strong>Heure moyenne d'arrivée</strong> : heure d'arrivée moyenne de l'ensemble des employés.</li>
+        </ul>
+
+        <div class="sub-title">2. Graphiques de ponctualité et de retard</div>
+        <p>Deux graphiques en barres par département : <strong>pourcentage moyen de ponctualité</strong> et <strong>pourcentage moyen de retards</strong>.</p>
+
+        <div class="sub-title">3. Graphiques de présence</div>
+        <p>Trois graphiques complémentaires : <strong>Type de présence</strong> (répartition par mode de saisie), <strong>Résumé de présence</strong> (présents vs absents) et <strong>Statistiques de présence</strong> (à l'heure vs en retard).</p>
+        <div class="img-wrap"><img src="../img/report2.png" alt="Graphiques de présence" /></div>
+
+        <div class="sub-title">4. Les 5 employés les plus performants</div>
+        <p>Un graphique en barres met en avant les <strong>cinq employés</strong> ayant le meilleur taux de présence sur la période.</p>
+
+        <div class="sub-title">5. Retard moyen en minutes par département</div>
+        <p>Un graphique en courbes présente l'évolution du retard moyen par département, avec une courbe distincte par département.</p>
+        <div class="img-wrap"><img src="../img/report3.png" alt="Retard moyen par département" /></div>
+        <div class="info-block tip">
+          <span class="ib-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" /></svg>
+          </span>
+          <div class="ib-body">
+            <div class="ib-title">Bon à savoir</div>
+            <p>Tous les graphiques sont interactifs : survolez les barres ou les courbes pour afficher les valeurs détaillées. Les filtres impactent l'ensemble des indicateurs simultanément.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ CONFIGURATIONS ══ -->
+      <div class="doc-section" id="configurations">
+        <div class="section-header">
+          <span class="s-icon">
+            <!-- Heroicon: cog-6-tooth -->
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.324.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 011.37.49l1.296 2.247a1.125 1.125 0 01-.26 1.431l-1.003.827c-.293.24-.438.613-.431.992a6.759 6.759 0 010 .255c-.007.378.138.75.43.99l1.005.828c.424.35.534.954.26 1.43l-1.298 2.247a1.125 1.125 0 01-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.57 6.57 0 01-.22.128c-.331.183-.581.495-.644.869l-.213 1.28c-.09.543-.56.941-1.11.941h-2.594c-.55 0-1.02-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 01-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 01-1.369-.49l-1.297-2.247a1.125 1.125 0 01.26-1.431l1.004-.827c.292-.24.437-.613.43-.992a6.932 6.932 0 010-.255c.007-.378-.138-.75-.43-.99l-1.004-.828a1.125 1.125 0 01-.26-1.43l1.297-2.247a1.125 1.125 0 011.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.087.22-.128.332-.183.582-.495.644-.869l.214-1.281z" /><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+          </span>
+          <h2>Configurations</h2>
+        </div>
+        <p>L'onglet <strong>Configurations</strong> regroupe tous les paramètres nécessaires au bon fonctionnement du système. Il est organisé en cinq sous-onglets : <strong>Shifts</strong>, <strong>Horaires</strong>, <strong>Utilisateurs</strong>, <strong>Postes</strong> et <strong>Types d'absence</strong>.</p>
+
+        <div class="sub-title">1. Shifts</div>
+        <p>Permet de configurer les plages horaires de travail. Les shifts sont affichés sous forme de cartes indiquant le nom, le type (régulier ou nuit), l'heure de début et l'heure de fin.</p>
+        <div class="img-wrap"><img src="../img/shift.png" alt="Liste des shifts" /></div>
+        <p>Pour créer un nouveau shift, cliquez sur <strong>« Créer un nouveau shift »</strong> et renseignez :</p>
+        <ul>
+          <li><strong>Nom du shift</strong> (ex. : Morning shift) ;</li>
+          <li><strong>Heure de début</strong> et <strong>heure de fin</strong> ;</li>
+          <li><strong>Shift de nuit</strong> : activez si la plage est nocturne ;</li>
+          <li><strong>Capacité</strong> : nombre maximum d'employés affectables.</li>
+        </ul>
+        <div class="img-wrap"><img src="../img/creershift.png" alt="Formulaire shift" /><div class="img-caption">Formulaire de création d'un shift</div></div>
+
+        <div class="sub-title">2. Horaires</div>
+        <p>Permet de configurer les horaires de travail par site. Sélectionnez le <strong>site</strong>, définissez les jours ouvrés et les heures d'ouverture et fermeture — uniformes ou personnalisés par jour.</p>
+        <div class="img-wrap"><img src="../img/Horaire.png" alt="Horaires" /><div class="img-caption">Configuration des horaires de travail</div></div>
+
+        <div class="sub-title">3. Utilisateurs</div>
+        <p>Permet de gérer les comptes des utilisateurs ayant accès au système. La liste affiche le nom, la société, le rôle et l'adresse e-mail de chaque utilisateur.</p>
+        <div class="img-wrap"><img src="../img/utilisateurs.png" alt="Utilisateurs" /></div>
+        <p>Cliquez sur <strong>« + Ajouter un utilisateur »</strong> et renseignez : nom, e-mail, mot de passe et société.</p>
+        <div class="img-wrap"><img src="../img/ajoutuser.png" alt="Ajout utilisateur" /><div class="img-caption">Formulaire d'ajout d'un utilisateur</div></div>
+
+        <div class="sub-title">4. Postes</div>
+        <p>Permet de gérer les intitulés de postes. Cliquez sur <strong>« + Ajouter un poste »</strong> et renseignez le nom et une description optionnelle.</p>
+        <div class="img-wrap"><img src="../img/postes.png" alt="Postes" /></div>
+        <div class="img-wrap"><img src="../img/ajoutposte.png" alt="Ajout poste" /><div class="img-caption">Formulaire d'ajout d'un poste</div></div>
+
+        <div class="sub-title">5. Types d'absence</div>
+        <p>Permet de configurer les catégories d'absence autorisées. Cliquez sur <strong>« + Ajouter un type d'absence »</strong> et renseignez le nom et une description optionnelle.</p>
+        <div class="img-wrap"><img src="../img/ajoutabsence.png" alt="Type d'absence" /><div class="img-caption">Formulaire d'ajout d'un type d'absence</div></div>
+
+        <div class="info-block tip">
+          <span class="ib-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" /></svg>
+          </span>
+          <div class="ib-body">
+            <div class="ib-title">Bon à savoir</div>
+            <p>Les <strong>shifts</strong> et <strong>horaires</strong> déterminent les plages de présence attendues. Les <strong>postes</strong> et <strong>types d'absence</strong> enrichissent les profils employés. Les <strong>utilisateurs</strong> contrôlent les accès à l'application.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ PROGRAMMES ══ -->
+      <div class="doc-section" id="programmes">
+        <div class="section-header">
+          <span class="s-icon">
+            <!-- Heroicon: clock -->
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+          </span>
+          <h2>Programmes</h2>
+        </div>
+        <p>L'onglet <strong>Programmes</strong> permet de définir et gérer les plannings de travail. Un programme regroupe des <strong>shifts</strong>, des <strong>jours de travail</strong> et des <strong>employés</strong> affectés. Il constitue le cadre de référence utilisé par le système pour évaluer la présence, les retards et les absences.</p>
+        <p>La liste affiche pour chaque programme son nom, ses dates d'exceptions, le nombre de shifts associés, le nombre d'employés inscrits, la capacité maximale et les jours de travail prévus.</p>
+        <div class="img-wrap">
+          <img src="../img/programs.png" alt="Liste des programmes" />
+          <div class="img-caption">Liste des programmes</div>
+        </div>
+
+        <div class="sub-title">1. Créer un programme</div>
+        <p>Cliquez sur <strong>« + Créer nouveau programme »</strong> et renseignez :</p>
+        <ul>
+          <li><strong>Nom programme</strong> : donnez un nom explicite ;</li>
+          <li><strong>Sélectionner les jours</strong> : cliquez sur les jours souhaités (Lundi à Dimanche) ;</li>
+          <li><strong>Capacité du programme</strong> : nombre maximal d'employés, tous shifts confondus ;</li>
+          <li><strong>Shifts</strong> : pour chaque shift, sélectionnez le shift concerné et les employés à affecter. Cliquez sur <strong>« + Ajouter un shift »</strong> pour créer plusieurs blocs. Un même employé peut appartenir à plusieurs programmes, à condition que ses shifts ne se chevauchent pas ;</li>
+          <li><strong>Dates</strong> : <strong>Illimité</strong>, <strong>Limite de plage de dates</strong> ou <strong>Liste de dates explicites</strong> ;</li>
+          <li><strong>Dates d'exception</strong> : jours à exclure de la période de validité (jours fériés, fermetures exceptionnelles…).</li>
+        </ul>
+        <div class="img-wrap">
+          <img src="../img/creerprogram.png" alt="Formulaire de création d'un programme" />
+          <div class="img-caption">Formulaire de création d'un programme</div>
+        </div>
+
+        <div class="sub-title">2. Voir les détails d'un programme</div>
+        <p>Cliquez sur <strong>« Voir détails »</strong> pour accéder à la page de détail : jours du programme, capacité avec barre de progression, dates d'exception, shifts disponibles (cartes) et tableau des employés inscrits. Le bouton <strong>« Retirer »</strong> permet de retirer un employé du programme.</p>
+        <div class="img-wrap">
+          <img src="../img/detailprogram.png" alt="Détail d'un programme" />
+          <div class="img-caption">Page de détail d'un programme</div>
+        </div>
+
+        <div class="sub-title">3. Modifier ou supprimer un programme</div>
+        <p>Depuis la liste, cliquez sur les <strong>trois points</strong> à droite d'un programme pour <strong>Modifier</strong> ou <strong>Supprimer</strong>. Depuis la page de détail, le bouton <strong>« Modifier le programme »</strong> en haut à droite donne accès directement au formulaire.</p>
+
+        <div class="info-block tip">
+          <span class="ib-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" /></svg>
+          </span>
+          <div class="ib-body">
+            <div class="ib-title">Bon à savoir</div>
+            <p>Un même employé peut être inscrit dans plusieurs programmes simultanément, à condition que les shifts auxquels il est affecté ne se chevauchent pas. Le système s'appuie sur les programmes pour calculer automatiquement les présences attendues, les retards et les absences.</p>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /content -->
+
+    <footer class="page-footer">
+      <span>© 2026 Kaeyros Analytics</span>
+      <div class="nav-buttons">
+        <a href="../General_presentation/index.html" class="btn-nav">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" /></svg>
+          Précédent
+        </a>
+        <a href="../Config_guide/index.html" class="btn-nav primary">
+          Suivant
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" /></svg>
+        </a>
+      </div>
+    </footer>
+
+  </div><!-- /main -->
+
   <script>
-      jQuery(function () {
-          SphinxRtdTheme.Navigation.enable(true);
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('sidebarOverlay');
+    const btnMenu = document.getElementById('btnMenu');
+
+    function openSidebar() { sidebar.classList.add('open'); overlay.classList.add('active'); document.body.style.overflow = 'hidden'; }
+    function closeSidebar() { sidebar.classList.remove('open'); overlay.classList.remove('active'); document.body.style.overflow = ''; }
+
+    btnMenu.addEventListener('click', function(e) { e.stopPropagation(); sidebar.classList.contains('open') ? closeSidebar() : openSidebar(); });
+    overlay.addEventListener('click', closeSidebar);
+    document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeSidebar(); });
+    window.addEventListener('resize', function() { if (window.innerWidth > 768) closeSidebar(); });
+
+    (function () {
+      const sectionIds = ['apercu','connexion-a-la-plateforme','journaux-de-presence','tableau-de-bord','employes','absences','departements','sites-qr-codes','rapports','configurations','programmes'];
+      const navLinks = {};
+      sectionIds.forEach(id => {
+        const href = id === 'apercu' ? '#' : '#' + id;
+        const el = document.querySelector(`.sidebar-nav .nav-item a[href="${href}"]`);
+        if (el) navLinks[id] = el.closest('.nav-item');
       });
-  </script> 
+      function setActive(id) {
+        sectionIds.forEach(sid => { if (navLinks[sid]) navLinks[sid].classList.remove('active'); });
+        if (navLinks[id]) navLinks[id].classList.add('active');
+      }
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => { if (entry.isIntersecting) setActive(entry.target.id); });
+      }, { rootMargin: '-10% 0px -80% 0px', threshold: 0 });
+      sectionIds.forEach(id => { const el = document.getElementById(id); if (el) observer.observe(el); });
+    })();
+  </script>
 
 </body>
 </html>
