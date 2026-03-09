@@ -1,400 +1,1519 @@
 <!doctype html>
 <html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Pointage — Documentation 1.0</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Sora:wght@600;700&display=swap" rel="stylesheet" />
-  <style>
-    :root {
-      --blue-900: #0f2d57;
-      --blue-700: #1a4d8f;
-      --blue-600: #1e5fad;
-      --blue-500: #2471c8;
-      --blue-100: #ddeeff;
-      --blue-50:  #f0f6ff;
-      --accent:   #f0a500;
-      --text:     #1c2b3a;
-      --text-light: #4a5e72;
-      --border:   #d4e3f5;
-      --white:    #ffffff;
-      --sidebar-w: 280px;
-      --radius:   8px;
-    }
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: 'Inter', sans-serif;
-      font-size: 15px;
-      color: var(--text);
-      background: #f5f8fc;
-      display: flex;
-      min-height: 100vh;
-    }
-    a { color: var(--blue-600); text-decoration: none; }
-    a:hover { text-decoration: underline; }
-
-    .sidebar-overlay {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.45);
-      z-index: 98;
-      opacity: 0;
-      transition: opacity 0.25s;
-      pointer-events: none;
-    }
-    .sidebar-overlay.active { opacity: 1; pointer-events: all; }
-
-    .sidebar {
-      width: var(--sidebar-w);
-      min-height: 100vh;
-      background: var(--blue-900);
-      display: flex;
-      flex-direction: column;
-      flex-shrink: 0;
-      position: sticky;
-      top: 0;
-      height: 100vh;
-      overflow-y: auto;
-      z-index: 100;
-    }
-    .sidebar-logo { padding: 24px 20px 20px; border-bottom: 1px solid rgba(255,255,255,0.1); }
-    .sidebar-logo a {
-      font-family: 'Sora', sans-serif;
-      font-size: 18px; font-weight: 700;
-      color: var(--white);
-      display: flex; align-items: center; gap: 10px;
-      text-decoration: none;
-    }
-    .sidebar-search { padding: 14px 16px; border-bottom: 1px solid rgba(255,255,255,0.08); }
-    .sidebar-search input {
-      width: 100%; padding: 8px 12px;
-      border-radius: 6px; border: 1px solid rgba(255,255,255,0.15);
-      background: rgba(255,255,255,0.08); color: var(--white);
-      font-size: 13px; outline: none;
-    }
-    .sidebar-search input::placeholder { color: rgba(255,255,255,0.4); }
-    .sidebar-nav { padding: 12px 0 24px; flex: 1; }
-    .nav-section-title {
-      font-size: 10px; font-weight: 600; letter-spacing: 0.1em;
-      text-transform: uppercase; color: rgba(255,255,255,0.4);
-      padding: 16px 20px 6px;
-    }
-    .nav-item a {
-      display: block; padding: 7px 20px; font-size: 13px;
-      color: rgba(255,255,255,0.75);
-      transition: background 0.15s, color 0.15s;
-      border-left: 3px solid transparent;
-    }
-    .nav-item a:hover { background: rgba(255,255,255,0.06); color: var(--white); text-decoration: none; }
-    .nav-item.active a { color: var(--white); border-left-color: var(--accent); background: rgba(255,255,255,0.08); font-weight: 600; }
-
-    .main { flex: 1; display: flex; flex-direction: column; min-width: 0; }
-
-    .topbar {
-      background: var(--white); border-bottom: 1px solid var(--border);
-      padding: 0 32px; height: 52px;
-      display: flex; align-items: center; gap: 6px;
-      font-size: 13px; color: var(--text-light);
-      position: sticky; top: 0; z-index: 10;
-    }
-    .topbar a { color: var(--text-light); }
-    .topbar .sep { color: #b0bec9; margin: 0 2px; }
-    .topbar .current { color: var(--text); font-weight: 500; }
-
-    .btn-menu {
-      display: none;
-      align-items: center; justify-content: center;
-      width: 36px; height: 36px;
-      margin-right: 8px; border: none;
-      background: transparent; cursor: pointer;
-      border-radius: 6px; padding: 0; flex-shrink: 0;
-      transition: background 0.15s;
-    }
-    .btn-menu:hover { background: var(--blue-50); }
-    .btn-menu svg { display: block; }
-
-    .hero {
-      background: linear-gradient(135deg, var(--blue-900) 0%, var(--blue-700) 55%, var(--blue-500) 100%);
-      padding: 52px 48px 48px;
-      position: relative; overflow: hidden;
-    }
-    .hero::before {
-      content: ''; position: absolute; inset: 0;
-      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
-      pointer-events: none;
-    }
-    .hero-badge {
-      display: inline-flex; align-items: center; gap: 6px;
-      background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2);
-      color: rgba(255,255,255,0.9); font-size: 12px; font-weight: 500;
-      padding: 4px 12px; border-radius: 20px; margin-bottom: 20px; letter-spacing: 0.03em;
-    }
-    .hero-badge::before { content: '●'; color: #4cde9a; font-size: 8px; }
-    .hero h1 {
-      font-family: 'Sora', sans-serif; font-size: 34px; font-weight: 700;
-      color: var(--white); line-height: 1.2; margin-bottom: 12px; position: relative;
-    }
-    .hero-sub { font-size: 16px; color: rgba(255,255,255,0.7); margin-bottom: 28px; max-width: 560px; line-height: 1.6; position: relative; }
-    .hero-desc {
-      background: rgba(255,255,255,0.1); border-left: 3px solid var(--accent);
-      border-radius: 0 6px 6px 0; padding: 14px 18px;
-      color: rgba(255,255,255,0.85); font-size: 14px; line-height: 1.6; max-width: 640px; position: relative;
-    }
-
-    .content { padding: 40px 48px 60px; max-width: 900px; }
-
-    .section-heading {
-      font-family: 'Sora', sans-serif; font-size: 13px; font-weight: 600;
-      letter-spacing: 0.08em; text-transform: uppercase; color: var(--blue-600);
-      margin-bottom: 16px; margin-top: 40px;
-      display: flex; align-items: center; gap: 8px;
-    }
-    .section-heading::after { content: ''; flex: 1; height: 1px; background: var(--border); }
-
-    .accordion { display: flex; flex-direction: column; gap: 10px; }
-    .acc-item { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; transition: box-shadow 0.2s; }
-    .acc-item:hover { box-shadow: 0 2px 12px rgba(36,113,200,0.08); }
-    .acc-header { display: flex; align-items: center; gap: 14px; padding: 16px 20px; cursor: pointer; user-select: none; list-style: none; }
-    .acc-header::-webkit-details-marker { display: none; }
-    .acc-icon { width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
-    .acc-icon.blue   { background: var(--blue-50); }
-    .acc-icon.orange { background: #fff8ee; }
-    .acc-title { flex: 1; font-weight: 600; font-size: 15px; color: var(--text); }
-    .acc-count { font-size: 12px; color: var(--text-light); background: var(--blue-50); border: 1px solid var(--border); padding: 2px 8px; border-radius: 12px; }
-    .acc-arrow { font-size: 12px; color: var(--text-light); transition: transform 0.2s; }
-    details[open] .acc-arrow { transform: rotate(180deg); }
-    .acc-body { border-top: 1px solid var(--border); padding: 8px 0 12px; }
-    .acc-link {
-      display: flex; align-items: center; gap: 10px;
-      padding: 9px 20px 9px 70px; font-size: 14px;
-      color: var(--text-light); transition: background 0.12s, color 0.12s;
-      border-left: 3px solid transparent;
-    }
-    .acc-link:hover { background: var(--blue-50); color: var(--blue-600); border-left-color: var(--blue-500); text-decoration: none; }
-    .acc-link::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: var(--border); flex-shrink: 0; transition: background 0.12s; }
-    .acc-link:hover::before { background: var(--blue-500); }
-
-    .page-footer {
-      margin-top: auto; padding: 20px 48px;
-      border-top: 1px solid var(--border); background: var(--white);
-      display: flex; justify-content: space-between; align-items: center;
-      font-size: 12px; color: var(--text-light);
-    }
-    .page-footer a { color: var(--text-light); }
-    .btn-next {
-      display: inline-flex; align-items: center; gap: 8px;
-      background: var(--blue-600); color: var(--white) !important;
-      padding: 9px 18px; border-radius: 6px; font-size: 13px; font-weight: 500;
-      text-decoration: none !important; transition: background 0.15s;
-    }
-    .btn-next:hover { background: var(--blue-700); }
-
-    @media (max-width: 768px) {
-      .btn-menu { display: flex; }
-      .sidebar-overlay { display: block; }
-      .sidebar {
-        position: fixed !important; top: 0; left: 0;
-        height: 100vh; min-height: 100vh;
-        transform: translateX(-100%);
-        transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
-        box-shadow: none;
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pointage — Documentation 1.0</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Sora:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --blue-900: #0f2d57;
+        --blue-700: #1a4d8f;
+        --blue-600: #1e5fad;
+        --blue-500: #2471c8;
+        --blue-100: #ddeeff;
+        --blue-50: #f0f6ff;
+        --accent: #f0a500;
+        --text: #1c2b3a;
+        --text-light: #4a5e72;
+        --border: #d4e3f5;
+        --white: #ffffff;
+        --sidebar-w: 280px;
+        --radius: 8px;
       }
-      .sidebar.open { transform: translateX(0) !important; box-shadow: 6px 0 32px rgba(0,0,0,0.22); }
-      .main { width: 100%; }
-      .topbar { padding: 0 16px; }
-      .hero { padding: 32px 20px 28px; }
-      .hero h1 { font-size: 24px; }
-      .hero-sub { font-size: 14px; }
-      .content { padding: 24px 16px 40px; }
-      .page-footer { padding: 16px; flex-direction: column; gap: 12px; text-align: center; }
-    }
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family: "Inter", sans-serif;
+        font-size: 15px;
+        color: var(--text);
+        background: #f5f8fc;
+        display: flex;
+        min-height: 100vh;
+      }
+      a {
+        color: var(--blue-600);
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
 
-    /* ── Language switcher ─────────────────────────────────── */
-    .lang-switch {
-      margin-left: auto;
-      display: flex;
-      align-items: center;
-    }
-    .lang-switch a {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 5px 12px;
-      border-radius: 6px;
-      font-size: 12px;
-      font-weight: 600;
-      border: 1.5px solid var(--border);
-      color: var(--text-light);
-      background: var(--white);
-      text-decoration: none;
-      transition: background 0.15s, border-color 0.15s, color 0.15s;
-      letter-spacing: 0.02em;
-    }
-    .lang-switch a:hover {
-      background: var(--blue-50);
-      border-color: var(--blue-500);
-      color: var(--blue-600);
-      text-decoration: none;
-    }
-    .lang-switch .flag { font-size: 14px; }
-  </style>
-</head>
-<body>
+      .sidebar-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.45);
+        z-index: 98;
+        opacity: 0;
+        transition: opacity 0.25s;
+        pointer-events: none;
+      }
+      .sidebar-overlay.active {
+        opacity: 1;
+        pointer-events: all;
+      }
 
-  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+      .sidebar {
+        width: var(--sidebar-w);
+        min-height: 100vh;
+        background: var(--blue-900);
+        display: flex;
+        flex-direction: column;
+        flex-shrink: 0;
+        position: sticky;
+        top: 0;
+        height: 100vh;
+        overflow-y: auto;
+        z-index: 100;
+      }
+      .sidebar-logo {
+        padding: 24px 20px 20px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      }
+      .sidebar-logo a {
+        font-family: "Sora", sans-serif;
+        font-size: 18px;
+        font-weight: 700;
+        color: var(--white);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        text-decoration: none;
+      }
+      .sidebar-search {
+        padding: 14px 16px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      }
+      .sidebar-search input {
+        width: 100%;
+        padding: 8px 12px;
+        border-radius: 6px;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        background: rgba(255, 255, 255, 0.08);
+        color: var(--white);
+        font-size: 13px;
+        outline: none;
+      }
+      .sidebar-search input::placeholder {
+        color: rgba(255, 255, 255, 0.4);
+      }
+      .sidebar-nav {
+        padding: 12px 0 24px;
+        flex: 1;
+      }
+      .nav-section-title {
+        font-size: 10px;
+        font-weight: 600;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.4);
+        padding: 16px 20px 6px;
+      }
+      .nav-item a {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 7px 20px;
+        font-size: 13px;
+        color: rgba(255, 255, 255, 0.75);
+        transition:
+          background 0.15s,
+          color 0.15s;
+        border-left: 3px solid transparent;
+      }
+      .nav-item a svg {
+        width: 15px;
+        height: 15px;
+        flex-shrink: 0;
+        opacity: 0.6;
+      }
+      .nav-item a:hover {
+        background: rgba(255, 255, 255, 0.06);
+        color: var(--white);
+        text-decoration: none;
+      }
+      .nav-item.active a {
+        color: var(--white);
+        border-left-color: var(--accent);
+        background: rgba(255, 255, 255, 0.08);
+        font-weight: 600;
+      }
+      .nav-item.active a svg {
+        opacity: 1;
+      }
 
-  <nav class="sidebar" id="sidebar">
-    <div class="sidebar-logo">
-      <a href="#">
-        <span><img src="img/sema-pointage-logo.png" alt="sema-pointage-logo" /></span>
-      </a>
-    </div>
-    <div class="sidebar-search">
-      <input type="text" placeholder="Search in docs…" />
-    </div>
-    <div class="sidebar-nav">
+      .main {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+      }
 
-      <div class="nav-section-title">General Overview</div>
-      <div class="nav-item"><a href="General_presentation/index.html">General Overview</a></div>
+      .topbar {
+        background: var(--white);
+        border-bottom: 1px solid var(--border);
+        padding: 0 32px;
+        height: 52px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 13px;
+        color: var(--text-light);
+        position: sticky;
+        top: 0;
+        z-index: 10;
+      }
+      .topbar a {
+        color: var(--text-light);
+        display: flex;
+        align-items: center;
+      }
+      .topbar a svg {
+        width: 16px;
+        height: 16px;
+      }
+      .topbar .sep {
+        color: #b0bec9;
+        margin: 0 2px;
+      }
+      .topbar .current {
+        color: var(--text);
+        font-weight: 500;
+      }
 
-      <div class="nav-section-title">Features</div>
-      <div class="nav-item active"><a href="Platform_features/index.html">Overview</a></div>
-      <div class="nav-item"><a href="Platform_features/index.html#connexion-a-la-plateforme">Platform Login</a></div>
-      <div class="nav-item"><a href="Platform_features/index.html#journaux-de-presence">Attendance Logs</a></div>
-      <div class="nav-item"><a href="Platform_features/index.html#tableau-de-bord">Dashboard</a></div>
-      <div class="nav-item"><a href="Platform_features/index.html#employes">Employees</a></div>
-      <div class="nav-item"><a href="Platform_features/index.html#absences">Absences</a></div>
-      <div class="nav-item"><a href="Platform_features/index.html#departements">Departments</a></div>
-      <div class="nav-item"><a href="Platform_features/index.html#sites-qr-codes">Sites & QR Codes</a></div>
-      <div class="nav-item"><a href="Platform_features/index.html#rapports">Reports</a></div>
-      <div class="nav-item"><a href="Platform_features/index.html#configurations">Settings</a></div>
-      <div class="nav-item"><a href="Platform_features/index.html#programmes">Schedules</a></div>
+      .btn-menu {
+        display: none;
+        align-items: center;
+        justify-content: center;
+        width: 36px;
+        height: 36px;
+        margin-right: 8px;
+        border: none;
+        background: transparent;
+        cursor: pointer;
+        border-radius: 6px;
+        padding: 0;
+        flex-shrink: 0;
+        transition: background 0.15s;
+      }
+      .btn-menu:hover {
+        background: var(--blue-50);
+      }
+      .btn-menu svg {
+        display: block;
+      }
 
-      <div class="nav-section-title">Configuration Guide</div>
-      <div class="nav-item"><a href="Config_guide/index.html">Introduction</a></div>
-      <div class="nav-item"><a href="Config_guide/index.html#etape-1-connexion-a-la-plateforme-dediee">Step 1: Login</a></div>
-      <div class="nav-item"><a href="Config_guide/index.html#etape-2-configuration-des-parametres-de-base">Step 2: Basic Settings</a></div>
-      <div class="nav-item"><a href="Config_guide/index.html#etape-3-ajout-dutilisateurs-supplementaires">Step 3: Users</a></div>
-      <div class="nav-item"><a href="Config_guide/index.html#etape-4-enregistrement-des-employes">Step 4: Employees</a></div>
-      <div class="nav-item"><a href="Config_guide/index.html#etape-5-creation-des-programmes-de-travail">Step 5: Schedules</a></div>
-      <div class="nav-item"><a href="Config_guide/index.html#etape-6-mise-en-place-sur-site-et-phase-de-test">Step 6: Deployment</a></div>
+      .hero {
+        background: linear-gradient(
+          135deg,
+          var(--blue-900) 0%,
+          var(--blue-700) 55%,
+          var(--blue-500) 100%
+        );
+        padding: 52px 48px 48px;
+        position: relative;
+        overflow: hidden;
+      }
+      .hero::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")
+          repeat;
+        pointer-events: none;
+      }
+      .hero-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: rgba(255, 255, 255, 0.12);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        color: rgba(255, 255, 255, 0.9);
+        font-size: 12px;
+        font-weight: 500;
+        padding: 4px 12px;
+        border-radius: 20px;
+        margin-bottom: 20px;
+        letter-spacing: 0.03em;
+      }
+      .badge-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #4cde9a;
+        flex-shrink: 0;
+      }
+      .hero h1 {
+        font-family: "Sora", sans-serif;
+        font-size: 34px;
+        font-weight: 700;
+        color: var(--white);
+        line-height: 1.2;
+        margin-bottom: 12px;
+        position: relative;
+      }
+      .hero-sub {
+        font-size: 16px;
+        color: rgba(255, 255, 255, 0.7);
+        margin-bottom: 28px;
+        max-width: 560px;
+        line-height: 1.6;
+        position: relative;
+      }
+      .hero-desc {
+        background: rgba(255, 255, 255, 0.1);
+        border-left: 3px solid var(--accent);
+        border-radius: 0 6px 6px 0;
+        padding: 14px 18px;
+        color: rgba(255, 255, 255, 0.85);
+        font-size: 14px;
+        line-height: 1.6;
+        max-width: 640px;
+        position: relative;
+      }
 
-    </div>
-  </nav>
+      .content {
+        padding: 40px 48px 60px;
+        max-width: 900px;
+      }
 
-  <div class="main">
+      .section-heading {
+        font-family: "Sora", sans-serif;
+        font-size: 13px;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--blue-600);
+        margin-bottom: 16px;
+        margin-top: 40px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .section-heading::after {
+        content: "";
+        flex: 1;
+        height: 1px;
+        background: var(--border);
+      }
 
-    <div class="topbar">
-      <button class="btn-menu" id="btnMenu" aria-label="Open menu">
-        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect y="3" width="20" height="2" rx="1" fill="#4a5e72"/>
-          <rect y="9" width="20" height="2" rx="1" fill="#4a5e72"/>
-          <rect y="15" width="20" height="2" rx="1" fill="#4a5e72"/>
-        </svg>
-      </button>
-      <a href="#">🏠</a>
-      <span class="sep">›</span>
-      <span class="current">Pointage — Documentation</span>
-    
-      <div class="lang-switch"><a href="../../../fr/build/html/index.html"><span class="flag">🇫🇷</span> Français</a></div>
-    </div>
+      .accordion {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      .acc-item {
+        background: var(--white);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        overflow: hidden;
+        transition: box-shadow 0.2s;
+      }
+      .acc-item:hover {
+        box-shadow: 0 2px 12px rgba(36, 113, 200, 0.08);
+      }
+      .acc-header {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding: 16px 20px;
+        cursor: pointer;
+        user-select: none;
+        list-style: none;
+      }
+      .acc-header::-webkit-details-marker {
+        display: none;
+      }
+      .acc-icon {
+        width: 36px;
+        height: 36px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+      .acc-icon.blue {
+        background: var(--blue-50);
+      }
+      .acc-icon.blue svg {
+        stroke: var(--blue-600);
+        width: 20px;
+        height: 20px;
+      }
+      .acc-icon.orange {
+        background: #fff8ee;
+      }
+      .acc-icon.orange svg {
+        stroke: #c87000;
+        width: 20px;
+        height: 20px;
+      }
+      .acc-title {
+        flex: 1;
+        font-weight: 600;
+        font-size: 15px;
+        color: var(--text);
+      }
+      .acc-count {
+        font-size: 12px;
+        color: var(--text-light);
+        background: var(--blue-50);
+        border: 1px solid var(--border);
+        padding: 2px 8px;
+        border-radius: 12px;
+      }
+      .acc-arrow {
+        display: flex;
+        align-items: center;
+        color: var(--text-light);
+        transition: transform 0.2s;
+      }
+      .acc-arrow svg {
+        width: 16px;
+        height: 16px;
+        stroke: var(--text-light);
+      }
+      details[open] .acc-arrow {
+        transform: rotate(180deg);
+      }
+      .acc-body {
+        border-top: 1px solid var(--border);
+        padding: 8px 0 12px;
+      }
+      .acc-link {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 9px 20px 9px 70px;
+        font-size: 14px;
+        color: var(--text-light);
+        transition:
+          background 0.12s,
+          color 0.12s;
+        border-left: 3px solid transparent;
+      }
+      .acc-link svg {
+        width: 14px;
+        height: 14px;
+        stroke: var(--border);
+        flex-shrink: 0;
+        transition: stroke 0.12s;
+      }
+      .acc-link:hover {
+        background: var(--blue-50);
+        color: var(--blue-600);
+        border-left-color: var(--blue-500);
+        text-decoration: none;
+      }
+      .acc-link:hover svg {
+        stroke: var(--blue-500);
+      }
 
-    <div class="hero">
-      <div class="hero-badge">Version 1.0 &nbsp;·&nbsp; Kaeyros Analytics</div>
-      <h1>Pointage Documentation</h1>
-      <p class="hero-sub">Complete guide for using and configuring the attendance tracking solution.</p>
-      <div class="hero-desc">
-        Attendance tracking is the process of recording employees' arrival and departure times
-        at their workplace in order to effectively monitor their presence.
-        This documentation covers all platform features as well as
-        the step-by-step setup guide.
+      .page-footer {
+        margin-top: auto;
+        padding: 20px 48px;
+        border-top: 1px solid var(--border);
+        background: var(--white);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 12px;
+        color: var(--text-light);
+      }
+      .page-footer a {
+        color: var(--text-light);
+      }
+      .btn-next {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: var(--blue-600);
+        color: var(--white) !important;
+        padding: 9px 18px;
+        border-radius: 6px;
+        font-size: 13px;
+        font-weight: 500;
+        text-decoration: none !important;
+        transition: background 0.15s;
+      }
+      .btn-next svg {
+        width: 16px;
+        height: 16px;
+        stroke: var(--white);
+      }
+      .btn-next:hover {
+        background: var(--blue-700);
+      }
+
+      /* ── Language switcher ── */
+      .lang-switch {
+        margin-left: auto;
+        display: flex;
+        align-items: center;
+      }
+      .lang-switch a {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 5px 12px;
+        border-radius: 6px;
+        font-size: 12px;
+        font-weight: 600;
+        border: 1.5px solid var(--border);
+        color: var(--text-light);
+        background: var(--white);
+        text-decoration: none;
+        transition:
+          background 0.15s,
+          border-color 0.15s,
+          color 0.15s;
+        letter-spacing: 0.02em;
+      }
+      .lang-switch a svg {
+        width: 15px;
+        height: 15px;
+        stroke: currentColor;
+      }
+      .lang-switch a:hover {
+        background: var(--blue-50);
+        border-color: var(--blue-500);
+        color: var(--blue-600);
+        text-decoration: none;
+      }
+
+      @media (max-width: 768px) {
+        .btn-menu {
+          display: flex;
+        }
+        .sidebar-overlay {
+          display: block;
+        }
+        .sidebar {
+          position: fixed !important;
+          top: 0;
+          left: 0;
+          height: 100vh;
+          min-height: 100vh;
+          transform: translateX(-100%);
+          transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+          box-shadow: none;
+        }
+        .sidebar.open {
+          transform: translateX(0) !important;
+          box-shadow: 6px 0 32px rgba(0, 0, 0, 0.22);
+        }
+        .main {
+          width: 100%;
+        }
+        .topbar {
+          padding: 0 16px;
+        }
+        .hero {
+          padding: 32px 20px 28px;
+        }
+        .hero h1 {
+          font-size: 24px;
+        }
+        .hero-sub {
+          font-size: 14px;
+        }
+        .content {
+          padding: 24px 16px 40px;
+        }
+        .page-footer {
+          padding: 16px;
+          flex-direction: column;
+          gap: 12px;
+          text-align: center;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <nav class="sidebar" id="sidebar">
+      <div class="sidebar-logo">
+        <a href="#">
+          <span
+            ><img src="img/sema-pointage-logo.png" alt="sema-pointage-logo"
+          /></span>
+        </a>
       </div>
-    </div>
-
-    <div class="content">
-
-      <div class="section-heading">Table of Contents</div>
-
-      <div class="accordion">
-
-        <details class="acc-item">
-          <summary class="acc-header">
-            <span class="acc-icon blue">📘</span>
-            <span class="acc-title">General Overview</span>
-            <span class="acc-count">1 page</span>
-            <span class="acc-arrow">▼</span>
-          </summary>
-          <div class="acc-body">
-            <a class="acc-link" href="General_presentation/index.html">General overview of the attendance tracking tool</a>
-          </div>
-        </details>
-
-        <details class="acc-item" open>
-          <summary class="acc-header">
-            <span class="acc-icon blue">🖥️</span>
-            <span class="acc-title">Platform Features</span>
-            <span class="acc-count">11 sections</span>
-            <span class="acc-arrow">▼</span>
-          </summary>
-          <div class="acc-body">
-            <a class="acc-link" href="Platform_features/index.html">Overview</a>
-            <a class="acc-link" href="Platform_features/index.html#connexion-a-la-plateforme">Platform Login</a>
-            <a class="acc-link" href="Platform_features/index.html#journaux-de-presence">Attendance Logs</a>
-            <a class="acc-link" href="Platform_features/index.html#tableau-de-bord">Dashboard</a>
-            <a class="acc-link" href="Platform_features/index.html#employes">Employees</a>
-            <a class="acc-link" href="Platform_features/index.html#absences">Absences</a>
-            <a class="acc-link" href="Platform_features/index.html#departements">Departments</a>
-            <a class="acc-link" href="Platform_features/index.html#sites-qr-codes">Sites & QR Codes</a>
-            <a class="acc-link" href="Platform_features/index.html#rapports">Reports</a>
-            <a class="acc-link" href="Platform_features/index.html#configurations">Settings</a>
-            <a class="acc-link" href="Platform_features/index.html#programmes">Schedules</a>
-          </div>
-        </details>
-
-        <details class="acc-item">
-          <summary class="acc-header">
-            <span class="acc-icon orange">🛠️</span>
-            <span class="acc-title">Configuration Guide</span>
-            <span class="acc-count">6 steps</span>
-            <span class="acc-arrow">▼</span>
-          </summary>
-          <div class="acc-body">
-            <a class="acc-link" href="Config_guide/index.html">Introduction</a>
-            <a class="acc-link" href="Config_guide/index.html#etape-1-connexion-a-la-plateforme-dediee">Step 1: Platform Login</a>
-            <a class="acc-link" href="Config_guide/index.html#etape-2-configuration-des-parametres-de-base">Step 2: Basic Settings Configuration</a>
-            <a class="acc-link" href="Config_guide/index.html#etape-3-ajout-dutilisateurs-supplementaires">Step 3: Adding Additional Users</a>
-            <a class="acc-link" href="Config_guide/index.html#etape-4-enregistrement-des-employes">Step 4: Employee Registration</a>
-            <a class="acc-link" href="Config_guide/index.html#etape-5-creation-des-programmes-de-travail">Step 5: Creating Work Schedules</a>
-            <a class="acc-link" href="Config_guide/index.html#etape-6-mise-en-place-sur-site-et-phase-de-test">Step 6: On-site Setup & Testing Phase</a>
-          </div>
-        </details>
-
+      <div class="sidebar-search">
+        <input type="text" placeholder="Search in docs…" />
       </div>
+      <div class="sidebar-nav">
+        <div class="nav-section-title">General Overview</div>
+        <div class="nav-item">
+          <a href="General_presentation/index.html">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"
+              />
+            </svg>
+            General Overview
+          </a>
+        </div>
+
+        <div class="nav-section-title">Features</div>
+        <div class="nav-item active">
+          <a href="Platform_features/index.html">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z"
+              />
+            </svg>
+            Overview
+          </a>
+        </div>
+        <div class="nav-item">
+          <a href="Platform_features/index.html#connexion-a-la-plateforme">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"
+              />
+            </svg>
+            Platform Login
+          </a>
+        </div>
+        <div class="nav-item">
+          <a href="Platform_features/index.html#journaux-de-presence">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25zM6.75 12h.008v.008H6.75V12zm0 3h.008v.008H6.75V15zm0 3h.008v.008H6.75V18z"
+              />
+            </svg>
+            Attendance Logs
+          </a>
+        </div>
+        <div class="nav-item">
+          <a href="Platform_features/index.html#tableau-de-bord">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M7.5 14.25v2.25m3-4.5v4.5m3-6.75v6.75m3-9v9M6 20.25h12A2.25 2.25 0 0020.25 18V6A2.25 2.25 0 0018 3.75H6A2.25 2.25 0 003.75 6v12A2.25 2.25 0 006 20.25z"
+              />
+            </svg>
+            Dashboard
+          </a>
+        </div>
+        <div class="nav-item">
+          <a href="Platform_features/index.html#employes">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z"
+              />
+            </svg>
+            Employees
+          </a>
+        </div>
+        <div class="nav-item">
+          <a href="Platform_features/index.html#absences">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5m-9-6h.008v.008H12v-.008zM12 15h.008v.008H12V15zm0 2.25h.008v.008H12v-.008zM9.75 15h.008v.008H9.75V15zm0 2.25h.008v.008H9.75v-.008zM7.5 15h.008v.008H7.5V15zm0 2.25h.008v.008H7.5v-.008zm6.75-4.5h.008v.008h-.008v-.008zm0 2.25h.008v.008h-.008V15zm0 2.25h.008v.008h-.008v-.008zm2.25-4.5h.008v.008H16.5v-.008zm0 2.25h.008v.008H16.5V15z"
+              />
+            </svg>
+            Absences
+          </a>
+        </div>
+        <div class="nav-item">
+          <a href="Platform_features/index.html#departements">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 3.75h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008z"
+              />
+            </svg>
+            Departments
+          </a>
+        </div>
+        <div class="nav-item">
+          <a href="Platform_features/index.html#sites-qr-codes">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M3.75 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 013.75 9.375v-4.5zM3.75 14.625c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5a1.125 1.125 0 01-1.125-1.125v-4.5zM13.5 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 0113.5 9.375v-4.5z"
+              />
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M6.75 6.75h.75v.75h-.75v-.75zM6.75 17.25h.75v.75h-.75v-.75zM16.5 6.75h.75v.75h-.75v-.75zM13.5 13.5h.75v.75h-.75v-.75zM13.5 19.5h.75v.75h-.75v-.75zM19.5 13.5h.75v.75h-.75v-.75zM19.5 19.5h.75v.75h-.75v-.75zM16.5 16.5h.75v.75h-.75v-.75z"
+              />
+            </svg>
+            Sites & QR Codes
+          </a>
+        </div>
+        <div class="nav-item">
+          <a href="Platform_features/index.html#rapports">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25M9 16.5v.75m3-3v3M15 12v5.25m-4.5-11.625h.375a3 3 0 013 3v1.5a3 3 0 003 3h1.5m-10.875-5.25h9.375M6.75 19.5h10.5a2.25 2.25 0 002.25-2.25V7.5a2.25 2.25 0 00-2.25-2.25H6.75A2.25 2.25 0 004.5 7.5v9.75A2.25 2.25 0 006.75 19.5z"
+              />
+            </svg>
+            Reports
+          </a>
+        </div>
+        <div class="nav-item">
+          <a href="Platform_features/index.html#configurations">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.324.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 011.37.49l1.296 2.247a1.125 1.125 0 01-.26 1.431l-1.003.827c-.293.24-.438.613-.431.992a6.759 6.759 0 010 .255c-.007.378.138.75.43.99l1.005.828c.424.35.534.954.26 1.43l-1.298 2.247a1.125 1.125 0 01-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.57 6.57 0 01-.22.128c-.331.183-.581.495-.644.869l-.213 1.28c-.09.543-.56.941-1.11.941h-2.594c-.55 0-1.02-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 01-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 01-1.369-.49l-1.297-2.247a1.125 1.125 0 01.26-1.431l1.004-.827c.292-.24.437-.613.43-.992a6.932 6.932 0 010-.255c.007-.378-.138-.75-.43-.99l-1.004-.828a1.125 1.125 0 01-.26-1.43l1.297-2.247a1.125 1.125 0 011.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.087.22-.128.332-.183.582-.495.644-.869l.214-1.281z"
+              />
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+              />
+            </svg>
+            Settings
+          </a>
+        </div>
+        <div class="nav-item">
+          <a href="Platform_features/index.html#programmes">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"
+              />
+            </svg>
+            Schedules
+          </a>
+        </div>
+
+        <div class="nav-section-title">Configuration Guide</div>
+        <div class="nav-item">
+          <a href="Config_guide/index.html">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25"
+              />
+            </svg>
+            Introduction
+          </a>
+        </div>
+        <div class="nav-item">
+          <a
+            href="Config_guide/index.html#etape-1-connexion-a-la-plateforme-dediee"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9"
+              />
+            </svg>
+            Step 1: Login
+          </a>
+        </div>
+        <div class="nav-item">
+          <a
+            href="Config_guide/index.html#etape-2-configuration-des-parametres-de-base"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M10.5 6h9.75M10.5 6a1.5 1.5 0 11-3 0m3 0a1.5 1.5 0 10-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-9.75 0h9.75"
+              />
+            </svg>
+            Step 2: Basic Settings
+          </a>
+        </div>
+        <div class="nav-item">
+          <a
+            href="Config_guide/index.html#etape-3-ajout-dutilisateurs-supplementaires"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M19 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zM4 19.235v-.11a6.375 6.375 0 0112.75 0v.109A12.318 12.318 0 0110.374 21c-2.331 0-4.512-.645-6.374-1.766z"
+              />
+            </svg>
+            Step 3: Users
+          </a>
+        </div>
+        <div class="nav-item">
+          <a href="Config_guide/index.html#etape-4-enregistrement-des-employes">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M15 9h3.75M15 12h3.75M15 15h3.75M4.5 19.5h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5zm6-10.125a1.875 1.875 0 11-3.75 0 1.875 1.875 0 013.75 0zm1.294 6.336a6.721 6.721 0 01-3.17.789 6.721 6.721 0 01-3.168-.789 3.376 3.376 0 016.338 0z"
+              />
+            </svg>
+            Step 4: Employees
+          </a>
+        </div>
+        <div class="nav-item">
+          <a
+            href="Config_guide/index.html#etape-5-creation-des-programmes-de-travail"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5"
+              />
+            </svg>
+            Step 5: Schedules
+          </a>
+        </div>
+        <div class="nav-item">
+          <a
+            href="Config_guide/index.html#etape-6-mise-en-place-sur-site-et-phase-de-test"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-.45 3.867 3.745 3.745 0 01-3.867.45A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.867-.45 3.745 3.745 0 01-.45-3.867A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 01.45-3.867 3.746 3.746 0 013.867-.45A3.745 3.745 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.867.45 3.745 3.745 0 01.45 3.867A3.745 3.745 0 0121 12z"
+              />
+            </svg>
+            Step 6: Deployment
+          </a>
+        </div>
+      </div>
+    </nav>
+
+    <div class="main">
+      <div class="topbar">
+        <button class="btn-menu" id="btnMenu" aria-label="Open menu">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <rect y="3" width="20" height="2" rx="1" fill="#4a5e72" />
+            <rect y="9" width="20" height="2" rx="1" fill="#4a5e72" />
+            <rect y="15" width="20" height="2" rx="1" fill="#4a5e72" />
+          </svg>
+        </button>
+        <!-- Heroicon: home -->
+        <a href="#">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25"
+            />
+          </svg>
+        </a>
+        <span class="sep">›</span>
+        <span class="current">Pointage — Documentation</span>
+        <div class="lang-switch">
+          <a href="../../../fr/build/html/index.html">
+            <!-- Heroicon: globe-alt -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253M3 12a8.959 8.959 0 01.284-2.253"
+              />
+            </svg>
+            Français
+          </a>
+        </div>
+      </div>
+
+      <div class="hero">
+        <div class="hero-badge">
+          <span class="badge-dot"></span>Version 1.0 &nbsp;·&nbsp; Kaeyros
+          Analytics
+        </div>
+        <h1>Pointage Documentation</h1>
+        <p class="hero-sub">
+          Complete guide for using and configuring the attendance tracking
+          solution.
+        </p>
+        <div class="hero-desc">
+          Attendance tracking is the process of recording employees' arrival and
+          departure times at their workplace in order to effectively monitor
+          their presence. This documentation covers all platform features as
+          well as the step-by-step setup guide.
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="section-heading">Table of Contents</div>
+
+        <div class="accordion">
+          <details class="acc-item">
+            <summary class="acc-header">
+              <span class="acc-icon blue">
+                <!-- Heroicon: book-open -->
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25"
+                  />
+                </svg>
+              </span>
+              <span class="acc-title">General Overview</span>
+              <span class="acc-count">1 page</span>
+              <span class="acc-arrow">
+                <!-- Heroicon: chevron-down -->
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="2"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M19.5 8.25l-7.5 7.5-7.5-7.5"
+                  />
+                </svg>
+              </span>
+            </summary>
+            <div class="acc-body">
+              <a class="acc-link" href="General_presentation/index.html">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M8.25 4.5l7.5 7.5-7.5 7.5"
+                  />
+                </svg>
+                General overview of the attendance tracking tool
+              </a>
+            </div>
+          </details>
+
+          <details class="acc-item" open>
+            <summary class="acc-header">
+              <span class="acc-icon blue">
+                <!-- Heroicon: computer-desktop -->
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M9 17.25v1.007a3 3 0 01-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0115 18.257V17.25m6-12V15a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 15V5.25m18 0A2.25 2.25 0 0018.75 3H5.25A2.25 2.25 0 003 5.25m18 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 7.91a2.25 2.25 0 01-1.07-1.916V5.25"
+                  />
+                </svg>
+              </span>
+              <span class="acc-title">Platform Features</span>
+              <span class="acc-count">11 sections</span>
+              <span class="acc-arrow">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="2"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M19.5 8.25l-7.5 7.5-7.5-7.5"
+                  />
+                </svg>
+              </span>
+            </summary>
+            <div class="acc-body">
+              <a class="acc-link" href="Platform_features/index.html">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M8.25 4.5l7.5 7.5-7.5 7.5"
+                  />
+                </svg>
+                Overview
+              </a>
+              <a
+                class="acc-link"
+                href="Platform_features/index.html#connexion-a-la-plateforme"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M8.25 4.5l7.5 7.5-7.5 7.5"
+                  />
+                </svg>
+                Platform Login
+              </a>
+              <a
+                class="acc-link"
+                href="Platform_features/index.html#journaux-de-presence"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M8.25 4.5l7.5 7.5-7.5 7.5"
+                  />
+                </svg>
+                Attendance Logs
+              </a>
+              <a
+                class="acc-link"
+                href="Platform_features/index.html#tableau-de-bord"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M8.25 4.5l7.5 7.5-7.5 7.5"
+                  />
+                </svg>
+                Dashboard
+              </a>
+              <a class="acc-link" href="Platform_features/index.html#employes">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M8.25 4.5l7.5 7.5-7.5 7.5"
+                  />
+                </svg>
+                Employees
+              </a>
+              <a class="acc-link" href="Platform_features/index.html#absences">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M8.25 4.5l7.5 7.5-7.5 7.5"
+                  />
+                </svg>
+                Absences
+              </a>
+              <a
+                class="acc-link"
+                href="Platform_features/index.html#departements"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M8.25 4.5l7.5 7.5-7.5 7.5"
+                  />
+                </svg>
+                Departments
+              </a>
+              <a
+                class="acc-link"
+                href="Platform_features/index.html#sites-qr-codes"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M8.25 4.5l7.5 7.5-7.5 7.5"
+                  />
+                </svg>
+                Sites & QR Codes
+              </a>
+              <a class="acc-link" href="Platform_features/index.html#rapports">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M8.25 4.5l7.5 7.5-7.5 7.5"
+                  />
+                </svg>
+                Reports
+              </a>
+              <a
+                class="acc-link"
+                href="Platform_features/index.html#configurations"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M8.25 4.5l7.5 7.5-7.5 7.5"
+                  />
+                </svg>
+                Settings
+              </a>
+              <a
+                class="acc-link"
+                href="Platform_features/index.html#programmes"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M8.25 4.5l7.5 7.5-7.5 7.5"
+                  />
+                </svg>
+                Schedules
+              </a>
+            </div>
+          </details>
+
+          <details class="acc-item">
+            <summary class="acc-header">
+              <span class="acc-icon orange">
+                <!-- Heroicon: wrench-screwdriver -->
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M11.42 15.17L17.25 21A2.652 2.652 0 0021 17.25l-5.877-5.877M11.42 15.17l2.496-3.03c.317-.384.74-.626 1.208-.766M11.42 15.17l-4.655 5.653a2.548 2.548 0 11-3.586-3.586l6.837-5.63m5.108-.233c.55-.164 1.163-.188 1.743-.14a4.5 4.5 0 004.486-6.336l-3.276 3.277a3.004 3.004 0 01-2.25-2.25l3.276-3.276a4.5 4.5 0 00-6.336 4.486c.091 1.076-.071 2.264-.904 2.95l-.102.085m-1.745 1.437L5.909 7.5H4.5L2.25 3.75l1.5-1.5L7.5 4.5v1.409l4.26 4.26m-1.745 1.437l1.745-1.437m6.615 8.206L15.75 15.75M4.867 19.125h.008v.008h-.008v-.008z"
+                  />
+                </svg>
+              </span>
+              <span class="acc-title">Configuration Guide</span>
+              <span class="acc-count">6 steps</span>
+              <span class="acc-arrow">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="2"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M19.5 8.25l-7.5 7.5-7.5-7.5"
+                  />
+                </svg>
+              </span>
+            </summary>
+            <div class="acc-body">
+              <a class="acc-link" href="Config_guide/index.html">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M8.25 4.5l7.5 7.5-7.5 7.5"
+                  />
+                </svg>
+                Introduction
+              </a>
+              <a
+                class="acc-link"
+                href="Config_guide/index.html#etape-1-connexion-a-la-plateforme-dediee"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M8.25 4.5l7.5 7.5-7.5 7.5"
+                  />
+                </svg>
+                Step 1: Platform Login
+              </a>
+              <a
+                class="acc-link"
+                href="Config_guide/index.html#etape-2-configuration-des-parametres-de-base"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M8.25 4.5l7.5 7.5-7.5 7.5"
+                  />
+                </svg>
+                Step 2: Basic Settings Configuration
+              </a>
+              <a
+                class="acc-link"
+                href="Config_guide/index.html#etape-3-ajout-dutilisateurs-supplementaires"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M8.25 4.5l7.5 7.5-7.5 7.5"
+                  />
+                </svg>
+                Step 3: Adding Additional Users
+              </a>
+              <a
+                class="acc-link"
+                href="Config_guide/index.html#etape-4-enregistrement-des-employes"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M8.25 4.5l7.5 7.5-7.5 7.5"
+                  />
+                </svg>
+                Step 4: Employee Registration
+              </a>
+              <a
+                class="acc-link"
+                href="Config_guide/index.html#etape-5-creation-des-programmes-de-travail"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M8.25 4.5l7.5 7.5-7.5 7.5"
+                  />
+                </svg>
+                Step 5: Creating Work Schedules
+              </a>
+              <a
+                class="acc-link"
+                href="Config_guide/index.html#etape-6-mise-en-place-sur-site-et-phase-de-test"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M8.25 4.5l7.5 7.5-7.5 7.5"
+                  />
+                </svg>
+                Step 6: On-site Setup & Testing Phase
+              </a>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <footer class="page-footer">
+        <span
+          >© 2026 Kaeyros Analytics &nbsp;·&nbsp; Built with
+          <a href="https://www.sphinx-doc.org/">Sphinx</a></span
+        >
+        <a href="General_presentation/index.html" class="btn-next">
+          Next
+          <!-- Heroicon: arrow-right -->
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="2"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"
+            />
+          </svg>
+        </a>
+      </footer>
     </div>
 
-    <footer class="page-footer">
-      <span>© 2026 Kaeyros Analytics &nbsp;·&nbsp; Built with <a href="https://www.sphinx-doc.org/">Sphinx</a></span>
-      <a href="General_presentation/index.html" class="btn-next">Next &nbsp;›</a>
-    </footer>
+    <script>
+      const sidebar = document.getElementById("sidebar");
+      const overlay = document.getElementById("sidebarOverlay");
+      const btnMenu = document.getElementById("btnMenu");
 
-  </div>
+      function openSidebar() {
+        sidebar.classList.add("open");
+        overlay.classList.add("active");
+        document.body.style.overflow = "hidden";
+      }
+      function closeSidebar() {
+        sidebar.classList.remove("open");
+        overlay.classList.remove("active");
+        document.body.style.overflow = "";
+      }
 
-  <script>
-    const sidebar = document.getElementById('sidebar');
-    const overlay = document.getElementById('sidebarOverlay');
-    const btnMenu = document.getElementById('btnMenu');
-
-    function openSidebar() { sidebar.classList.add('open'); overlay.classList.add('active'); document.body.style.overflow = 'hidden'; }
-    function closeSidebar() { sidebar.classList.remove('open'); overlay.classList.remove('active'); document.body.style.overflow = ''; }
-
-    btnMenu.addEventListener('click', function(e) { e.stopPropagation(); sidebar.classList.contains('open') ? closeSidebar() : openSidebar(); });
-    overlay.addEventListener('click', closeSidebar);
-    document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeSidebar(); });
-    window.addEventListener('resize', function() { if (window.innerWidth > 768) closeSidebar(); });
-  </script>
-
-</body>
+      btnMenu.addEventListener("click", function (e) {
+        e.stopPropagation();
+        sidebar.classList.contains("open") ? closeSidebar() : openSidebar();
+      });
+      overlay.addEventListener("click", closeSidebar);
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape") closeSidebar();
+      });
+      window.addEventListener("resize", function () {
+        if (window.innerWidth > 768) closeSidebar();
+      });
+    </script>
+  </body>
 </html>
