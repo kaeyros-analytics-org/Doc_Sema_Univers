@@ -22,7 +22,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Set Git Commit SHA as Tag
+      - name: Set Git Commit SHA as Tag  
         run: echo "IMAGE_TAG=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
 
       - name: Login to GitHub Container Registry
